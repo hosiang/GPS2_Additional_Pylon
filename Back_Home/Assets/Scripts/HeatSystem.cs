@@ -90,6 +90,16 @@ public class HeatSystem : MonoBehaviour {
 
     }
 
+    public float getHeatAmount()
+    {
+        return heatAmount;
+    }
+    public float getMaxHeatAmount()
+    {
+        return maxHeatAmount;
+    }
+
+
     void debug() {
 
         if(Input.GetKeyDown(KeyCode.Q) && iceAtHand > 0) { //Reduce heat by decreasing ice
