@@ -11,15 +11,15 @@ public class PlayerMove : MonoBehaviour
     {
         direction = Vector3.zero;
 
-        if (Input.GetKeyDown(KeyCode.D))
+        if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
             direction.x += speed;
-        else if (Input.GetKeyDown(KeyCode.A))
+        else if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
             direction.x -= speed;
-        else if (Input.GetKeyDown(KeyCode.W))
-            direction.y += speed;
-        else if (Input.GetKeyDown(KeyCode.S))
-            direction.y -= speed;
+        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
+            direction.z += speed;
+        else if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
+            direction.z -= speed;
 
-        transform.Translate(direction);
+        transform.Translate(direction * Time.deltaTime);
     }
 }
