@@ -16,10 +16,13 @@ public class HeatSystem : MonoBehaviour {
 
     [SerializeField] private bool debugMode;
 
+    private Renderer renderer; //for visual debug
+
     private bool[] isShipPartDamaged = new bool[0];
 
     private float heatAmount; //current heat buildup
     private float timerCountdown;
+    private float colourIndicatorTimer;
 
     private void Awake() {
 
@@ -31,10 +34,23 @@ public class HeatSystem : MonoBehaviour {
     }
 
     // Start is called before the first frame update
-    void Start() { }
+    void Start() {
+
+        renderer = GetComponent<Renderer>();
+
+    }
 
     // Update is called once per frame
     void Update() {
+
+        //Debug
+        if(renderer.material.color != Color.white && colourIndicatorTimer >= 1) {
+            renderer.material.SetColor("_Color", Color.white);
+            colourIndicatorTimer = 0f;
+        }
+        else if (renderer.material.color != Color.white) {
+            colourIndicatorTimer += Time.deltaTime;
+        }
 
         timerCountdown -= Time.deltaTime;
 
@@ -45,10 +61,14 @@ public class HeatSystem : MonoBehaviour {
             timerCountdown = timerDuration;
 
             Debug.Log("Heat Increase");
+            renderer.material.SetColor("_Color", Color.yellow);
 
         }
 
-        if(heatAmount >= maxHeatAmount) { Debug.Log("MAX HEAT!!!"); }
+        if(heatAmount >= maxHeatAmount) {
+            Debug.Log("MAX HEAT!!!");
+            renderer.material.SetColor("_Color", Color.red);
+        }
 
         if(debugMode) { debug(); }
 
@@ -76,22 +96,26 @@ public class HeatSystem : MonoBehaviour {
             iceAtHand--;
             heatAmount -= heatAmount > 0 ? iceCooldownRate : 0;
             Debug.Log("DEBUG MODE: heat reduced");
+            renderer.material.SetColor("_Color", Color.green);
         }
 
         if(Input.GetKeyDown(KeyCode.W)) { //Increase heat and reset countdown timer
             heatAmount++;
             timerCountdown = timerDuration;
             Debug.Log("DEBUG MODE: heat increased");
+            renderer.material.SetColor("_Color", Color.yellow);
         }
 
         if(Input.GetKeyDown(KeyCode.E)) { //Increase ice in inventory
             iceAtHand++;
             Debug.Log("DEBUG MODE: ice increased");
+            renderer.material.SetColor("_Color", Color.cyan);
         }
 
         if(Input.GetKeyDown(KeyCode.R)) { //Reset heat amount
             heatAmount = 0f;
             Debug.Log("DEBUG MODE: heat reset");
+            renderer.material.SetColor("_Color", Color.gray);
         }
 
         //Damage or fix ship parts
