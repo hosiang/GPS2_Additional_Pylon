@@ -129,13 +129,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 62709649}
-  - component: {fileID: 62709648}
   - component: {fileID: 62709647}
   - component: {fileID: 62709646}
   - component: {fileID: 62709645}
   m_Layer: 0
   m_Name: Ice
-  m_TagString: Untagged
+  m_TagString: Ice
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -198,19 +197,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 62709644}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &62709648
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 62709644}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 96afca569dc1e5a438d22b71e27e33ac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pickUpText: {fileID: 1893794000}
 --- !u!4 &62709649
 Transform:
   m_ObjectHideFlags: 0
@@ -816,13 +802,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1331417909}
-  - component: {fileID: 1331417908}
   - component: {fileID: 1331417907}
   - component: {fileID: 1331417906}
   - component: {fileID: 1331417905}
   m_Layer: 0
   m_Name: TItanium
-  m_TagString: Untagged
+  m_TagString: Titanium
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -886,19 +871,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1331417904}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &1331417908
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1331417904}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1af0451d58345e14f869fe20308ba7a2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pickUpText: {fileID: 1893794000}
 --- !u!4 &1331417909
 Transform:
   m_ObjectHideFlags: 0

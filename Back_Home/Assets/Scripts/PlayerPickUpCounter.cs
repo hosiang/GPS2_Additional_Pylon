@@ -19,12 +19,11 @@ public class PlayerPickUpCounter : MonoBehaviour
 
     private void OnTriggerEnter(Collider collision)
     {
-        if ((Input.GetKeyUp(KeyCode.K)) && collision.GetComponent<IcePickUp>()) // i couldnt get the counter work properly even 
-        {
-            iceAmount += 1;                                                     // if i use without input keycode, could work but collide will 
-                                                                                //  automatically increase the counter
+        if ((Input.GetKeyUp(KeyCode.K)) && collision.GetComponent<ItemPickUp>() && collision.gameObject.tag == "Ice")
+        { 
+            iceAmount += 1;                                                    
         }
-        if ((Input.GetKeyUp(KeyCode.K)) && collision.GetComponent<TitaniumPickUp>())
+        else if ((Input.GetKeyUp(KeyCode.K)) && collision.GetComponent<ItemPickUp>() && collision.gameObject.tag == "Titanium")
         {
             titaniumAmount += 1;
         }
