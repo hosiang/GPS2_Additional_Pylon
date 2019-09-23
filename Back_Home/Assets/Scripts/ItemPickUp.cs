@@ -9,6 +9,14 @@ public class ItemPickUp : MonoBehaviour
 
     private bool isPickedUp = false; // to check if it is picked up
 
+    public bool IsPickedUp
+    {
+        get
+        {
+            return isPickedUp;
+        }
+    }
+
     private void Start()
     {
         pickUpText.gameObject.SetActive(false);
@@ -16,39 +24,27 @@ public class ItemPickUp : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Ice")
+        if (other.gameObject.tag == "Player")
         {
             pickUpText.gameObject.SetActive(true);
             isPickedUp = true;
-            if (isPickedUp && Input.GetKeyUp(KeyCode.F))
-            {
-                Destroy(other.gameObject);
-            }
-        }
-
-        if (other.gameObject.tag == "Titanium")
-        {
-            pickUpText.gameObject.SetActive(true);
-            isPickedUp = true;
-            if (isPickedUp && Input.GetKeyUp(KeyCode.F))
-            {
-                Destroy(other.gameObject);
-            }
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.tag == ("Ice"))
+        if (other.gameObject.tag == "Player")
         {
             pickUpText.gameObject.SetActive(false);
             isPickedUp = false;
         }
 
-        if (other.gameObject.tag == "Titanium")
-        {
-            pickUpText.gameObject.SetActive(false);
-            isPickedUp = false;
-        }
     }
+
+    public void SetIsPickedUpToFalse()
+    {
+        pickUpText.gameObject.SetActive(false);
+        isPickedUp = true;
+    }
+
 }

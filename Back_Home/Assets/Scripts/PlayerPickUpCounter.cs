@@ -17,15 +17,30 @@ public class PlayerPickUpCounter : MonoBehaviour
         titaniumCounterText.text = "TITANIUM : " + titaniumAmount.ToString();
     }
 
-    private void OnTriggerEnter(Collider collision)
+    private void OnTriggerStay(Collider collision)
     {
-        if ((Input.GetKeyUp(KeyCode.K)) && collision.GetComponent<ItemPickUp>() && collision.gameObject.tag == "Ice")
-        { 
-            iceAmount += 1;                                                    
-        }
-        else if ((Input.GetKeyUp(KeyCode.K)) && collision.GetComponent<ItemPickUp>() && collision.gameObject.tag == "Titanium")
+
+        if (Input.GetKeyUp(KeyCode.F) && collision.GetComponent<ItemPickUp>().IsPickedUp.Equals(true))
         {
-            titaniumAmount += 1;
+
+            switch (collision.tag)
+            {
+                case "Ice":
+                    collision.GetComponent<ItemPickUp>().SetIsPickedUpToFalse();
+                    collision.gameObject.SetActive(false);
+
+                    iceAmount += 1;
+                    break;
+
+                case "Titanium":
+                    collision.GetComponent<ItemPickUp>().SetIsPickedUpToFalse();
+                    collision.gameObject.SetActive(false);
+
+                    titaniumAmount += 1;
+                    break;
+            }
+
         }
+
     }
 }
