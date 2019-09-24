@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Ice
   - Titanium
+  - Enemy
   layers:
   - Default
   - TransparentFX

@@ -1,13 +1,21 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class HeatSystem : MonoBehaviour {
+
+    private string basicHeatText = "Heat : ";
+    private string basicShipDamagedPartText = "Ship Damaged Parts : ";
+    [SerializeField] private Text shipDamagePartsText;
+    [SerializeField] private Text heatAmountText;
+    [SerializeField] private Text overHeatInformText;
+    [SerializeField] private PlayerPickUpCounter playerPickUpCounter;
 
     [SerializeField] private float heatIncreaseRate; //amount of heat points to increase per time duration
     [SerializeField] private float maxHeatAmount; //max amount of heat ship can handle
 
-    [SerializeField] private float iceAtHand; //amount of ice within player's inventory
+    //[SerializeField] private float iceAtHand; //amount of ice within player's inventory
     [SerializeField] private float iceCooldownRate; //amount of heat to reduce from usage of ice
 
     [SerializeField] private float timerDuration; //max time till heat is reduced
@@ -36,12 +44,36 @@ public class HeatSystem : MonoBehaviour {
     // Start is called before the first frame update
     void Start() {
 
+        int shipDamagePartAmount = 0;
+        for (int j = 0; j < totalShipParts; j++)
+        {
+            if (isShipPartDamaged[j]) shipDamagePartAmount++;
+
+        }
+        shipDamagePartsText.text = basicShipDamagedPartText + shipDamagePartAmount;
+        heatAmountText.text = basicHeatText + heatAmount;
+        overHeatInformText.gameObject.SetActive(false);
+
         renderer = GetComponent<Renderer>();
 
     }
 
     // Update is called once per frame
     void Update() {
+
+        if (Input.GetKeyDown(KeyCode.K) && playerPickUpCounter.IceAmount > 0.0f && heatAmount > 0.0f)
+        {
+            timerCountdown = timerDuration;
+
+            playerPickUpCounter.ReduceIceAmount(1);
+            heatAmount -= 10;
+
+            if(heatAmount < 0.0f) heatAmount = 0.0f;
+
+            heatAmountText.text = basicHeatText + heatAmount;
+
+            overHeatInformText.gameObject.SetActive(false);
+        }
 
         //Debug
         if(renderer.material.color != Color.white && colourIndicatorTimer >= 1) {
@@ -54,9 +86,13 @@ public class HeatSystem : MonoBehaviour {
 
         timerCountdown -= Time.deltaTime;
 
-        if(timerCountdown <= 0f) {
+        if(timerCountdown <= 0f && heatAmount < maxHeatAmount) {
 
             heatAmount += heatIncreaseRate + (heatIncreaseRate * numOfDamagedShipParts());
+
+            if (heatAmount > 100.0f) heatAmount = 100.0f;
+
+            heatAmountText.text = basicHeatText + heatAmount;
 
             timerCountdown = timerDuration;
 
@@ -66,6 +102,9 @@ public class HeatSystem : MonoBehaviour {
         }
 
         if(heatAmount >= maxHeatAmount) {
+
+            overHeatInformText.gameObject.SetActive(true);
+
             Debug.Log("MAX HEAT!!!");
             renderer.material.SetColor("_Color", Color.red);
         }
@@ -90,20 +129,28 @@ public class HeatSystem : MonoBehaviour {
 
     }
 
-    public float getHeatAmount()
+    public float GetHeatAmount()
     {
         return heatAmount;
     }
-    public float getMaxHeatAmount()
+    public float GetMaxHeatAmount()
     {
         return maxHeatAmount;
     }
 
+    public void AddHeatAmount(float heatIncreaseRate)
+    {
+        heatAmount += heatIncreaseRate;
+        heatAmountText.text = basicHeatText + heatAmount;
+    }
 
     void debug() {
 
-        if(Input.GetKeyDown(KeyCode.Q) && iceAtHand > 0) { //Reduce heat by decreasing ice
-            iceAtHand--;
+        if(Input.GetKeyDown(KeyCode.Q) && playerPickUpCounter.Debug_IceAmount > 0) { //Reduce heat by decreasing ice
+            timerCountdown = timerDuration;
+            overHeatInformText.gameObject.SetActive(false);
+
+            playerPickUpCounter.Debug_IceAmount++;
             heatAmount -= heatAmount > 0 ? iceCooldownRate : 0;
             Debug.Log("DEBUG MODE: heat reduced");
             renderer.material.SetColor("_Color", Color.green);
@@ -117,7 +164,7 @@ public class HeatSystem : MonoBehaviour {
         }
 
         if(Input.GetKeyDown(KeyCode.E)) { //Increase ice in inventory
-            iceAtHand++;
+            playerPickUpCounter.Debug_IceAmount++;
             Debug.Log("DEBUG MODE: ice increased");
             renderer.material.SetColor("_Color", Color.cyan);
         }
@@ -130,9 +177,18 @@ public class HeatSystem : MonoBehaviour {
 
         //Damage or fix ship parts
         for (int i = 0; i < totalShipParts; i++) {
-
+            
             if (Input.GetKeyDown((KeyCode)i + (int)KeyCode.Alpha1)) {
                 isShipPartDamaged[i] = !isShipPartDamaged[i];
+
+                int shipDamagePartAmount = 0;
+                for (int j = 0; j < totalShipParts; j++)
+                {
+                    if(isShipPartDamaged[j]) shipDamagePartAmount++;
+                    
+                }
+                shipDamagePartsText.text = basicShipDamagedPartText + shipDamagePartAmount;
+
                 Debug.Log("DEBUG MODE: ship part " + (i+1) + " damaged: " + isShipPartDamaged[i]);
             }
 
