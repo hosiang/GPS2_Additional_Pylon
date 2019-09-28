@@ -39,14 +39,15 @@ public class PlayerControl : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            if (transform.rotation.y > 90)
+            if (transform.rotation.y > -90)
             {
-                transform.rotation = Quaternion.Euler(0, -90, 0);
+                //transform.rotation = Quaternion.Euler(0, -rotateSpeed * Time.deltaTime, 0);
                 //transform.Rotate(Vector3.up * rotateSpeed * Time.deltaTime);
+                transform.Rotate(0, -rotateSpeed * Time.deltaTime, 0);
             }
-            else if (transform.rotation.y < 90)
+            else if (transform.rotation.y < -90)
             {
-                transform.rotation = Quaternion.Euler(0, -90, 0);
+                transform.Rotate(0, rotateSpeed * Time.deltaTime, 0);
             }
             else
             {
@@ -57,11 +58,11 @@ public class PlayerControl : MonoBehaviour
         {
             if (transform.rotation.y > 90)
             {
-                transform.rotation = Quaternion.Euler(0, 90, 0);
+                transform.Rotate(0, -rotateSpeed * Time.deltaTime, 0);
             }
             else if (transform.rotation.y < 90)
             {
-                transform.rotation = Quaternion.Euler(0, 90, 0);
+                transform.Rotate(0, rotateSpeed * Time.deltaTime, 0);
             }
             else
             {
@@ -72,11 +73,11 @@ public class PlayerControl : MonoBehaviour
         {
             if (transform.rotation.y > 180)
             {
-                transform.rotation = Quaternion.Euler(0, -180, 0);
+                transform.Rotate(0, -rotateSpeed * Time.deltaTime, 0);
             }
             else if (transform.rotation.y < 180)
             {
-                transform.rotation = Quaternion.Euler(0, -180, 0);
+                transform.Rotate(0, rotateSpeed * Time.deltaTime, 0);
             }
             else
             {
@@ -87,11 +88,11 @@ public class PlayerControl : MonoBehaviour
         {
             if (transform.rotation.y > 0)
             {
-                transform.rotation = Quaternion.Euler(0, 0, 0);
+                transform.Rotate(0, -rotateSpeed * Time.deltaTime, 0);
             }
             else if (transform.rotation.y < 0)
             {
-                transform.rotation = Quaternion.Euler(0, 0, 0);
+                transform.Rotate(0, rotateSpeed * Time.deltaTime, 0);
             }
             else
             {
