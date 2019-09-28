@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 62709645}
   m_Layer: 0
   m_Name: Ice
-  m_TagString: Untagged
+  m_TagString: Ice
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -409,7 +409,7 @@ GameObject:
   - component: {fileID: 151610070}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -484,7 +484,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2272530dd749bd24e8fffd0e326c3e51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
+  speed: 3
 --- !u!4 &151610068
 Transform:
   m_ObjectHideFlags: 0
@@ -822,7 +822,7 @@ GameObject:
   - component: {fileID: 1331417905}
   m_Layer: 0
   m_Name: TItanium
-  m_TagString: Untagged
+  m_TagString: Titanium
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -895,7 +895,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1331417904}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1af0451d58345e14f869fe20308ba7a2, type: 3}
+  m_Script: {fileID: 11500000, guid: 96afca569dc1e5a438d22b71e27e33ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   pickUpText: {fileID: 1893794000}

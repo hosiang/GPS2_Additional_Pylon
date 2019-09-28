@@ -11,17 +11,23 @@ public class PlayerControl : MonoBehaviour
     private Rigidbody playerRigidbody;
     private Vector3 moveDirection = Vector3.zero;
 
-    [SerializeField] private float heatAmount;
-    [SerializeField] private float maxHeatAmount;
+    [SerializeField] HeatSystem heatSystem;
+
+    [SerializeField] private float heatCollisionEnemyIncreaseRate;
+    [SerializeField] private float heatCollisionThrustRate;
+
+    //[SerializeField] private float heatAmount;
+    //[SerializeField] private float maxHeatAmount;
 
     // Start is called before the first frame update
     void Start()
     {
         playerCollision = GetComponent<BoxCollider>();
         playerRigidbody = GetComponent<Rigidbody>();
-
+        /*
         heatAmount = GetComponent<HeatSystem>().getHeatAmount();
         maxHeatAmount = GetComponent<HeatSystem>().getMaxHeatAmount();
+        */
     }
 
     // Update is called once per frame
@@ -32,7 +38,10 @@ public class PlayerControl : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        heatAmount += 1;
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            heatSystem.AddHeatAmount(heatCollisionEnemyIncreaseRate);
+        }
     }
 
     void Rotation()
@@ -102,10 +111,10 @@ public class PlayerControl : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (heatAmount < maxHeatAmount)
+            if (heatSystem.GetHeatAmount() < heatSystem.GetMaxHeatAmount())
             {
                 playerRigidbody.AddForce(transform.right * thrustPower);
-                heatAmount += 10;
+                heatSystem.AddHeatAmount(heatCollisionThrustRate);
             }
             else
             {

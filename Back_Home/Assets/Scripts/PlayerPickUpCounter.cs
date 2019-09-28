@@ -3,30 +3,86 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+[System.Serializable]
 public class PlayerPickUpCounter : MonoBehaviour
 {
-    [SerializeField] private Text iceCounterText; 
-    [SerializeField] private Text titaniumCounterText; 
+    [SerializeField] private Text iceCounterText;
+    [SerializeField] private Text titaniumCounterText;
 
-    private int iceAmount; // increment of Ice
-    private int titaniumAmount; // increment of titanium
+    [SerializeField] private float iceAmount; // increment of Ice
+    [SerializeField] private float titaniumAmount; // increment of titanium
 
-    private void Update()
+    /// <summary>
+    /// # Important! Don't simply use this function, this only for Debugging!!!
+    /// </summary>
+    public float Debug_IceAmount
+    {
+        get
+        {
+            return iceAmount;
+        }
+        set
+        {
+            iceAmount = value;
+            iceCounterText.text = "ICE : " + iceAmount.ToString();
+        }
+    }
+
+    public float IceAmount
+    {
+        get
+        {
+            return iceAmount;
+        }
+    }
+
+    public float TitaniumAmount
+    {
+        get
+        {
+            return titaniumAmount;
+        }
+    }
+
+    private void Start()
     {
         iceCounterText.text = "ICE : " + iceAmount.ToString();
         titaniumCounterText.text = "TITANIUM : " + titaniumAmount.ToString();
     }
 
-    private void OnTriggerEnter(Collider collision)
+    private void OnTriggerStay(Collider collision)
     {
-        if ((Input.GetKeyUp(KeyCode.K)) && collision.GetComponent<IcePickUp>()) // i couldnt get the counter work properly even 
+
+        if (Input.GetKeyUp(KeyCode.F) && collision.GetComponent<ItemPickUp>().IsPickedUp.Equals(true))
         {
-            iceAmount += 1;                                                     // if i use without input keycode, could work but collide will 
-                                                                                //  automatically increase the counter
+
+            switch (collision.tag)
+            {
+                case "Ice":
+                    collision.GetComponent<ItemPickUp>().SetIsPickedUpToFalse();
+                    collision.gameObject.SetActive(false);
+
+                    iceAmount += 1;
+                    iceCounterText.text = "ICE : " + iceAmount.ToString();
+                    break;
+
+                case "Titanium":
+                    collision.GetComponent<ItemPickUp>().SetIsPickedUpToFalse();
+                    collision.gameObject.SetActive(false);
+
+                    titaniumAmount += 1;
+                    titaniumCounterText.text = "TITANIUM : " + titaniumAmount.ToString();
+                    break;
+            }
+
         }
-        if ((Input.GetKeyUp(KeyCode.K)) && collision.GetComponent<TitaniumPickUp>())
-        {
-            titaniumAmount += 1;
-        }
+
     }
+
+    public void ReduceIceAmount(float iceReduceRate)
+    {
+        iceAmount -= iceReduceRate;
+        iceCounterText.text = "ICE : " + iceAmount.ToString();
+    }
+
 }
