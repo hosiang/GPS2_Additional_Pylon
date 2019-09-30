@@ -9,4 +9,6 @@ public static class Global {
 
     public static string tagPlayer = "Player";
 
+    public enum OresTypes { Iron, Length };
+
 }
