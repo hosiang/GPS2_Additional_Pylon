@@ -134,6 +134,9 @@ GameObject:
   - component: {fileID: 896169944}
   - component: {fileID: 896169940}
   - component: {fileID: 896169939}
+  - component: {fileID: 896169947}
+  - component: {fileID: 896169946}
+  - component: {fileID: 896169945}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -154,9 +157,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   thrustPower: 300
-  rotateSpeed: 5
-  heatAmount: 0
-  maxHeatAmount: 100
+  rotateSpeed: 45
+  nitroConsume: 15
+  nitroSystem: {fileID: 896169946}
+  weightSystem: {fileID: 0}
 --- !u!65 &896169940
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -245,6 +249,52 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &896169945
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 896169938}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b3edeab789fb4348ac41922c1e95d8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxWeight: 100
+  currentWeight: 100
+--- !u!114 &896169946
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 896169938}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfa6f3fbe75229a4f9acdbcfa871a3df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxNitro: 100
+  currentNitro: 100
+  nitroRegenerationRate: 33
+  nitroRefuelRate: 50
+--- !u!114 &896169947
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 896169938}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4f6a51ff94cb2e48b61d1371ffccb93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  currentHealth: 100
+  healthRegenerationRate: 1
+  isDead: 0
 --- !u!1 &1032846655
 GameObject:
   m_ObjectHideFlags: 0
