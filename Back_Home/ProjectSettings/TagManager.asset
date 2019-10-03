@@ -4,9 +4,9 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Ice
-  - Titanium
   - Enemy
+  - Ores
+  - Asteroid
   layers:
   - Default
   - TransparentFX

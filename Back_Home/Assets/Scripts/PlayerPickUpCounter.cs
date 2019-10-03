@@ -52,14 +52,14 @@ public class PlayerPickUpCounter : MonoBehaviour
 
     private void OnTriggerStay(Collider collision)
     {
-
-        if (Input.GetKeyUp(KeyCode.F) && collision.GetComponent<ItemPickUp>().IsPickedUp.Equals(true))
+        // && collision.GetComponent<ItemPickUp>().IsPickedUp.Equals(true)
+        if (Input.GetKeyUp(KeyCode.F))
         {
 
             switch (collision.tag)
             {
                 case "Ice":
-                    collision.GetComponent<ItemPickUp>().SetIsPickedUpToFalse();
+                    //collision.GetComponent<ItemPickUp>().SetIsPickedUpToFalse();
                     collision.gameObject.SetActive(false);
 
                     iceAmount += 1;
@@ -67,7 +67,7 @@ public class PlayerPickUpCounter : MonoBehaviour
                     break;
 
                 case "Titanium":
-                    collision.GetComponent<ItemPickUp>().SetIsPickedUpToFalse();
+                    //collision.GetComponent<ItemPickUp>().SetIsPickedUpToFalse();
                     collision.gameObject.SetActive(false);
 
                     titaniumAmount += 1;
