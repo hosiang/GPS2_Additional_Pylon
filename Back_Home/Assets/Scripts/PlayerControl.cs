@@ -13,6 +13,7 @@ public class PlayerControl : MonoBehaviour
     private Rigidbody playerRigidbody;
     private Vector3 moveDirection = Vector3.zero;
 
+    [SerializeField] HealthSystem healthSystem;
     [SerializeField] NitroSystem nitroSystem;
     [SerializeField] WeightSystem weightSystem;
 
@@ -37,12 +38,14 @@ public class PlayerControl : MonoBehaviour
     {
         Rotation();
         Thrust();
+        WeightToNitroConsume();
     }
 
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
+            healthSystem.TakeDamage(50f);
             //heatSystem.AddHeatAmount(heatCollisionEnemyIncreaseRate);
         }
     }
