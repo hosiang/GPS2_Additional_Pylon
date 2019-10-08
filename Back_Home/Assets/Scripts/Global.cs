@@ -29,6 +29,6 @@ public static class Global {
     public static string controls_Test = "";
 
     //Enums
-    public enum OresTypes { Iron, Length };
+    public enum OresTypes { Iron, no2_Ores, Length };
 
 }
