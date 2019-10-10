@@ -11,6 +11,8 @@ public class PirateAI_Stun : PirateAI_Abstract {
 
     private void Awake() {
 
+
+        inspectCountdown = 0f;
         stunRecoveryCountdown = 0f;
 
         playerPosition = Vector3.zero;
@@ -61,6 +63,12 @@ public class PirateAI_Stun : PirateAI_Abstract {
 
                 break;
 
+            case PirateState.inspect:
+
+                if (MoveToInspect()) { Inspect(); }
+
+                break;
+
         }
 
         StunRecovery();
@@ -73,7 +81,7 @@ public class PirateAI_Stun : PirateAI_Abstract {
 
             Collider[] playerCollideCheck = Physics.OverlapSphere(transform.position, stunRadius, Global.layer_Player);
 
-            //playerCollideCheck[0].gameObject.GetComponent<Player>().stun();
+            //playerCollideCheck[0].gameObject.GetComponent<Player>().stun(); //placeholder
 
             stunRecoveryCountdown = stunRecoveryTime;
 

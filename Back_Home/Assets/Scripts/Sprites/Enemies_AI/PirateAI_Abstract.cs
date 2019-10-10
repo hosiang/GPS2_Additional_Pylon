@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class PirateAI_Abstract : MonoBehaviour {
 
-    protected enum PirateState { patrol, chase, evacuate };
+    protected enum PirateState { patrol, chase, evacuate, inspect };
 
     //protected delegate void BehaviourExecute();
 
@@ -16,6 +16,9 @@ public abstract class PirateAI_Abstract : MonoBehaviour {
     [SerializeField] protected float playerDetectionRadius;
 
     [SerializeField] protected float evacuateDistance;
+    [SerializeField] protected float astroidDistance;
+
+    [SerializeField] protected float inspectDuration;
 
     [SerializeField] protected Vector3 patrolCenter;
 
@@ -27,6 +30,9 @@ public abstract class PirateAI_Abstract : MonoBehaviour {
 
     protected Vector3 playerPosition;
     protected Vector3 moveToPosition;
+    protected Vector3 vibrationPosition;
+
+    protected float inspectCountdown;
 
     protected Vector3 RandomRadiusPosition(Vector3 startPos, float distance = 0f) {
 
@@ -92,6 +98,40 @@ public abstract class PirateAI_Abstract : MonoBehaviour {
         }
 
         pirateRigidbody.position = Vector3.MoveTowards(transform.position, patrolCenter, speed * evacSpeedMultiplier * Time.deltaTime);
+
+    }
+
+    protected bool MoveToInspect() {
+
+        if(Vector3.Distance(transform.position, vibrationPosition) > astroidDistance) {
+
+            pirateRigidbody.position = Vector3.MoveTowards(transform.position, vibrationPosition, speed * Time.deltaTime);
+
+            return false;
+
+        }
+
+        if (inspectCountdown <= 0f) { inspectCountdown = inspectDuration; }
+
+        return true;
+
+    }
+
+    protected void Inspect() {
+
+        inspectCountdown -= Time.deltaTime;
+
+        if(inspectCountdown <= 0f) { currentState = PirateState.patrol; }
+
+    }
+
+    public void VibrationDetected(Vector3 vibrationPosition) {
+
+        this.vibrationPosition = vibrationPosition;
+
+        currentState = PirateState.inspect;
+
+        transform.LookAt(vibrationPosition);
 
     }
 

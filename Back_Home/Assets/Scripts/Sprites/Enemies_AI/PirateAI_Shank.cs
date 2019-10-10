@@ -12,6 +12,7 @@ public class PirateAI_Shank : PirateAI_Abstract {
 
     private void Awake() {
 
+        inspectCountdown = 0f;
         shankRecoveryCountdown = 0f;
 
         playerPosition = Vector3.zero;
@@ -67,6 +68,12 @@ public class PirateAI_Shank : PirateAI_Abstract {
             case PirateState.evacuate:
 
                 Evacuate();
+
+                break;
+
+            case PirateState.inspect:
+
+                if(MoveToInspect()) { Inspect(); }
 
                 break;
 
