@@ -9,6 +9,7 @@ public class MenuSystem : MonoBehaviour
     private bool InGame = false;
     private bool IsPause = true;
 
+    [SerializeField] GameObject panel;
     [SerializeField] GameObject pauseMenu;
 
     // Start is called before the first frame update
@@ -61,12 +62,14 @@ public class MenuSystem : MonoBehaviour
     {
         Time.timeScale = 0f;
         IsPause = true;
+        panel.SetActive(true);
         pauseMenu.SetActive(true);
     }
     public void ResumeGame()
     {
         Time.timeScale = 1f;
         IsPause = false;
+        panel.SetActive(false);
         pauseMenu.SetActive(false);
     }
 
