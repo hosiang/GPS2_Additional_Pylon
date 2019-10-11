@@ -17,6 +17,10 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] NitroSystem nitroSystem;
     [SerializeField] WeightSystem weightSystem;
 
+    private float facingAngle;
+    private float currentFacingAngle;
+    [SerializeField] private JoystickTouchController joystickTouchController;
+
     //[SerializeField] HeatSystem heatSystem;
     //[SerializeField] private float heatAmount;
     //[SerializeField] private float maxHeatAmount;
@@ -52,6 +56,19 @@ public class PlayerControl : MonoBehaviour
 
     void Rotation()
     {
+        if(joystickTouchController.InputDirection != Vector3.zero)
+        {
+            facingAngle = Mathf.Atan2(joystickTouchController.InputDirection.x, joystickTouchController.InputDirection.y) * Mathf.Rad2Deg;
+            if (facingAngle - currentFacingAngle > 180f) facingAngle -= 360f;
+            else if (facingAngle - currentFacingAngle < -180f) facingAngle += 360f;
+
+                currentFacingAngle = Mathf.Lerp(currentFacingAngle, facingAngle, 1f * Time.deltaTime);
+
+            transform.rotation = Quaternion.Euler(0.0f, currentFacingAngle, 0.0f);
+        }
+        
+
+
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             //transform.rotation = Quaternion.Euler(0, -rotateSpeed * Time.deltaTime, 0); // Old one didn't use rotate speed just whole number
@@ -76,7 +93,16 @@ public class PlayerControl : MonoBehaviour
         else if (rotationSetting == 0) { }
     }
 
-    void Thrust()
+    public void Thrusting()
+    {
+        if (nitroSystem.GetNitro() > 0)
+        {
+            playerRigidbody.AddForce(transform.forward * thrustPower);
+            nitroSystem.NitroReduction(nitroConsume);
+        }
+    }
+
+    private void Thrust()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
