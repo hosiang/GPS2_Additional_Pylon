@@ -97,7 +97,8 @@ public class PlayerControl : MonoBehaviour
     {
         if (nitroSystem.GetNitro() > 0)
         {
-            playerRigidbody.AddForce(transform.forward * thrustPower);
+            playerRigidbody.velocity = transform.forward * (thrustPower * Time.deltaTime);
+            //playerRigidbody.AddForce(transform.forward * thrustPower);
             nitroSystem.NitroReduction(nitroConsume);
         }
     }

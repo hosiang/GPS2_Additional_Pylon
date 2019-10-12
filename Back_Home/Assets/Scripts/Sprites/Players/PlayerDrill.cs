@@ -17,6 +17,7 @@ public class PlayerDrill : MonoBehaviour {
 
     //[SerializeField] private GameObject ores;
 
+
     private void OnTriggerEnter(Collider other) {
 
         if (other.gameObject.tag == "Asteroid") {
@@ -48,6 +49,14 @@ public class PlayerDrill : MonoBehaviour {
 
         }
 
+    }
+
+    public void SwitchDrillSpeed(int drillSpeed)
+    {
+        if ((DrillSpeed)drillSpeed > DrillSpeed.fast) drillSpeed = (int)DrillSpeed.fast;
+        if ((DrillSpeed)drillSpeed < DrillSpeed.slow) drillSpeed = (int)DrillSpeed.slow;
+
+        this.drillSpeed = (DrillSpeed)drillSpeed;
     }
 
 }

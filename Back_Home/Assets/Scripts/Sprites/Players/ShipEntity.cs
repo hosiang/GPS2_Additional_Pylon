@@ -22,12 +22,12 @@ public class ShipEntity : MonoBehaviour
     public float WeightAmount { get { return weightAmount; } }
     public float WeightAmountMaximal { get { return weightAmountMaximal; } }
 
-    protected float energyPoint = 0; // nitroPoint?
-    protected float energyPointMaximal = 100;
-    protected float energyDepletePoint = 0;
+    protected float nitroPoint = 0; // nitroPoint?
+    protected float nitroPointMaximal = 100;
+    protected float nitroDepletePoint = 0;
 
-    public float EnergyPoint { get { return energyPoint; } }
-    public float EnergyPointMaximal { get { return energyPointMaximal; } }
+    public float NitroPoint { get { return nitroPoint; } }
+    public float NitroPointMaximal { get { return nitroPointMaximal; } }
 
     private BaseSystem baseSystem;
 
@@ -81,9 +81,17 @@ public class ShipEntity : MonoBehaviour
     public void ReplenishHealthPoint(Object requireObject)
     {
         //if(requireObject.GetType().Name == nameof(BaseSystem))
-        if (requireObject == baseSystem)
+        if (requireObject == baseSystem && healthPoint < healthPointMaximal)
         {
             healthPoint += healthRecoverPoint*Time.deltaTime;
+        }
+    }
+
+    public void ReplenishNitroPoint(Object requireObject)
+    {
+        if (requireObject == baseSystem && nitroPoint < nitroPointMaximal)
+        {
+            nitroPoint = nitroPointMaximal;
         }
     }
 

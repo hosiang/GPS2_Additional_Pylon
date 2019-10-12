@@ -7,33 +7,36 @@ public class BaseSystem : MonoBehaviour
 {
     private float currentShieldRadius = 0.0f;
     private float targetToExtendShieldRadius = 0.0f;
-    [SerializeField] private float startShieldRadius = 10.0f;
-    [SerializeField] private float maximalShieldRadius = 20.0f;
+    [SerializeField] private float startShieldRadius = 6.0f;
+    [SerializeField] private float maximalShieldRadius = 12.0f;
     [SerializeField] private float shieldDeclineRate = 1f;
     public Transform detectShieldOriginTransform;
     [SerializeField] private bool debugMode;
 
+    public float CurrentShieldRadius { get { return currentShieldRadius; } }
+
     private bool isExtendingShield = false;
 
     protected Dictionary<Global.OresTypes, float> storageOresResources = new Dictionary<Global.OresTypes, float>();
+    
+    public ShipEntity shipEntity;
 
+    /*
     public Text IronText;
     public Text IronStorageText;
     public Text no2OreText;
     public Text no2OreStorageText;
     public Text HealthPointText;
-
-    public ShipEntity shipEntity;
-
+    
     public Material materialNormal;
     public Material materialTriger;
-
+    
     public MeshRenderer meshPlayer;
 
     [SerializeField] private Transform shieldVisualize;
     [SerializeField] private Transform originalShieldVisualize;
     [SerializeField] private Transform maximalShieldVisualize;
-
+    */
     private Collider[] shieldCollider;
 
     void Start()
@@ -48,32 +51,32 @@ public class BaseSystem : MonoBehaviour
 
     void Update()
     {
-        TestingTextUIUpdate();
+        //TestingTextUIUpdate();
         ShieldSizeUpdate();
-        TestingShieldVisualise();
+        //TestingShieldVisualise();
 
         shieldCollider = Physics.OverlapSphere(detectShieldOriginTransform.position, currentShieldRadius, LayerMask.GetMask("Player"));
 
         if(shieldCollider.Length > 0)
         {
-            meshPlayer.material = materialTriger;
+            //meshPlayer.material = materialTriger;
 
-            if (shieldCollider[0].GetComponent<ShipEntity>().WeightAmount > 0)
+            if (shieldCollider[0].GetComponentInParent<ShipEntity>().WeightAmount > 0.0f)
             {
-                storageOresResources = shieldCollider[0].GetComponent<ShipEntity>().UnloadResources(this);
+                storageOresResources = shieldCollider[0].GetComponentInParent<ShipEntity>().UnloadResources(this);
             }
-            if (shieldCollider[0].GetComponent<ShipEntity>().HealthPoint < shieldCollider[0].GetComponent<ShipEntity>().HealthPointMaximal)
-            {
-                shieldCollider[0].GetComponent<ShipEntity>().ReplenishHealthPoint(this);
-            }
+
+            shieldCollider[0].GetComponentInParent<ShipEntity>().ReplenishHealthPoint(this);
+            shieldCollider[0].GetComponentInParent<ShipEntity>().ReplenishNitroPoint(this);
+
         }
         else
         {
-            meshPlayer.material = materialNormal;
+            //meshPlayer.material = materialNormal;
         }
         
     }
-
+    /*
     private void TestingTextUIUpdate()
     {
         IronText.text = "Iron : " + shipEntity.GetOresAmount(this)[Global.OresTypes.Iron];
@@ -89,12 +92,12 @@ public class BaseSystem : MonoBehaviour
         originalShieldVisualize.position = new Vector3(startShieldRadius * Mathf.Sin(Time.time * 3.0f), 0.0f, startShieldRadius * Mathf.Cos(Time.time * 3.0f));
         maximalShieldVisualize.position = new Vector3(maximalShieldRadius * Mathf.Sin(Time.time * 3.0f), 0.0f, maximalShieldRadius * Mathf.Cos(Time.time * 3.0f));
     }
-
+    */
     private void ShieldSizeUpdate()
     {
         if ((currentShieldRadius > 0.0f) && !isExtendingShield)
         {
-            currentShieldRadius -= (shieldDeclineRate * 0.1f) * Time.deltaTime;
+            currentShieldRadius -= (shieldDeclineRate * 0.01f) * Time.deltaTime;
             if(currentShieldRadius < 0.0f) { currentShieldRadius = 0.0f; }
             targetToExtendShieldRadius = currentShieldRadius;
         }
@@ -142,7 +145,7 @@ public class BaseSystem : MonoBehaviour
     {
         if (debugMode)
         {
-            Gizmos.color = Color.red;
+            Gizmos.color = Color.green;
             Gizmos.DrawWireSphere(detectShieldOriginTransform.position, currentShieldRadius);
         }
     }
