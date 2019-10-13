@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8579753704229360930}
   m_Layer: 0
-  m_Name: Astroid_02
+  m_Name: Asteroid_02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -31,6 +31,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!64 &7802592029669807618
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6588176642677611148}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 1
+  m_CookingOptions: 14
+  m_Mesh: {fileID: -6352852447319879488, guid: ee9917fbd25e55f49b6fde1fc5738a2d, type: 3}
 --- !u!1001 &3207459162934555434
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -103,6 +117,12 @@ PrefabInstance:
 --- !u!4 &7636305977612998704 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: ee9917fbd25e55f49b6fde1fc5738a2d,
+    type: 3}
+  m_PrefabInstance: {fileID: 3207459162934555434}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6588176642677611148 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8642065588062661030, guid: ee9917fbd25e55f49b6fde1fc5738a2d,
     type: 3}
   m_PrefabInstance: {fileID: 3207459162934555434}
   m_PrefabAsset: {fileID: 0}

@@ -4,18 +4,22 @@ using UnityEngine;
 
 public class PlayerControl : MonoBehaviour
 {
-    [SerializeField] private float thrustPower = 200f;
+    [SerializeField] private float thrustPower = 20f;
     [SerializeField] private float rotateSpeed = 90f;
     [SerializeField] private float nitroConsume = 15f;
 
     private BoxCollider playerCollision;
     private Rigidbody playerRigidbody;
+    private Transform playerTransform;
     private Vector3 moveDirection = Vector3.zero;
+    
 
     [SerializeField] HealthSystem healthSystem;
     [SerializeField] NitroSystem nitroSystem;
     [SerializeField] WeightSystem weightSystem;
 
+    private Vector3 playerOriginVector3 = Vector3.zero;
+    private float rotationSpeed = 100f;
     private float facingAngle;
     private float currentFacingAngle;
     [SerializeField] private JoystickTouchController joystickTouchController;
@@ -31,6 +35,7 @@ public class PlayerControl : MonoBehaviour
     {
         playerCollision = GetComponent<BoxCollider>();
         playerRigidbody = GetComponent<Rigidbody>();
+        playerTransform = GetComponent<Transform>();
 
         //heatAmount = GetComponent<HeatSystem>().getHeatAmount();
         //maxHeatAmount = GetComponent<HeatSystem>().getMaxHeatAmount();
@@ -55,13 +60,29 @@ public class PlayerControl : MonoBehaviour
 
     void Rotation()
     {
-        if(joystickTouchController.InputDirection != Vector3.zero)
+        if (joystickTouchController.InputDirection != Vector3.zero)
         {
+            /*
+            if (playerRigidbody.position.y != 0.0f)
+            {
+                playerOriginVector3.x = playerTransform.position.x;
+                playerOriginVector3.y = Mathf.Lerp(playerTransform.position.y, 0.0f, (0.1f / Mathf.Abs(playerOriginVector3.y - playerTransform.position.y)) * Time.deltaTime);
+                playerOriginVector3.z = playerTransform.position.z;
+
+                playerTransform.position = playerOriginVector3;
+            } 
+            */
+            if (playerRigidbody.angularVelocity != Vector3.zero) // For reset the ship torque when the ship collder with something
+            {
+                currentFacingAngle = transform.rotation.eulerAngles.y; // 
+                playerRigidbody.angularVelocity = Vector3.zero; // Reset the ship torque to all to be zero
+            }
+
             facingAngle = Mathf.Atan2(joystickTouchController.InputDirection.x, joystickTouchController.InputDirection.y) * Mathf.Rad2Deg;
             if (facingAngle - currentFacingAngle > 180f) facingAngle -= 360f;
             else if (facingAngle - currentFacingAngle < -180f) facingAngle += 360f;
 
-            currentFacingAngle = Mathf.Lerp(currentFacingAngle, facingAngle, 1f * Time.deltaTime);
+            currentFacingAngle = Mathf.Lerp(currentFacingAngle, facingAngle, (rotationSpeed / Mathf.Abs(currentFacingAngle - facingAngle) ) * Time.deltaTime);
 
             transform.rotation = Quaternion.Euler(0.0f, currentFacingAngle, 0.0f);
 
@@ -75,12 +96,6 @@ public class PlayerControl : MonoBehaviour
                 playerRigidbody.angularVelocity = new Vector3(playerRigidbody.angularVelocity.x, +(50f * Time.deltaTime), playerRigidbody.angularVelocity.z);
             */
         }
-<<<<<<< HEAD
-
-=======
->>>>>>> 4856912a31a79b7a62dea34b1feda24bcd8622cf
-
-
 
         // Old keyboard control
         if (Input.GetKeyDown(KeyCode.LeftArrow))

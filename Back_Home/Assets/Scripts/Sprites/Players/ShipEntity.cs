@@ -83,7 +83,7 @@ public class ShipEntity : MonoBehaviour
         //if(requireObject.GetType().Name == nameof(BaseSystem))
         if (requireObject == baseSystem && healthPoint < healthPointMaximal)
         {
-            healthPoint += healthRecoverPoint*Time.deltaTime;
+            healthPoint += healthRecoverPoint * Time.deltaTime;
         }
     }
 

@@ -8,91 +8,133 @@ public class BaseSystem : MonoBehaviour
     private float currentShieldRadius = 0.0f;
     private float targetToExtendShieldRadius = 0.0f;
     [SerializeField] private float startShieldRadius = 6.0f;
+    private float minimalShieldRadius = 4.5f;
     [SerializeField] private float maximalShieldRadius = 12.0f;
     [SerializeField] private float shieldDeclineRate = 1f;
-    public Transform detectShieldOriginTransform;
+    private float shieldSizeCovertValue = 1.5f;
+    private Transform detectShieldOriginTransform;
+    private bool isExtendingShield = false;
+    private LayerMask layerMask_player;
+
     [SerializeField] private bool debugMode;
 
     public float CurrentShieldRadius { get { return currentShieldRadius; } }
 
-    private bool isExtendingShield = false;
+    public bool IsExtendingShield { get { return isExtendingShield; } }
 
     protected Dictionary<Global.OresTypes, float> storageOresResources = new Dictionary<Global.OresTypes, float>();
-    
-    public ShipEntity shipEntity;
 
-    /*
-    public Text IronText;
-    public Text IronStorageText;
-    public Text no2OreText;
-    public Text no2OreStorageText;
-    public Text HealthPointText;
-    
-    public Material materialNormal;
-    public Material materialTriger;
-    
-    public MeshRenderer meshPlayer;
+    #region !! Border Lines Marker Rotation !!
+    [Header("Border Lines Marker")]
+    [SerializeField] private int borderLinesAmount = 20;
+    [SerializeField] private GameObject borderLine;
+    private List<GameObject> borderLines_GameObject = new List<GameObject>();
+    private List<Transform> borderLines_Transform = new List<Transform>();
+    private List<SpriteRenderer> borderLines_SpriteRenderer = new List<SpriteRenderer>();
+    [SerializeField] private Color colorNotShield;
+    private Color borderLineOriginalColor;
+    readonly string name_borderLinesContainner = "BorderLinesContainner";
+    private GameObject borderLinesContainner;
 
-    [SerializeField] private Transform shieldVisualize;
-    [SerializeField] private Transform originalShieldVisualize;
-    [SerializeField] private Transform maximalShieldVisualize;
-    */
-    private Collider[] shieldCollider;
+    private float eachAngle = 0.0f;
+    private Vector3 eachBorderLinesPosition = Vector3.zero;
+    private Quaternion eachBorderLinesRotation = Quaternion.identity;
+    private float slowDownBorderLinesRotationSpeed = 5f;
+    #endregion
+
+    private Collider[] playerCollider;
+
+    private void Awake()
+    {
+        borderLinesContainner = new GameObject(name_borderLinesContainner); // Create the border line containner
+        borderLineOriginalColor = borderLine.GetComponentInChildren<SpriteRenderer>().color;
+
+        for (int i = 0; i < borderLinesAmount; i++) // Create the border line
+        {
+            borderLines_GameObject.Add(Instantiate<GameObject>(borderLine));
+            borderLines_GameObject[i].name = borderLine.name + i;
+            borderLines_SpriteRenderer.Add(borderLines_GameObject[i].GetComponentInChildren<SpriteRenderer>());
+            borderLines_Transform.Add(borderLines_GameObject[i].GetComponent<Transform>());
+            borderLines_Transform[i].SetParent(borderLinesContainner.transform);
+            
+        }
+
+        detectShieldOriginTransform = this.GetComponent<Transform>();
+
+        for (int i = 0; i < (int)Global.OresTypes.Length; i++) // Initialise the ores types resourses
+        {
+            storageOresResources.Add((Global.OresTypes)i, 0.0f);
+        }
+    }
 
     void Start()
     {
-        for(int i =0; i < (int)Global.OresTypes.Length; i++)
-        {
-            storageOresResources.Add((Global.OresTypes)i, 0.0f); // Initialise the ores types resourses
-        }
+        layerMask_player = LayerMask.GetMask("Player");
+
+        eachAngle = (2f * Mathf.PI) / borderLinesAmount; // For count the each border lines's angle
 
         currentShieldRadius = startShieldRadius;
     }
 
     void Update()
     {
-        //TestingTextUIUpdate();
+        
+
         ShieldSizeUpdate();
-        //TestingShieldVisualise();
+        BorderLinesMarkerRotating();
 
-        shieldCollider = Physics.OverlapSphere(detectShieldOriginTransform.position, currentShieldRadius, LayerMask.GetMask("Player"));
+        playerCollider = Physics.OverlapSphere(detectShieldOriginTransform.position, ((currentShieldRadius + minimalShieldRadius) * shieldSizeCovertValue), layerMask_player);
 
-        if(shieldCollider.Length > 0)
+        if(playerCollider.Length > 0)
         {
-            //meshPlayer.material = materialTriger;
 
-            if (shieldCollider[0].GetComponentInParent<ShipEntity>().WeightAmount > 0.0f)
+            if (playerCollider[0].GetComponentInParent<ShipEntity>().WeightAmount > 0.0f)
             {
-                storageOresResources = shieldCollider[0].GetComponentInParent<ShipEntity>().UnloadResources(this);
-            }
+                storageOresResources = playerCollider[0].GetComponentInParent<ShipEntity>().UnloadResources(this);
 
-            shieldCollider[0].GetComponentInParent<ShipEntity>().ReplenishHealthPoint(this);
-            shieldCollider[0].GetComponentInParent<ShipEntity>().ReplenishNitroPoint(this);
+                Debug.Log("Iron = " + storageOresResources[Global.OresTypes.Iron]);
+                Debug.Log("No2_Ores = " + storageOresResources[Global.OresTypes.no2_Ores]);
+            }
+            if (currentShieldRadius > 0.0f)
+            {
+                playerCollider[0].GetComponentInParent<ShipEntity>().ReplenishHealthPoint(this);
+                playerCollider[0].GetComponentInParent<ShipEntity>().ReplenishNitroPoint(this);
+            }
 
         }
         else
         {
-            //meshPlayer.material = materialNormal;
+            // Set something here
         }
         
     }
-    /*
-    private void TestingTextUIUpdate()
+
+    private void BorderLinesMarkerRotating()
     {
-        IronText.text = "Iron : " + shipEntity.GetOresAmount(this)[Global.OresTypes.Iron];
-        IronStorageText.text = "Iron Storage : " + storageOresResources[Global.OresTypes.Iron];
-        no2OreText.text = "Ore 2 : " + shipEntity.GetOresAmount(this)[Global.OresTypes.no2_Ores];
-        no2OreStorageText.text = "Ore 2 Storage : " + storageOresResources[Global.OresTypes.no2_Ores];
-        HealthPointText.text = "Health Point : " + (int)shipEntity.HealthPoint;
+        for (int i = 0; i < borderLinesAmount; i++)
+        {
+            eachBorderLinesPosition.x = ((currentShieldRadius + minimalShieldRadius) * shieldSizeCovertValue) * Mathf.Sin((Time.time / slowDownBorderLinesRotationSpeed) + (eachAngle * i));
+            eachBorderLinesPosition.y = 0.0f; //borderLines_Transform[i].position.y;
+            eachBorderLinesPosition.z = ((currentShieldRadius + minimalShieldRadius) * shieldSizeCovertValue) * Mathf.Cos((Time.time / slowDownBorderLinesRotationSpeed) + (eachAngle * i));
+
+            eachBorderLinesRotation.SetLookRotation(borderLines_Transform[i].position - transform.position);
+            eachBorderLinesRotation *= Quaternion.Euler(0.0f, 90.0f, 0.0f);
+
+            borderLines_Transform[i].SetPositionAndRotation(eachBorderLinesPosition, eachBorderLinesRotation);
+
+            if(currentShieldRadius <= 0.0f)
+            {
+                borderLines_SpriteRenderer[i].color = colorNotShield;
+            }
+            else if(currentShieldRadius > 0.0f && borderLines_SpriteRenderer[i].color != borderLineOriginalColor)
+            {
+                borderLines_SpriteRenderer[i].color = borderLineOriginalColor;
+            }
+
+            //Debug.Log("Sin : " + Mathf.Rad2Deg * 180 + ", Cos : " + Mathf.Rad2Deg * 180);
+        }
     }
 
-    private void TestingShieldVisualise()
-    {
-        shieldVisualize.position = new Vector3(currentShieldRadius * Mathf.Sin(Time.time * 3.0f), 0.0f, currentShieldRadius * Mathf.Cos(Time.time * 3.0f));
-        originalShieldVisualize.position = new Vector3(startShieldRadius * Mathf.Sin(Time.time * 3.0f), 0.0f, startShieldRadius * Mathf.Cos(Time.time * 3.0f));
-        maximalShieldVisualize.position = new Vector3(maximalShieldRadius * Mathf.Sin(Time.time * 3.0f), 0.0f, maximalShieldRadius * Mathf.Cos(Time.time * 3.0f));
-    }
-    */
     private void ShieldSizeUpdate()
     {
         if ((currentShieldRadius > 0.0f) && !isExtendingShield)
@@ -105,7 +147,7 @@ public class BaseSystem : MonoBehaviour
 
     public void RepairTheShield()
     {
-        if (shieldCollider.Length > 0)
+        if (playerCollider.Length > 0)
         {
             if((storageOresResources[Global.OresTypes.no2_Ores] >= 100.0f) && (targetToExtendShieldRadius < (maximalShieldRadius - 5.0f)))
             {
@@ -148,6 +190,19 @@ public class BaseSystem : MonoBehaviour
             Gizmos.color = Color.green;
             Gizmos.DrawWireSphere(detectShieldOriginTransform.position, currentShieldRadius);
         }
+    }
+
+    private void OnDestroy()
+    {
+        foreach (var tempBorderLines_Transform in borderLines_Transform) // Create the border line
+        {
+            Destroy(tempBorderLines_Transform);
+        }
+        foreach (var tempBorderLines_GameObject in borderLines_GameObject) // Create the border line
+        {
+            Destroy(tempBorderLines_GameObject);
+        }
+        Destroy(borderLinesContainner); // Delete the border line containner
     }
 
 }

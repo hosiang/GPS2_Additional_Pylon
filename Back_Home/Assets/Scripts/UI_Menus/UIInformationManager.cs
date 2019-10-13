@@ -62,7 +62,9 @@ public class UIInformationManager : MonoBehaviour
 
         timerText.text = timeValueRawNumber.ToString() + ":" + ((timeValueRadixPoint < 10) ? ("0" + timeValueRadixPoint.ToString()) : timeValueRadixPoint.ToString());
 
-        distanceBetweenShipAndBase = baseTransform.position.magnitude - shipTransform.position.magnitude;
+        distanceBetweenShipAndBase = baseTransform.position.magnitude - shipTransform.position.magnitude; // Count the distance between base and ship
+        distanceBetweenShipAndBase = (int)(distanceBetweenShipAndBase * 100f); // Getting radix point first step (3.200f * 100)
+        distanceBetweenShipAndBase = distanceBetweenShipAndBase / 100f; // Getting radix point last step
 
         distanceBetweenShipAndBaseText.text = text_DistanceBetweenShipAndBase + Mathf.Abs(distanceBetweenShipAndBase) + "m";
 

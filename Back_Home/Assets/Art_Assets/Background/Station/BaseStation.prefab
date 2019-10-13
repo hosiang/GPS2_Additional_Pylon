@@ -47,9 +47,38 @@ MonoBehaviour:
   startShieldRadius: 6
   maximalShieldRadius: 12
   shieldDeclineRate: 1
-  detectShieldOriginTransform: {fileID: 2977071249775592767}
   debugMode: 0
-  shipEntity: {fileID: 0}
+  borderLinesAmount: 20
+  borderLine: {fileID: 5436356065730152089, guid: 3a0152dd981076249a8c53b8314aaef2,
+    type: 3}
+  colorNotShield: {r: 1, g: 0.45644036, b: 0.3160377, a: 1}
+--- !u!65 &546071340
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8227311647536146546}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 11.89, y: 6.13, z: 6}
+  m_Center: {x: 0, y: -1.66, z: 0.1}
+--- !u!136 &546071341
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8227311647536146546}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 0
+  m_Radius: 3.02
+  m_Height: 14.17
+  m_Direction: 0
+  m_Center: {x: 0, y: -1.71, z: 0}
 --- !u!64 &854538679
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -59,7 +88,7 @@ MeshCollider:
   m_GameObject: {fileID: 8227311647536146546}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Convex: 0
   m_CookingOptions: 14
