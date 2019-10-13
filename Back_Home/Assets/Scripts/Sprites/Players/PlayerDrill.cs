@@ -6,6 +6,8 @@ public class PlayerDrill : MonoBehaviour {
 
     private enum DrillSpeed { slow, fast };
 
+    [SerializeField] CapsuleCollider capsuleCollider;
+
     [SerializeField] private float damage;
     [SerializeField] private float vibrationFrequency;
 
@@ -16,7 +18,6 @@ public class PlayerDrill : MonoBehaviour {
     //private bool isDestroyed = false;
 
     //[SerializeField] private GameObject ores;
-
 
     private void OnTriggerEnter(Collider other) {
 
