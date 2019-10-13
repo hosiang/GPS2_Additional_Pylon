@@ -17,7 +17,6 @@ public class PlayerDrill : MonoBehaviour {
 
     //[SerializeField] private GameObject ores;
 
-
     private void OnTriggerEnter(Collider other) {
 
         if (other.gameObject.tag == "Asteroid") {
