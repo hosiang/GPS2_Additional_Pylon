@@ -614,7 +614,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2272530dd749bd24e8fffd0e326c3e51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 3
 --- !u!4 &151610068
 Transform:
   m_ObjectHideFlags: 0
@@ -974,7 +973,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dff2885cb3e61b84183cd5ef9e40d796, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ores: {fileID: 6085088416295462277, guid: cea170f9d8a701648bfb0950d14df1c6, type: 3}
+  damage: 0
+  vibrationFrequency: 0
+  fastSpeedMultiplier: 0
+  drillSpeed: 0
 --- !u!1 &956151255
 GameObject:
   m_ObjectHideFlags: 0
@@ -1699,6 +1701,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: RandomAsteroidGenerator
       objectReference: {fileID: 0}
+    - target: {fileID: 2834825093468453742, guid: d530fb14b412fd14ab2c428e015a0d09,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2834825093468453740, guid: d530fb14b412fd14ab2c428e015a0d09,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1753,6 +1760,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2834825093468453743, guid: d530fb14b412fd14ab2c428e015a0d09,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d530fb14b412fd14ab2c428e015a0d09, type: 3}
@@ -1825,8 +1837,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3719470283037808574, guid: 3920870b5850c5347b6909bde94ddecc,
         type: 3}
+      propertyPath: enemyType.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3719470283037808574, guid: 3920870b5850c5347b6909bde94ddecc,
+        type: 3}
       propertyPath: enemyStart
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3719470283037808574, guid: 3920870b5850c5347b6909bde94ddecc,
+        type: 3}
+      propertyPath: enemyType.Array.data[1]
+      value: 
+      objectReference: {fileID: 260203220285189930, guid: 050ce42c94c3605409ceda60d31157d2,
+        type: 3}
+    - target: {fileID: 3719470283037808574, guid: 3920870b5850c5347b6909bde94ddecc,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3920870b5850c5347b6909bde94ddecc, type: 3}

@@ -4,17 +4,22 @@ using UnityEngine;
 
 public class RandomEnemySpawn : MonoBehaviour
 {
-    [SerializeField] private float enemyStart;
-    [SerializeField] private float enemyGenerateRate;
     [SerializeField] GameObject[] enemyType;
+    private int maxEnemies = 10; // depend on the level set, can set to how many enemies to be spawned
+    private int enemyCounter = 0; // to check the maximum enemies?
     private int timeGenerate = 1;
     private int xPos;
     private int yPos;
     private int zPos;
 
-    private void Start()
+    private void Update()
     {
-        InvokeRepeating("RandomEnemyGenerator", enemyStart, enemyGenerateRate);
+        if (enemyCounter < maxEnemies)
+        {
+            RandomEnemyGenerator();
+            enemyCounter++;
+        }
+        
     }
 
     private void RandomEnemyGenerator()
