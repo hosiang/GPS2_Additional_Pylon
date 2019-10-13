@@ -7,7 +7,6 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] private float thrustPower = 200f;
     [SerializeField] private float rotateSpeed = 90f;
     [SerializeField] private float nitroConsume = 15f;
-    private int rotationSetting = 0;
 
     private BoxCollider playerCollision;
     private Rigidbody playerRigidbody;
@@ -66,31 +65,21 @@ public class PlayerControl : MonoBehaviour
 
             transform.rotation = Quaternion.Euler(0.0f, currentFacingAngle, 0.0f);
         }
-        
 
 
+
+        // Old keyboard control
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             //transform.rotation = Quaternion.Euler(0, -rotateSpeed * Time.deltaTime, 0); // Old one didn't use rotate speed just whole number
             //transform.Rotate(Vector3.up * rotateSpeed * Time.deltaTime);
             //transform.Rotate(0, -rotateSpeed * Time.deltaTime, 0);
-            rotationSetting = 1;
+            transform.Rotate(0, -rotateSpeed, 0);
         }
         else if (Input.GetKeyDown(KeyCode.RightArrow))
         {
-            rotationSetting = 2;
-        }
-        else rotationSetting = 0;
-
-        if (rotationSetting == 1)
-        {
-            transform.Rotate(0, -rotateSpeed, 0);
-        }
-        else if (rotationSetting == 2)
-        {
             transform.Rotate(0, rotateSpeed, 0);
         }
-        else if (rotationSetting == 0) { }
     }
 
     public void Thrusting()
@@ -144,7 +133,7 @@ public class PlayerControl : MonoBehaviour
             nitroConsume = 21f;
         }
     }
-    // Thrust power style for Weight–Thrust system
+    // Increase thrust power style for Weight–Thrust system
     //void WeightToThrustPower()
     //{
     //    if (weightSystem.GetWeight() <= 0)

@@ -6,8 +6,6 @@ public class PlayerDrill : MonoBehaviour {
 
     private enum DrillSpeed { slow, fast };
 
-    [SerializeField] CapsuleCollider capsuleCollider;
-
     [SerializeField] private float damage;
     [SerializeField] private float vibrationFrequency;
 
