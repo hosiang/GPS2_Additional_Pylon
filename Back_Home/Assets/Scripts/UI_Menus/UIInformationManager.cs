@@ -27,6 +27,8 @@ public class UIInformationManager : MonoBehaviour
     private int timeValueRawNumber;
     private int timeValueRadixPoint;
 
+    public Transform basePointerTransform;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -63,5 +65,11 @@ public class UIInformationManager : MonoBehaviour
         distanceBetweenShipAndBase = baseTransform.position.magnitude - shipTransform.position.magnitude;
 
         distanceBetweenShipAndBaseText.text = text_DistanceBetweenShipAndBase + Mathf.Abs(distanceBetweenShipAndBase) + "m";
+
+        Vector3 shipAndBaseNormalized = (shipTransform.position - baseTransform.position).normalized;
+
+        basePointerTransform.LookAt(baseTransform.position);
+
+        basePointerTransform.position = shipTransform.position - (shipAndBaseNormalized * 1.5f);
     }
 }

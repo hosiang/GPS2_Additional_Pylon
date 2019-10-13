@@ -62,11 +62,21 @@ public class PlayerControl : MonoBehaviour
             if (facingAngle - currentFacingAngle > 180f) facingAngle -= 360f;
             else if (facingAngle - currentFacingAngle < -180f) facingAngle += 360f;
 
-                currentFacingAngle = Mathf.Lerp(currentFacingAngle, facingAngle, 1f * Time.deltaTime);
+            currentFacingAngle = Mathf.Lerp(currentFacingAngle, facingAngle, 1f * Time.deltaTime);
 
             transform.rotation = Quaternion.Euler(0.0f, currentFacingAngle, 0.0f);
+
+            /* other method, but have some probelm
+            if (facingAngle - playerRigidbody.rotation.eulerAngles.y > 180f) facingAngle -= 360f;
+            else if (facingAngle - playerRigidbody.rotation.eulerAngles.y < -180f) facingAngle += 360f;
+
+            if (facingAngle < playerRigidbody.rotation.eulerAngles.y)
+                playerRigidbody.angularVelocity = new Vector3(playerRigidbody.angularVelocity.x, -(50f * Time.deltaTime), playerRigidbody.angularVelocity.z);
+            else if (facingAngle > playerRigidbody.rotation.eulerAngles.y)
+                playerRigidbody.angularVelocity = new Vector3(playerRigidbody.angularVelocity.x, +(50f * Time.deltaTime), playerRigidbody.angularVelocity.z);
+            */
         }
-        
+
 
 
         if (Input.GetKeyDown(KeyCode.LeftArrow))
@@ -97,7 +107,7 @@ public class PlayerControl : MonoBehaviour
     {
         if (nitroSystem.GetNitro() > 0)
         {
-            playerRigidbody.velocity = transform.forward * (thrustPower * Time.deltaTime);
+            playerRigidbody.velocity += transform.forward * (thrustPower * Time.deltaTime);
             //playerRigidbody.AddForce(transform.forward * thrustPower);
             nitroSystem.NitroReduction(nitroConsume);
         }
