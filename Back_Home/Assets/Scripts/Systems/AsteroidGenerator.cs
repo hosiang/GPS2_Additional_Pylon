@@ -8,6 +8,7 @@ using UnityEngine;
     [SerializeField] public int amount;
 }
 
+
 public class AsteroidGenerator : MonoBehaviour
 {
     [SerializeField] private List<Asteroids> asteroids = new List<Asteroids>();
@@ -40,6 +41,7 @@ public class AsteroidGenerator : MonoBehaviour
             asteroidBigTransforms[i].SetParent(asteroidBigContainner.transform);
         }
 
+        #region !! dont delete !!
         /*
         for (int i = 0; i < asteroids[1].amount; i++)
         {
@@ -48,6 +50,7 @@ public class AsteroidGenerator : MonoBehaviour
             asteroidSmallTransforms[i].SetParent(asteroidSmallContainner.transform);
         }
         */
+        #endregion
 
         Vector3 tempRandomPosition = new Vector3();
         float angle = 0.0f;
@@ -57,26 +60,27 @@ public class AsteroidGenerator : MonoBehaviour
             angle = Random.Range(0, Mathf.PI * 2);
             if(i <= (int)(asteroidBigTransforms.Count / 6) * 1)
             {
-                tempRandomPosition.x = Mathf.Cos(angle) * Global.EasyZoneValue;
+                tempRandomPosition.x = Mathf.Cos(angle) * Global.zoneValues[(int)Global.ZoneLevels.EasyZone];
                 tempRandomPosition.y = 0.0f;
-                tempRandomPosition.z = Random.Range(Mathf.Sin(angle) * Global.ShieldZoneValue, Mathf.Sin(angle) * Global.EasyZoneValue);
+                tempRandomPosition.z = Random.Range(Mathf.Sin(angle) * Global.zoneValues[(int)Global.ZoneLevels.ShieldZone], Mathf.Sin(angle) * Global.zoneValues[(int)Global.ZoneLevels.EasyZone]);
             }
             else if(i <= (int)(asteroidBigTransforms.Count / 6) * 3)
             {
-                tempRandomPosition.x = Mathf.Cos(angle) * Global.MediumZoneValue;
+                tempRandomPosition.x = Mathf.Cos(angle) * Global.zoneValues[(int)Global.ZoneLevels.MediumZone];
                 tempRandomPosition.y = 0.0f;
-                tempRandomPosition.z = Random.Range(Mathf.Sin(angle) * Global.EasyZoneValue, Mathf.Sin(angle) * Global.MediumZoneValue);
+                tempRandomPosition.z = Random.Range(Mathf.Sin(angle) * Global.zoneValues[(int)Global.ZoneLevels.EasyZone], Mathf.Sin(angle) * Global.zoneValues[(int)Global.ZoneLevels.MediumZone]);
             }
             else if (i <= (int)(asteroidBigTransforms.Count / 6) * 6)
             {
-                tempRandomPosition.x = Mathf.Cos(angle) * Global.HardZoneValue;
+                tempRandomPosition.x = Mathf.Cos(angle) * Global.zoneValues[(int)Global.ZoneLevels.HardZone];
                 tempRandomPosition.y = 0.0f;
-                tempRandomPosition.z = Random.Range(Mathf.Sin(angle) * Global.MediumZoneValue, Mathf.Sin(angle) * Global.HardZoneValue);
+                tempRandomPosition.z = Random.Range(Mathf.Sin(angle) * Global.zoneValues[(int)Global.ZoneLevels.MediumZone], Mathf.Sin(angle) * Global.zoneValues[(int)Global.ZoneLevels.HardZone]);
             }
             
             asteroidBigTransforms[i].position = tempRandomPosition;
         }
 
+        #region !! dont delete !!
         /*
         for (int i = 0; i < asteroidSmallTransforms.Count; i++)
         {
@@ -104,6 +108,7 @@ public class AsteroidGenerator : MonoBehaviour
             asteroidSmallTransforms[i].position = tempRandomPosition;
         }
         */
+        #endregion
     }
 
     // Update is called once per frame

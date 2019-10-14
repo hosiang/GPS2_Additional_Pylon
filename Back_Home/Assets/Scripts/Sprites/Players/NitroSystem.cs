@@ -23,6 +23,7 @@ public class NitroSystem : MonoBehaviour
     // Enter Base increase the regeneration rate
     private void OnCollisionEnter(Collision collision)
     {
+        /*
         if (collision.gameObject.CompareTag("Base"))
         {
             if (currentNitro < maxNitro)
@@ -34,6 +35,7 @@ public class NitroSystem : MonoBehaviour
                 currentNitro = maxNitro;
             }
         }
+        */
     }
 
     void NitroRegeneration()

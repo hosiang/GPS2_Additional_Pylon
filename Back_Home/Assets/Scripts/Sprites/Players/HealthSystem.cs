@@ -23,6 +23,7 @@ public class HealthSystem : MonoBehaviour
     // Enter the Base to regenerate
     private void OnCollisionEnter(Collision collision)
     {
+        /*
         if (collision.gameObject.CompareTag("Base")) // Check name of Base tag
         {
             if (currentHealth < maxHealth)
@@ -34,6 +35,7 @@ public class HealthSystem : MonoBehaviour
                 currentHealth = maxHealth;
             }
         }
+        */
     }
 
     void HealthChecker()

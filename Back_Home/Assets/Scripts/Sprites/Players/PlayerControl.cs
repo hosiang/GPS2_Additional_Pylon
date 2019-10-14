@@ -24,6 +24,8 @@ public class PlayerControl : MonoBehaviour
     private float currentFacingAngle;
     [SerializeField] private JoystickTouchController joystickTouchController;
 
+    private Vector3 basePosition = Vector3.zero;
+
     //[SerializeField] HeatSystem heatSystem;
     //[SerializeField] private float heatAmount;
     //[SerializeField] private float maxHeatAmount;
@@ -37,6 +39,8 @@ public class PlayerControl : MonoBehaviour
         playerRigidbody = GetComponent<Rigidbody>();
         playerTransform = GetComponent<Transform>();
 
+        basePosition = FindObjectOfType<BaseSystem>().transform.position;
+
         //heatAmount = GetComponent<HeatSystem>().getHeatAmount();
         //maxHeatAmount = GetComponent<HeatSystem>().getMaxHeatAmount();
     }
@@ -47,6 +51,9 @@ public class PlayerControl : MonoBehaviour
         Rotation();
         Thrust();
         WeightToNitroConsume();
+
+        CircularEdgeWallEffect();
+
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -55,6 +62,15 @@ public class PlayerControl : MonoBehaviour
         {
             healthSystem.TakeDamage(50f);
             //heatSystem.AddHeatAmount(heatCollisionEnemyIncreaseRate);
+        }
+    }
+
+    private void CircularEdgeWallEffect()
+    {
+        if( Vector3.Distance(basePosition, transform.position) > Global.zoneValues[(int)Global.ZoneLevels.HardZone])
+        {
+            playerRigidbody.velocity = Vector3.zero;
+            transform.position = transform.position.normalized * Global.zoneValues[(int)Global.ZoneLevels.HardZone];
         }
     }
 

@@ -28,12 +28,11 @@ public static class Global {
     //Controls
     public static string controls_Test = "";
 
-    public static readonly float ShieldZoneValue = 20.0f;
-    public static readonly float EasyZoneValue = 40;
-    public static readonly float MediumZoneValue = 80;
-    public static readonly float HardZoneValue = 120;
-
     //Enums
     public enum OresTypes { Iron, no2_Ores, Length };
+    public enum ZoneLevels { ShieldZone, EasyZone, MediumZone, HardZone };
+
+    //List or Array
+    public static readonly float[] zoneValues = { 10.0f, 20.0f, 40.0f, 60.0f };
 
 }
