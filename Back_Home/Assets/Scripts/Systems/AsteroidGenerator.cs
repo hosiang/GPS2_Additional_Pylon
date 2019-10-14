@@ -53,12 +53,15 @@ public class AsteroidGenerator : MonoBehaviour
     void Start()
     {
         Debug.Log(Random.insideUnitCircle);
+
+        float angle = Random.Range(0, Mathf.PI * 2);
         /*
         float angle = Random.Range(0, Mathf.PI * 2);
         //float angle = i * Mathf.PI * 2f / 20;
         Vector3 newPos = new Vector3(Mathf.Cos(angle) * maxR, 0, Random.Range(Mathf.Sin(angle) * minR, Mathf.Sin(angle) * maxR));
         GameObject go = Instantiate(asteroid, newPos, Quaternion.identity);
         */
+        /*
         for (int i = 0; i < asteroidBigTransforms.Count; i++)
         {
             asteroidBigTransforms[i].position = Random.insideUnitCircle * Random.Range(shieldZoneValue, easyZoneValue);
@@ -67,6 +70,7 @@ public class AsteroidGenerator : MonoBehaviour
         {
             asteroidSmallTransforms[i].position = Random.insideUnitCircle * Random.Range(easyZoneValue, mediumZoneValue);
         }
+        */
     }
 
     // Update is called once per frame
