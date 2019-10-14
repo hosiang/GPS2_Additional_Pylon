@@ -23,52 +23,85 @@ public class AsteroidGenerator : MonoBehaviour
     private List<Transform> asteroidBigTransforms = new List<Transform>();
     private List<Transform> asteroidSmallTransforms = new List<Transform>();
 
-    readonly float shieldZoneValue = 10;
-    readonly float easyZoneValue = 20;
-    readonly float mediumZoneValue = 40;
-    readonly float hardZoneValue = 60;
-
-    private BaseSystem baseSystem;
-
     private void Awake()
     {
         asteroidBigContainner = new GameObject(name_AsteroidBigContainner);
         asteroidSmallContainner = new GameObject(name_AsteroidSmallContainner);
-
-        baseSystem = FindObjectOfType<BaseSystem>();
-        for (int i = 0; i < asteroids[0].amount; i++)
-        {
-            asteroidBigGameObjects.Add(Instantiate<GameObject>(asteroids[0].asteroidGameObject));
-            asteroidBigTransforms.Add(asteroidBigGameObjects[i].GetComponent<Transform>());
-            asteroidBigTransforms[i].SetParent(asteroidBigContainner.transform);
-        }
-        for (int i = 0; i < asteroids[1].amount; i++)
-        {
-            asteroidSmallGameObjects.Add(Instantiate<GameObject>(asteroids[1].asteroidGameObject));
-            asteroidSmallTransforms.Add(asteroidSmallGameObjects[i].GetComponent<Transform>());
-            asteroidSmallTransforms[i].SetParent(asteroidSmallContainner.transform);
-        }
     }
 
     void Start()
     {
         Debug.Log(Random.insideUnitCircle);
 
-        float angle = Random.Range(0, Mathf.PI * 2);
-        /*
-        float angle = Random.Range(0, Mathf.PI * 2);
-        //float angle = i * Mathf.PI * 2f / 20;
-        Vector3 newPos = new Vector3(Mathf.Cos(angle) * maxR, 0, Random.Range(Mathf.Sin(angle) * minR, Mathf.Sin(angle) * maxR));
-        GameObject go = Instantiate(asteroid, newPos, Quaternion.identity);
-        */
-        /*
-        for (int i = 0; i < asteroidBigTransforms.Count; i++)
+        for (int i = 0; i < asteroids[0].amount; i++)
         {
-            asteroidBigTransforms[i].position = Random.insideUnitCircle * Random.Range(shieldZoneValue, easyZoneValue);
+            asteroidBigGameObjects.Add(Instantiate<GameObject>(asteroids[0].asteroidGameObject));
+            asteroidBigTransforms.Add(asteroidBigGameObjects[i].GetComponent<Transform>());
+            asteroidBigTransforms[i].SetParent(asteroidBigContainner.transform);
         }
+
+        /*
+        for (int i = 0; i < asteroids[1].amount; i++)
+        {
+            asteroidSmallGameObjects.Add(Instantiate<GameObject>(asteroids[1].asteroidGameObject));
+            asteroidSmallTransforms.Add(asteroidSmallGameObjects[i].GetComponent<Transform>());
+            asteroidSmallTransforms[i].SetParent(asteroidSmallContainner.transform);
+        }
+        */
+
+        Vector3 tempRandomPosition = new Vector3();
+        float angle = 0.0f;
+
+        for (int i = 0; i <asteroidBigTransforms.Count; i++)
+        {
+            angle = Random.Range(0, Mathf.PI * 2);
+            if(i <= (int)(asteroidBigTransforms.Count / 6) * 1)
+            {
+                tempRandomPosition.x = Mathf.Cos(angle) * Global.EasyZoneValue;
+                tempRandomPosition.y = 0.0f;
+                tempRandomPosition.z = Random.Range(Mathf.Sin(angle) * Global.ShieldZoneValue, Mathf.Sin(angle) * Global.EasyZoneValue);
+            }
+            else if(i <= (int)(asteroidBigTransforms.Count / 6) * 3)
+            {
+                tempRandomPosition.x = Mathf.Cos(angle) * Global.MediumZoneValue;
+                tempRandomPosition.y = 0.0f;
+                tempRandomPosition.z = Random.Range(Mathf.Sin(angle) * Global.EasyZoneValue, Mathf.Sin(angle) * Global.MediumZoneValue);
+            }
+            else if (i <= (int)(asteroidBigTransforms.Count / 6) * 6)
+            {
+                tempRandomPosition.x = Mathf.Cos(angle) * Global.HardZoneValue;
+                tempRandomPosition.y = 0.0f;
+                tempRandomPosition.z = Random.Range(Mathf.Sin(angle) * Global.MediumZoneValue, Mathf.Sin(angle) * Global.HardZoneValue);
+            }
+            
+            asteroidBigTransforms[i].position = tempRandomPosition;
+        }
+
+        /*
         for (int i = 0; i < asteroidSmallTransforms.Count; i++)
         {
-            asteroidSmallTransforms[i].position = Random.insideUnitCircle * Random.Range(easyZoneValue, mediumZoneValue);
+            angle = Random.Range(0, Mathf.PI * 2);
+
+            if (i <= (int)(asteroidBigTransforms.Count / 6) * 1)
+            {
+                tempRandomPosition.x = Mathf.Cos(angle) * Global.EasyZoneValue;
+                tempRandomPosition.y = 0.0f;
+                tempRandomPosition.z = Random.Range(Mathf.Sin(angle) * Global.ShieldZoneValue, Mathf.Sin(angle) * Global.EasyZoneValue);
+            }
+            else if (i <= (int)(asteroidBigTransforms.Count / 6) * 3)
+            {
+                tempRandomPosition.x = Mathf.Cos(angle) * Global.MediumZoneValue;
+                tempRandomPosition.y = 0.0f;
+                tempRandomPosition.z = Random.Range(Mathf.Sin(angle) * Global.EasyZoneValue, Mathf.Sin(angle) * Global.MediumZoneValue);
+            }
+            else if (i <= (int)(asteroidBigTransforms.Count / 6) * 6)
+            {
+                tempRandomPosition.x = Mathf.Cos(angle) * Global.HardZoneValue;
+                tempRandomPosition.y = 0.0f;
+                tempRandomPosition.z = Random.Range(Mathf.Sin(angle) * Global.MediumZoneValue, Mathf.Sin(angle) * Global.HardZoneValue);
+            }
+
+            asteroidSmallTransforms[i].position = tempRandomPosition;
         }
         */
     }
