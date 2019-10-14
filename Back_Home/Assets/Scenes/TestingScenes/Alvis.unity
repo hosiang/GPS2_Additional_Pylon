@@ -1238,6 +1238,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1 &1191595891 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2834825093468453742, guid: d530fb14b412fd14ab2c428e015a0d09,
+    type: 3}
+  m_PrefabInstance: {fileID: 2834825093080223770}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1191595892
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1191595891}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be24efb99b8e8404e8a6d2c3fa5c99b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  asteroid: {fileID: 260203220285189930, guid: 050ce42c94c3605409ceda60d31157d2, type: 3}
 --- !u!1 &1411716837
 GameObject:
   m_ObjectHideFlags: 0
@@ -1765,7 +1784,7 @@ PrefabInstance:
     - target: {fileID: 2834825093468453743, guid: d530fb14b412fd14ab2c428e015a0d09,
         type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d530fb14b412fd14ab2c428e015a0d09, type: 3}
