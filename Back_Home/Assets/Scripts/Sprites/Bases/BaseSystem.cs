@@ -18,6 +18,8 @@ public class BaseSystem : MonoBehaviour
 
     [SerializeField] private bool debugMode;
 
+    public float BeginShieldRadius { get { return startShieldRadius; } }
+
     public float CurrentShieldRadius { get { return currentShieldRadius; } }
 
     public bool IsExtendingShield { get { return isExtendingShield; } }
@@ -43,6 +45,8 @@ public class BaseSystem : MonoBehaviour
     #endregion
 
     private Collider[] playerCollider;
+
+    public bool IsPlayerInBase { get{ return playerCollider.Length > 0; } }
 
     private void Awake()
     {
@@ -84,7 +88,7 @@ public class BaseSystem : MonoBehaviour
         BorderLinesMarkerRotating();
 
         playerCollider = Physics.OverlapSphere(detectShieldOriginTransform.position, ((currentShieldRadius + minimalShieldRadius) * shieldSizeCovertValue), layerMask_player);
-
+        
         if(playerCollider.Length > 0)
         {
 
@@ -188,7 +192,7 @@ public class BaseSystem : MonoBehaviour
         if (debugMode)
         {
             Gizmos.color = Color.green;
-            Gizmos.DrawWireSphere(detectShieldOriginTransform.position, currentShieldRadius);
+            Gizmos.DrawWireSphere(detectShieldOriginTransform.position, ((currentShieldRadius + minimalShieldRadius) * shieldSizeCovertValue));
         }
     }
 

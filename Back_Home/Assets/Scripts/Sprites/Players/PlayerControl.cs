@@ -162,6 +162,7 @@ public class PlayerControl : MonoBehaviour
             nitroConsume = 21f;
         }
     }
+
     // Increase thrust power style for Weight–Thrust system
     //void WeightToThrustPower()
     //{

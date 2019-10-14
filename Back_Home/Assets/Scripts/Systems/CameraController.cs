@@ -7,6 +7,7 @@ public class CameraController : MonoBehaviour
     //private Camera cameraMain;
     private Transform cameraTransform;
     [SerializeField] private Transform playerTransform;
+    //private Rigidbody2D playerRigidbody2D;
 
     private Vector3 cameraOffset = Vector3.zero;
     private float distanceY = 0.0f;
@@ -19,6 +20,7 @@ public class CameraController : MonoBehaviour
     void Start()
     {
         cameraTransform = GetComponent<Transform>();
+        //playerRigidbody2D = GetComponent<Rigidbody2D>();
         cameraOffset.y = cameraTransform.position.y;
         distanceY = cameraOffset.y - playerTransform.position.y;
     }
@@ -31,7 +33,7 @@ public class CameraController : MonoBehaviour
             targetPosition = playerTransform.position + cameraOffset;
             targetPosition.y -= playerTransform.position.y;
 
-            cameraTransform.position = Vector3.Lerp(cameraTransform.position, targetPosition, cameraFollowingSpeed * Time.deltaTime);
+            cameraTransform.position = Vector3.Lerp(cameraTransform.position, targetPosition, (cameraFollowingSpeed * Mathf.Abs(cameraTransform.position.magnitude - targetPosition.magnitude)) * Time.deltaTime);
         }
 
     }
