@@ -5,9 +5,8 @@ using UnityEngine;
 public class Asteroid : MonoBehaviour
 {
     private float[] AstroidOreProvide = { 3, 5, 4 };
-    private enum AstroidType { small, big, special };
-
-    [SerializeField] private AstroidType astroidType;
+    
+    [SerializeField] private Global.AstroidType astroidType;
 
     [SerializeField] private GameObject ore;
 
@@ -15,7 +14,7 @@ public class Asteroid : MonoBehaviour
     [SerializeField] private float oreScatterRaius;
     [SerializeField] private float vibrationDissipateRate;
 
-    [SerializeField] private PirateAI_Shank parasiteToSpawn;
+    //[SerializeField] private PirateAI_Shank parasiteToSpawn;
 
     private float vibrationDistance;
     private float vibrationFrequency;
@@ -29,11 +28,11 @@ public class Asteroid : MonoBehaviour
         switch (astroidType)
         {
 
-            case AstroidType.small:
+            case Global.AstroidType.small:
                 //transform.localScale = Vector3(); //placeholder
                 break;
 
-            case AstroidType.big:
+            case Global.AstroidType.big:
                 //transform.localScale = Vector3(); //placeholder
                 break;
 
@@ -62,14 +61,14 @@ public class Asteroid : MonoBehaviour
     {
         switch (astroidType)
         {
-            case AstroidType.small:
-                FindObjectOfType<ShipEntity>().GainOresFromAsteroid(this, Global.OresTypes.Iron, AstroidOreProvide[(int)AstroidType.small]);
+            case Global.AstroidType.small:
+                FindObjectOfType<ShipEntity>().GainOresFromAsteroid(this, Global.OresTypes.Iron, AstroidOreProvide[(int)Global.AstroidType.small]);
                 break;
-            case AstroidType.big:
-                FindObjectOfType<ShipEntity>().GainOresFromAsteroid(this, Global.OresTypes.Iron, AstroidOreProvide[(int)AstroidType.big]);
+            case Global.AstroidType.big:
+                FindObjectOfType<ShipEntity>().GainOresFromAsteroid(this, Global.OresTypes.Iron, AstroidOreProvide[(int)Global.AstroidType.big]);
                 break;
-            case AstroidType.special:
-                FindObjectOfType<ShipEntity>().GainOresFromAsteroid(this, Global.OresTypes.no2_Ores, AstroidOreProvide[(int)AstroidType.special]);
+            case Global.AstroidType.special:
+                FindObjectOfType<ShipEntity>().GainOresFromAsteroid(this, Global.OresTypes.no2_Ores, AstroidOreProvide[(int)Global.AstroidType.special]);
                 break;
         }
 
@@ -158,7 +157,7 @@ public class Asteroid : MonoBehaviour
             for (int i = 0; i < enemyCollideCheck.Length; ++i)
             {
 
-                enemyCollideCheck[i].GetComponent<PirateAI_Abstract>().VibrationDetected(transform.position);
+                enemyCollideCheck[i].GetComponentInParent<PirateAI_Abstract>().VibrationDetected(transform.position);
 
             }
 
@@ -175,6 +174,11 @@ public class Asteroid : MonoBehaviour
             health -= damage;
         }
 
+    }
+
+    public Global.AstroidType GetAstroidType()
+    {
+        return astroidType;
     }
 
 }

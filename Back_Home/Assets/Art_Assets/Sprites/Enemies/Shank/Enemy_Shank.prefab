@@ -14409,7 +14409,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 84
   m_CollisionDetection: 0
 --- !u!114 &7720261105972269045
 MonoBehaviour:
@@ -14423,18 +14423,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62e764eb2fbc4424bb68ffeee98c4bdc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0
-  evacSpeedMultiplier: 0
-  chaseSpeedMultiplier: 0
-  patrolRadius: 0
-  playerDetectionRadius: 0
-  evacuateDistance: 0
-  astroidDistance: 0
-  inspectDuration: 0
+  speed: 7
+  evacSpeedMultiplier: 2
+  chaseSpeedMultiplier: 1.5
+  patrolRadius: 15
+  playerDetectionRadius: 3
+  evacuateDistance: 5
+  astroidDistance: 5
+  inspectDuration: 3
   patrolCenter: {x: 0, y: 0, z: 0}
-  shankForce: 0
-  shankDistance: 0
-  shankRecoveryTime: 0
+  shankForce: 200
+  shankDistance: 5
+  shankRecoveryTime: 1
 --- !u!1001 &4272056927861596039
 PrefabInstance:
   m_ObjectHideFlags: 0

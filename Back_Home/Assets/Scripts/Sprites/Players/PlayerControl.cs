@@ -233,16 +233,20 @@ public class PlayerControl : MonoBehaviour
 
         if (drillCollide.Length > 0)
         {
-            onDrilling = true;
-
-            playerRigidbody.angularVelocity = Vector3.zero;
-            playerRigidbody.velocity = Vector3.zero;
-            playerTransform.position = playerTransform.position;
-
             for (int i = 0; i < drillCollide.Length; ++i)
             {
-                drillCollide[i].gameObject.GetComponentInParent<Asteroid>().Drill(drillSpeed == DrillSpeed.fast ? damage * drillFastSpeedMultiplier : damage,
-                                                                         drillSpeed == DrillSpeed.fast ? vibrationFrequency * drillFastSpeedMultiplier : vibrationFrequency);
+                if (!(drillCollide[i].gameObject.GetComponentInParent<Asteroid>().GetAstroidType() == Global.AstroidType.big && drillSpeed == DrillSpeed.slow))
+                {
+                    onDrilling = true;
+
+                    playerRigidbody.angularVelocity = Vector3.zero;
+                    playerRigidbody.velocity = Vector3.zero;
+                    playerTransform.position = playerTransform.position;
+
+            
+                    drillCollide[i].gameObject.GetComponentInParent<Asteroid>().Drill(drillSpeed == DrillSpeed.fast ? damage * drillFastSpeedMultiplier : damage,
+                                                                             drillSpeed == DrillSpeed.fast ? vibrationFrequency * drillFastSpeedMultiplier : vibrationFrequency);
+                }
 
             }
 

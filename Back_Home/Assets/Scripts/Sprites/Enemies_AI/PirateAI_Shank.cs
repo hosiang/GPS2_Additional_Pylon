@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PirateAI_Shank : PirateAI_Abstract {
+public class PirateAI_Shank : PirateAI_Abstract
+{
 
     [SerializeField] private float shankForce;
     [SerializeField] private float shankDistance;
@@ -10,7 +11,8 @@ public class PirateAI_Shank : PirateAI_Abstract {
 
     private float shankRecoveryCountdown;
 
-    private void Awake() {
+    private void Awake()
+    {
 
         inspectCountdown = 0f;
         shankRecoveryCountdown = 0f;
@@ -22,7 +24,8 @@ public class PirateAI_Shank : PirateAI_Abstract {
     }
 
     // Start is called before the first frame update
-    void Start() {
+    void Start()
+    {
 
         currentState = PirateState.patrol;
 
@@ -33,9 +36,11 @@ public class PirateAI_Shank : PirateAI_Abstract {
     }
 
     // Update is called once per frame
-    void Update() {
+    void Update()
+    {
 
-        switch (currentState) {
+        switch (currentState)
+        {
 
             case PirateState.patrol:
 
@@ -46,7 +51,8 @@ public class PirateAI_Shank : PirateAI_Abstract {
 
             case PirateState.chase:
 
-                if (shankRecoveryCountdown <= 0) {
+                if (shankRecoveryCountdown <= 0)
+                {
 
                     DetectPlayer();
                     ChasePlayer();
@@ -57,7 +63,8 @@ public class PirateAI_Shank : PirateAI_Abstract {
                     else if (playerDistance <= shankDistance) { AttackPlayer(); }
 
                 }
-                else {
+                else
+                {
 
                     ShankRecovery();
 
@@ -73,7 +80,11 @@ public class PirateAI_Shank : PirateAI_Abstract {
 
             case PirateState.inspect:
 
-                if(MoveToInspect()) { Inspect(); }
+                if (MoveToInspect())
+                {
+                    Inspect();
+                    DetectPlayer();
+                }
 
                 break;
 
@@ -81,9 +92,11 @@ public class PirateAI_Shank : PirateAI_Abstract {
 
     }
 
-    private void OnCollisionEnter(Collision collision) {
+    private void OnCollisionEnter(Collision collision)
+    {
 
-        if (collision.collider.CompareTag(Global.tag_Player)) {
+        if (collision.collider.CompareTag(Global.tag_Player))
+        {
 
             //collision.collider.GetComponent<Player>().reduceOre(amount); //placeholder
             //collision.collider.GetComponent<Player>().reduceHealth(amount); //placeholder
@@ -94,7 +107,8 @@ public class PirateAI_Shank : PirateAI_Abstract {
 
     }
 
-    private void OnCollisionExit(Collision collision) {
+    private void OnCollisionExit(Collision collision)
+    {
 
         pirateRigidbody.velocity = Vector3.zero;
         pirateRigidbody.angularVelocity = Vector3.zero;
@@ -103,7 +117,8 @@ public class PirateAI_Shank : PirateAI_Abstract {
 
     }
 
-    public override void AttackPlayer() {
+    public override void AttackPlayer()
+    {
 
         pirateRigidbody.AddForce((playerPosition - transform.position) * shankForce);
 
@@ -111,11 +126,13 @@ public class PirateAI_Shank : PirateAI_Abstract {
 
     }
 
-    private void ShankRecovery() {
+    private void ShankRecovery()
+    {
 
         shankRecoveryCountdown -= Time.deltaTime;
 
-        if (shankRecoveryCountdown <= 0.1 * shankRecoveryTime) {
+        if (shankRecoveryCountdown <= 0.1 * shankRecoveryTime)
+        {
 
             pirateRigidbody.velocity = Vector3.zero;
             pirateRigidbody.angularVelocity = Vector3.zero;

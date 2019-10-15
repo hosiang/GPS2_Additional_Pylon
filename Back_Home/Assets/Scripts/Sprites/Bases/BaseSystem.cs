@@ -113,6 +113,11 @@ public class BaseSystem : MonoBehaviour
         
     }
 
+    public float GetBaseStorageOres(Global.OresTypes oresTypes)
+    {
+        return storageOresResources[oresTypes];
+    }
+
     private void BorderLinesMarkerRotating()
     {
         for (int i = 0; i < borderLinesAmount; i++)

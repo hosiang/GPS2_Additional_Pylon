@@ -48,7 +48,7 @@ public class HealthSystem : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
-        Debug.Log($"<color=red>Player took {damage}</color>");
+        //Debug.Log($"<color=red>Player took {damage}</color>");
 
         currentHealth -= damage;
     }

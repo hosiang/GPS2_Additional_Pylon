@@ -31,6 +31,7 @@ public static class Global {
     public static string controls_Test = "";
 
     //Enums
+    public enum AstroidType { small, big, special };
     public enum OresTypes { Iron, no2_Ores, Length };
     public enum ZoneLevels { ShieldZone, EasyZone, MediumZone, HardZone };
 

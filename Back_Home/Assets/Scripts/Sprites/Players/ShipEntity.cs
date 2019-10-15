@@ -119,4 +119,8 @@ public class ShipEntity : MonoBehaviour
         weightAmount = (oresAmount[Global.OresTypes.Iron] * 1) + (oresAmount[Global.OresTypes.no2_Ores] * 2);
     }
 
+    public float GetShipOresAmount(Global.OresTypes oresTypes)
+    {
+        return oresAmount[oresTypes];
+    }
 }
