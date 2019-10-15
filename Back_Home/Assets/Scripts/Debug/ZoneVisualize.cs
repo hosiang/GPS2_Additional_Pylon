@@ -30,12 +30,12 @@ public class ZoneVisualize : MonoBehaviour
     private Quaternion eachBorderLinesRotation = Quaternion.identity;
     private float slowDownBorderLinesRotationSpeed = 5f;
 
-    private Transform shipTransform;
+    private Transform baseTransform;
 
     // Start is called before the first frame update
     void Start()
     {
-        shipTransform = FindObjectOfType<ShipEntity>().transform;
+        baseTransform = FindObjectOfType<BaseSystem>().transform;
 
         for (int i = 0; i < name_ZoneContainners.Count; i++)
         {
@@ -78,7 +78,7 @@ public class ZoneVisualize : MonoBehaviour
                 eachBorderLinesPosition.y = 0.0f; //borderLines_Transform[i].position.y;
                 eachBorderLinesPosition.z = Global.zoneValues[i + 1] * Mathf.Cos((Time.time / slowDownBorderLinesRotationSpeed) + (eachAngles[i] * j));
 
-                eachBorderLinesRotation.SetLookRotation(zoneBorderLinesDetails[i].borderLines_Transform[j].position - shipTransform.position);
+                eachBorderLinesRotation.SetLookRotation(zoneBorderLinesDetails[i].borderLines_Transform[j].position - baseTransform.position);
                 eachBorderLinesRotation *= Quaternion.Euler(0.0f, 90.0f, 0.0f);
 
                 zoneBorderLinesDetails[i].borderLines_Transform[j].SetPositionAndRotation(eachBorderLinesPosition, eachBorderLinesRotation);

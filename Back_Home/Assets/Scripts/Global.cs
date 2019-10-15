@@ -21,6 +21,8 @@ public static class Global {
 
     //Layers
     public static int layer_Player = 1 << LayerMask.NameToLayer("Player");
+    public static int layer_Astroid = 1 << LayerMask.NameToLayer("Asteroid");
+    public static int layer_Enemy = 1 << LayerMask.NameToLayer("Enemy");
 
     //Tags
     public static string tag_Player = "Player";

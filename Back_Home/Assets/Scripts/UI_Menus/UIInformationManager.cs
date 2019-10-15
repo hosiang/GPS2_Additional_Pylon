@@ -15,6 +15,7 @@ public class UIInformationManager : MonoBehaviour
 
     private float distanceBetweenShipAndBase = 0.0f;
 
+    private NitroSystem nitroSystem;
     private ShipEntity shipEntity;
     private BaseSystem baseSystem;
 
@@ -32,7 +33,9 @@ public class UIInformationManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if(!(shipEntity = FindObjectOfType<ShipEntity>()))
+        nitroSystem = FindObjectOfType<NitroSystem>();
+
+        if (!(shipEntity = FindObjectOfType<ShipEntity>()))
             Debug.Log(this.GetType().Name + " have not found " + typeof(ShipEntity));
 
         if (!(baseSystem = FindObjectOfType<BaseSystem>()))
@@ -52,7 +55,7 @@ public class UIInformationManager : MonoBehaviour
     void Update()
     {
         healthPointSlider.value = shipEntity.HealthPoint;
-        nitroPointSlider.value = shipEntity.NitroPoint;
+        nitroPointSlider.value = nitroSystem.GetNitro();
 
         //rawNumber = (int)baseSystem.CurrentShieldRadius;
         //radixPoint = (int)((baseSystem.CurrentShieldRadius - (int)baseSystem.CurrentShieldRadius) * 100);

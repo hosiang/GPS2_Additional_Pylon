@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 423064313}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.17, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3156877941114343623}
@@ -87,7 +87,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_BoundingSphereOverride: {x: -0.033203125, y: 0, z: 16, w: 12}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -178,7 +178,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 3.3915353e+38, z: 6.84e-43, w: 1.6129432e+38}
+  m_BoundingSphereOverride: {x: 2.69e-43, y: 0, z: 1.57e-43, w: 0.03125}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -297,6 +297,8 @@ Transform:
   - {fileID: 1415455525}
   - {fileID: 540991934}
   - {fileID: 423064314}
+  - {fileID: 5354784451090378843}
+  - {fileID: 3849383927870369367}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -328,9 +330,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e84939423188cd64caca7200c15859f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthPoint: 30
+  healthPoint: 100
   healthRecoverPoint: 3
-  weightAmount: 5
+  weightAmount: 0
 --- !u!114 &1755108443
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -392,6 +394,13 @@ MonoBehaviour:
   thrustPower: 10
   rotateSpeed: 90
   nitroConsume: 15
+  drillSpeed: 0
+  drillStart: {fileID: 5354784451090378843}
+  drillEnd: {fileID: 3849383927870369367}
+  drillRadius: 0.1
+  damage: 4
+  vibrationFrequency: 10
+  drillFastSpeedMultiplier: 2
   healthSystem: {fileID: 1755108445}
   nitroSystem: {fileID: 1755108444}
   weightSystem: {fileID: 1755108443}
@@ -405,11 +414,41 @@ CapsuleCollider:
   m_GameObject: {fileID: 1055530992759721315}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   m_Radius: 0.49040443
   m_Height: 1.3378721
   m_Direction: 2
   m_Center: {x: 0, y: -0.06, z: 0.91}
+--- !u!1 &1736434520931369591
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3849383927870369367}
+  m_Layer: 8
+  m_Name: Drill End
+  m_TagString: Untagged
+  m_Icon: {fileID: 4422084297763085224, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3849383927870369367
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1736434520931369591}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.17, z: 1.4}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3156877941114343623}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6204107388099171769
 GameObject:
   m_ObjectHideFlags: 0
@@ -502,3 +541,33 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: -3613724358419971262, guid: f99531381c8c8e6448e5c25a701e7e80, type: 3}
+--- !u!1 &8341910522274937843
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5354784451090378843}
+  m_Layer: 8
+  m_Name: Drill Start
+  m_TagString: Untagged
+  m_Icon: {fileID: 4422084297763085224, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5354784451090378843
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8341910522274937843}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.17, z: 0.65}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3156877941114343623}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

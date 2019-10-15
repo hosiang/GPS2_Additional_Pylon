@@ -10,6 +10,7 @@ public class CustomButton : Selectable
     
     [SerializeField] private UnityEvent onClick;
     [SerializeField] private UnityEvent onPressing;
+    [SerializeField] private UnityEvent onRelease;
 
     private bool buttonOnPressing = false;
     public bool ButtonOnPressing { get{ return buttonOnPressing; } }
@@ -35,6 +36,7 @@ public class CustomButton : Selectable
     public override void OnPointerUp(PointerEventData eventData)
     {
         buttonOnPressing = false;
+        onRelease.Invoke();
 
         base.OnPointerUp(eventData);
     }
@@ -42,6 +44,7 @@ public class CustomButton : Selectable
     public override void OnPointerExit(PointerEventData eventData)
     {
         buttonOnPressing = false;
+        onRelease.Invoke();
 
         base.OnPointerExit(eventData);
     }

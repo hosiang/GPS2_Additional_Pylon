@@ -42,7 +42,7 @@ public class NitroSystem : MonoBehaviour
     {
         if (currentNitro < maxNitro)
         {
-            currentNitro += nitroRegenerationRate;
+            currentNitro += nitroRegenerationRate * Time.deltaTime;
         }
         else if (currentNitro > maxNitro)
         {
@@ -56,6 +56,6 @@ public class NitroSystem : MonoBehaviour
     }
     public void NitroReduction(float reduceValue)
     {
-        currentNitro -= reduceValue;
+        currentNitro -= reduceValue * Time.deltaTime;
     }
 }

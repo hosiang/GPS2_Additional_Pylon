@@ -32,8 +32,6 @@ public class AsteroidGenerator : MonoBehaviour
 
     void Start()
     {
-        Debug.Log(Random.insideUnitCircle);
-
         for (int i = 0; i < asteroids[0].amount; i++)
         {
             asteroidBigGameObjects.Add(Instantiate<GameObject>(asteroids[0].asteroidGameObject));

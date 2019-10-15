@@ -21,7 +21,7 @@ public class PlayerDrill : MonoBehaviour {
 
         if (other.gameObject.tag == "Asteroid") {
 
-            other.gameObject.GetComponent<Astroid>().Drill(drillSpeed == DrillSpeed.fast ? damage * fastSpeedMultiplier : damage,
+            other.gameObject.GetComponent<Asteroid>().Drill(drillSpeed == DrillSpeed.fast ? damage * fastSpeedMultiplier : damage,
                                                            drillSpeed == DrillSpeed.fast ? vibrationFrequency * fastSpeedMultiplier : vibrationFrequency);
 
             /*

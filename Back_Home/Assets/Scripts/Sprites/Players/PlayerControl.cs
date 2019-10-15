@@ -12,11 +12,27 @@ public class PlayerControl : MonoBehaviour
     private Rigidbody playerRigidbody;
     private Transform playerTransform;
     private Vector3 moveDirection = Vector3.zero;
-    
+
+    //Drill
+    private enum DrillSpeed { slow, fast };
+
+    [SerializeField] private DrillSpeed drillSpeed;
+
+    [SerializeField] private Transform drillStart;
+    [SerializeField] private Transform drillEnd;
+    [SerializeField] private float drillRadius;
+    private bool onDrilling = false;
+    private Collider[] drillCollide;
+
+    [SerializeField] private float damage;
+    [SerializeField] private float vibrationFrequency;
+    [SerializeField] private float drillFastSpeedMultiplier;
 
     [SerializeField] HealthSystem healthSystem;
     [SerializeField] NitroSystem nitroSystem;
     [SerializeField] WeightSystem weightSystem;
+
+    [SerializeField] UnityEngine.UI.Toggle slowDrillToggle;
 
     private Vector3 playerOriginVector3 = Vector3.zero;
     private float rotationSpeed = 100f;
@@ -41,6 +57,8 @@ public class PlayerControl : MonoBehaviour
 
         basePosition = FindObjectOfType<BaseSystem>().transform.position;
 
+        slowDrillToggle.isOn = (drillSpeed == DrillSpeed.slow) ? true : false;
+
         //heatAmount = GetComponent<HeatSystem>().getHeatAmount();
         //maxHeatAmount = GetComponent<HeatSystem>().getMaxHeatAmount();
     }
@@ -48,9 +66,12 @@ public class PlayerControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Rotation();
-        Thrust();
-        WeightToNitroConsume();
+        if (!onDrilling)
+        {
+            Rotation();
+            Thrust();
+            WeightToNitroConsume();
+        }
 
         CircularEdgeWallEffect();
 
@@ -199,4 +220,51 @@ public class PlayerControl : MonoBehaviour
     //        thrustPower = 110f;
     //    }
     //}
+
+    public void SwitchDrillSpeed(int whichDrillSpeed)
+    {
+        drillSpeed = (DrillSpeed)whichDrillSpeed;
+    }
+
+    public void DrillCollideDetect()
+    {
+
+        drillCollide = Physics.OverlapCapsule(drillStart.position, drillEnd.position, drillRadius, Global.layer_Astroid);
+
+        if (drillCollide.Length > 0)
+        {
+            onDrilling = true;
+
+            playerRigidbody.angularVelocity = Vector3.zero;
+            playerRigidbody.velocity = Vector3.zero;
+            playerTransform.position = playerTransform.position;
+
+            for (int i = 0; i < drillCollide.Length; ++i)
+            {
+                drillCollide[i].gameObject.GetComponentInParent<Asteroid>().Drill(drillSpeed == DrillSpeed.fast ? damage * drillFastSpeedMultiplier : damage,
+                                                                         drillSpeed == DrillSpeed.fast ? vibrationFrequency * drillFastSpeedMultiplier : vibrationFrequency);
+
+            }
+
+        }
+        else
+        {
+            onDrilling = false;
+        }
+
+    }
+
+    public void StopDrilling()
+    {
+        onDrilling = false;
+        /*
+        if (drillCollide.Length > 0)
+        {
+            for (int i = 0; i < drillCollide.Length; ++i)
+            {
+                drillCollide[i].gameObject.GetComponent<Material>().color = Color.white;
+            }
+        }
+        */
+    }
 }

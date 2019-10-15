@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2653968007600160261}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Thuster fire
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 4488237680896175235}
   - component: {fileID: 4454927543497671347}
   - component: {fileID: 3528194228525059809}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Side Thruster 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4810,7 +4810,7 @@ GameObject:
   - component: {fileID: 1892405809144479709}
   - component: {fileID: 6977436741814617177}
   - component: {fileID: 204746651380095187}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Side Thruster 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9562,7 +9562,7 @@ GameObject:
   - component: {fileID: 6771137915148432095}
   - component: {fileID: 5041866579746874570}
   - component: {fileID: 4547878228952345196}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Main Thruster Fire
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14372,9 +14372,9 @@ GameObject:
   - component: {fileID: 6251992149948484399}
   - component: {fileID: -7689259420217756152}
   - component: {fileID: 7720261105972269045}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Enemy_Shank
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -14446,6 +14446,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: 3D_Model
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: a36f6c04576db4d4fb57f47713ebaa8d,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: a36f6c04576db4d4fb57f47713ebaa8d,
         type: 3}

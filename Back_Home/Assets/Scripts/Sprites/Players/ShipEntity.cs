@@ -47,30 +47,28 @@ public class ShipEntity : MonoBehaviour
         }
 
         // !!! For Testing
-        oresAmount[Global.OresTypes.Iron] = 100.0f;
-        oresAmount[Global.OresTypes.no2_Ores] = 300.0f;
+        //oresAmount[Global.OresTypes.Iron] = 100.0f;
+        //oresAmount[Global.OresTypes.no2_Ores] = 300.0f;
     }
 
     void Update()
     {
-
+        Debug.Log("No 1 ore : " + oresAmount[Global.OresTypes.Iron] + " , No 2 ore : " + oresAmount[Global.OresTypes.no2_Ores]);
     }
 
 
-    public Dictionary<Global.OresTypes, float> UnloadResources(Object requireObject)
+    public Dictionary<Global.OresTypes, float> UnloadResources(Object requireObject, Dictionary<Global.OresTypes, float> baseOresAmount)
     {
         if (requireObject == baseSystem)
         {
-            Dictionary<Global.OresTypes, float> unloadResourcesOresAmount = new Dictionary<Global.OresTypes, float>();
-
             for (int i = 0; i < (int)Global.OresTypes.Length; i++)
             {
-                unloadResourcesOresAmount[(Global.OresTypes)i] = oresAmount[(Global.OresTypes)i];
+                baseOresAmount[(Global.OresTypes)i] += oresAmount[(Global.OresTypes)i];
                 oresAmount[(Global.OresTypes)i] = 0.0f;
             }
             weightAmount = 0.0f;
 
-            return unloadResourcesOresAmount;
+            return baseOresAmount;
         }
         else
         {
@@ -105,6 +103,20 @@ public class ShipEntity : MonoBehaviour
         {
             return null;
         }
+    }
+
+    public void GainOresFromAsteroid(Object requireObject, Global.OresTypes oresTypes, float oreAmount)
+    {
+        if (requireObject.GetType().Name == nameof(Asteroid))
+        {
+            oresAmount[oresTypes] += oreAmount;
+            CheckWeightAmount();
+        }
+    }
+
+    private void CheckWeightAmount()
+    {
+        weightAmount = (oresAmount[Global.OresTypes.Iron] * 1) + (oresAmount[Global.OresTypes.no2_Ores] * 2);
     }
 
 }

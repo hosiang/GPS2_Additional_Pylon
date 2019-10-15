@@ -94,7 +94,7 @@ public class BaseSystem : MonoBehaviour
 
             if (playerCollider[0].GetComponentInParent<ShipEntity>().WeightAmount > 0.0f)
             {
-                storageOresResources = playerCollider[0].GetComponentInParent<ShipEntity>().UnloadResources(this);
+                storageOresResources = playerCollider[0].GetComponentInParent<ShipEntity>().UnloadResources(this, storageOresResources);
 
                 Debug.Log("Iron = " + storageOresResources[Global.OresTypes.Iron]);
                 Debug.Log("No2_Ores = " + storageOresResources[Global.OresTypes.no2_Ores]);
