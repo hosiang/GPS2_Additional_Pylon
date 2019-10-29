@@ -1,5 +1,18 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!135 &3865639947793386972
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2530732876936182387}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 2
+  m_Center: {x: 0.224527, y: -0.16065983, z: 1.1212858}
 --- !u!64 &5651376731671801414
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -14,19 +27,6 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 3796571728757102463, guid: 5e0ed4d3817bc6446876cecb02b2c6f3, type: 3}
---- !u!135 &3865639947793386972
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2530732876936182387}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 2
-  m_Center: {x: 0.224527, y: -0.16065983, z: 1.1212858}
 --- !u!1 &3635963145947681922
 GameObject:
   m_ObjectHideFlags: 0
@@ -39,7 +39,7 @@ GameObject:
   - component: {fileID: -6123305810042119034}
   m_Layer: 9
   m_Name: Special_Asteroid
-  m_TagString: Untagged
+  m_TagString: Asteroid
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -76,7 +76,6 @@ MonoBehaviour:
   health: 10
   oreScatterRaius: 0
   vibrationDissipateRate: 0
-  parasiteToSpawn: {fileID: 0}
 --- !u!1001 &5782363754433979258
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -93,6 +92,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 5e0ed4d3817bc6446876cecb02b2c6f3,
+        type: 3}
+      propertyPath: m_TagString
+      value: Asteroid
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 5e0ed4d3817bc6446876cecb02b2c6f3,
         type: 3}

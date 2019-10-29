@@ -31,7 +31,9 @@ public class ShipEntity : MonoBehaviour
 
     private BaseSystem baseSystem;
 
-    //private float 
+    //Particle
+    [SerializeField] private ParticleSystem astroidHitParticle;
+    [SerializeField] private float astroidCollisionSpeed;
 
     void Start()
     {
@@ -49,13 +51,40 @@ public class ShipEntity : MonoBehaviour
         // !!! For Testing
         //oresAmount[Global.OresTypes.Iron] = 100.0f;
         //oresAmount[Global.OresTypes.no2_Ores] = 300.0f;
+
     }
 
     void Update()
     {
         //Debug.Log("No 1 ore : " + oresAmount[Global.OresTypes.Iron] + " , No 2 ore : " + oresAmount[Global.OresTypes.no2_Ores]);
+
     }
 
+    private void OnCollisionEnter(Collision collision) {
+
+        if (collision.relativeVelocity.magnitude >= astroidCollisionSpeed && collision.collider.CompareTag(Global.tag_Astroid)) {
+
+            playCollisionEffect(ref collision, Global.ParticleEffectType.astroid);
+
+        }
+
+    }
+
+    private void playCollisionEffect(ref Collision collision, Global.ParticleEffectType particleObject) {
+
+        for (int i = 0; i < collision.contacts.Length; ++i) {
+
+            switch (particleObject) {
+
+                case Global.ParticleEffectType.astroid:
+                    Instantiate(astroidHitParticle, collision.contacts[i].point, Quaternion.identity);
+                    break;
+
+            }
+
+        }
+
+    }
 
     public Dictionary<Global.OresTypes, float> UnloadResources(Object requireObject, Dictionary<Global.OresTypes, float> baseOresAmount)
     {

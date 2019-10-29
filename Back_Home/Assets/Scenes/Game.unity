@@ -3630,7 +3630,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 500
-  simulateActual: 0
+  simulateActual: 1
 --- !u!95 &578951303
 Animator:
   serializedVersion: 3
@@ -5050,6 +5050,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3635963145947681922, guid: 8f55192037d1d484b8d656b15ea0c560,
+        type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 4188793395879070507, guid: 8f55192037d1d484b8d656b15ea0c560,
         type: 3}
@@ -13083,6 +13088,15 @@ PrefabInstance:
       propertyPath: m_Convex
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1755108442, guid: c7757eb10e0cd954a80d8b7b54134eda, type: 3}
+      propertyPath: astroidCollisionSpeed
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1755108442, guid: c7757eb10e0cd954a80d8b7b54134eda, type: 3}
+      propertyPath: astroidHitParticle
+      value: 
+      objectReference: {fileID: 5296382230799502480, guid: beb31d17ad11b2948aee8ed4cfec95c6,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c7757eb10e0cd954a80d8b7b54134eda, type: 3}
 --- !u!1 &2051027834 stripped
