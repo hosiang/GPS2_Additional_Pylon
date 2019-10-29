@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PirateAI_Stun : PirateAI_Abstract {
+public class EnemyAI_Stun : EnemyAI_Abstract {
 
     [SerializeField] private float stunRadius;
     [SerializeField] private float stunRecoveryTime;
