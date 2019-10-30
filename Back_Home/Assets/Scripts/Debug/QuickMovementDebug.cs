@@ -6,6 +6,8 @@ public class QuickMovementDebug : MonoBehaviour {
 
     [SerializeField] private float speed;
 
+    [SerializeField] private bool simulateActual; 
+
     private Rigidbody rigidBody;
 
     // Start is called before the first frame update
@@ -26,7 +28,12 @@ public class QuickMovementDebug : MonoBehaviour {
         if (Input.GetKey(KeyCode.A)) { horizontal = -1; }
         else if (Input.GetKey(KeyCode.D)) { horizontal = 1; }
 
-        rigidBody.velocity = new Vector3(horizontal * speed * Time.deltaTime, 0, vertical * speed * Time.deltaTime);
+        if (simulateActual) {
+            rigidBody.AddForce(new Vector3(horizontal * speed * Time.deltaTime, 0, vertical * speed * Time.deltaTime));
+        }
+        else {
+            rigidBody.velocity = new Vector3(horizontal * speed * Time.deltaTime, 0, vertical * speed * Time.deltaTime);
+        }
 
     }
 
