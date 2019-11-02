@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PirateAI_Shank : PirateAI_Abstract
-{
+public class EnemyAI_Shank : EnemyAI_Abstract {
 
     [SerializeField] private float shankForce;
     [SerializeField] private float shankDistance;
@@ -26,6 +25,8 @@ public class PirateAI_Shank : PirateAI_Abstract
     // Start is called before the first frame update
     void Start()
     {
+
+        patrolCenter = transform.position;
 
         currentState = PirateState.patrol;
 
@@ -88,6 +89,10 @@ public class PirateAI_Shank : PirateAI_Abstract
 
                 break;
 
+        }
+
+        if(debug) {
+            debugVision();
         }
 
     }

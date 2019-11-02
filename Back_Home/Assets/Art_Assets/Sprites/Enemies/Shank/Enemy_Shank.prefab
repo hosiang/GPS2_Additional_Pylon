@@ -14371,7 +14371,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6251992149948484399}
   - component: {fileID: -7689259420217756152}
-  - component: {fileID: 7720261105972269045}
+  - component: {fileID: 4056513772011582246}
   m_Layer: 10
   m_Name: Enemy_Shank
   m_TagString: Enemy
@@ -14411,7 +14411,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 84
   m_CollisionDetection: 0
---- !u!114 &7720261105972269045
+--- !u!114 &4056513772011582246
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -14427,12 +14427,12 @@ MonoBehaviour:
   evacSpeedMultiplier: 2
   chaseSpeedMultiplier: 1.5
   patrolRadius: 15
-  playerDetectionRadius: 3
-  evacuateDistance: 5
-  astroidDistance: 5
+  playerDetectionRadius: 10
+  evacuateDistance: 10
+  visionDistance: 3
   inspectDuration: 3
-  patrolCenter: {x: 0, y: 0, z: 0}
-  shankForce: 200
+  debug: 1
+  shankForce: 300
   shankDistance: 5
   shankRecoveryTime: 1
 --- !u!1001 &4272056927861596039

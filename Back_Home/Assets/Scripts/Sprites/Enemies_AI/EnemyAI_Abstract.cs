@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class PirateAI_Abstract : MonoBehaviour {
+public abstract class EnemyAI_Abstract : MonoBehaviour {
 
     protected enum PirateState { patrol, chase, evacuate, inspect };
 
@@ -16,11 +16,11 @@ public abstract class PirateAI_Abstract : MonoBehaviour {
     [SerializeField] protected float playerDetectionRadius;
 
     [SerializeField] protected float evacuateDistance;
-    [SerializeField] protected float astroidDistance;
+    [SerializeField] protected float visionDistance;
 
     [SerializeField] protected float inspectDuration;
 
-    [SerializeField] protected Vector3 patrolCenter;
+    [SerializeField] protected bool debug;
 
     protected PirateState currentState;
 
@@ -31,6 +31,7 @@ public abstract class PirateAI_Abstract : MonoBehaviour {
     protected Vector3 playerPosition;
     protected Vector3 moveToPosition;
     protected Vector3 vibrationPosition;
+    protected Vector3 patrolCenter;
 
     protected float inspectCountdown;
 
@@ -103,7 +104,7 @@ public abstract class PirateAI_Abstract : MonoBehaviour {
 
     protected bool MoveToInspect() {
 
-        if(Vector3.Distance(transform.position, vibrationPosition) > astroidDistance) {
+        if(Vector3.Distance(transform.position, vibrationPosition) > visionDistance) {
 
             pirateRigidbody.position = Vector3.MoveTowards(transform.position, vibrationPosition, speed * Time.deltaTime);
 
@@ -133,6 +134,20 @@ public abstract class PirateAI_Abstract : MonoBehaviour {
 
         transform.LookAt(vibrationPosition);
 
+    }
+
+    protected bool visionDetected() {
+
+        if(Physics.Raycast(transform.position, transform.forward * visionDistance)) {
+            return true;
+        }
+
+        return false;
+
+    }
+
+    protected void debugVision() {
+        Debug.DrawRay(transform.position, transform.forward * visionDistance, Color.red);
     }
 
     abstract public void AttackPlayer();
