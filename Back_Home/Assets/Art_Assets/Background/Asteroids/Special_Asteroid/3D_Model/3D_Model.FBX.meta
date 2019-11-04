@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 5e0ed4d3817bc6446876cecb02b2c6f3
+guid: 017172e0d734797419d00d05cf6d9e3c
 ModelImporter:
   serializedVersion: 25
   internalIDToNameTable: []
@@ -7,8 +7,13 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: 'Material #2'
-    second: {fileID: 2100000, guid: c4deff680937d7340a62a947cc990709, type: 2}
+      name: 03 - Default
+    second: {fileID: 2100000, guid: 3cce4cf6e02439c4bb2f121b4130da71, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: No Name
+    second: {fileID: 2100000, guid: f8416b93bfd99724ab60fe29fa8eaa51, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
@@ -36,7 +41,7 @@ ModelImporter:
     extraExposedTransformPaths: []
     extraUserProperties: []
     clipAnimations: []
-    isReadable: 1
+    isReadable: 0
   meshes:
     lODScreenPercentages: []
     globalScale: 1

@@ -39,4 +39,14 @@ public static class Global {
     //List or Array
     public static readonly float[] zoneValues = { 10.0f, 20.0f, 40.0f, 60.0f };
 
+    public static float ValueToTime(float value)
+    {
+        return (60.0f / 100.0f) * value;
+    }
+
+    public static float TimeToValue(float time)
+    {
+        return (100.0f / 60.0f) * time;
+    }
+
 }

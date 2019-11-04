@@ -25,7 +25,7 @@ public class CameraController : MonoBehaviour
         distanceY = cameraOffset.y - playerTransform.position.y;
     }
 
-    void Update()
+    void FixedUpdate()
     {
 
         if (Vector3.Distance(cameraTransform.position, playerTransform.position) > distanceY)

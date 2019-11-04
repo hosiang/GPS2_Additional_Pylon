@@ -57,9 +57,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5240115bf6917142bc047cddcd1c07c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startShieldRadius: 6
-  maximalShieldRadius: 12
-  shieldDeclineRate: 1
+  maximalShieldRadius: 10
+  shieldDeclineRate: 0.01
   debugMode: 0
   borderLinesAmount: 20
   borderLine: {fileID: 5436356065730152089, guid: 3a0152dd981076249a8c53b8314aaef2,
