@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
 public class Asteroid : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class Asteroid : MonoBehaviour
 
     [SerializeField] private float health;
     [SerializeField] private float oreScatterRaius;
+    //[SerializeField] private float vibrationFrequency;
     [SerializeField] private float vibrationDissipateRate;
 
     //[SerializeField] private PirateAI_Shank parasiteToSpawn;
@@ -157,7 +159,7 @@ public class Asteroid : MonoBehaviour
             for (int i = 0; i < enemyCollideCheck.Length; ++i)
             {
 
-                enemyCollideCheck[i].GetComponentInParent<PirateAI_Abstract>().VibrationDetected(transform.position);
+                enemyCollideCheck[i].GetComponentInParent<EnemyAI_Abstract>().VibrationDetected(transform.position);
 
             }
 

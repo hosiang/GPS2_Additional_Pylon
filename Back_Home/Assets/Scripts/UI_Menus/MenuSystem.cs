@@ -6,8 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class MenuSystem : MonoBehaviour
 {
-    private bool InGame = false;
-    private bool IsPause = true;
+    private bool inGame = false;
+    private bool isPause = true;
 
     [SerializeField] GameObject panel;
     [SerializeField] GameObject pauseMenu;
@@ -26,13 +26,13 @@ public class MenuSystem : MonoBehaviour
 
     void CheckPause()
     {
-        if (InGame)
+        if (inGame)
         {
-            if (!IsPause && Input.GetKeyDown(KeyCode.Escape))
+            if (!isPause && Input.GetKeyDown(KeyCode.Escape))
             {
                 PauseGame();
             }
-            else if (IsPause && Input.GetKeyDown(KeyCode.Escape))
+            else if (isPause && Input.GetKeyDown(KeyCode.Escape))
             {
                 ResumeGame();
             }
@@ -42,15 +42,15 @@ public class MenuSystem : MonoBehaviour
     public void NewGame()
     {
         Time.timeScale = 1f;
-        InGame = true;
-        IsPause = false;
+        inGame = true;
+        isPause = false;
         //SceneManager.LoadScene("Kenze");
     }
     public void ContinueGame()
     {
         Time.timeScale = 1f;
-        InGame = true;
-        IsPause = false;
+        inGame = true;
+        isPause = false;
         //SceneManager.LoadScene("Back Home");
     }
     public void QuitGame()
@@ -61,20 +61,20 @@ public class MenuSystem : MonoBehaviour
     public void PauseGame()
     {
         Time.timeScale = 0f;
-        IsPause = true;
+        isPause = true;
         panel.SetActive(true);
         pauseMenu.SetActive(true);
     }
     public void ResumeGame()
     {
         Time.timeScale = 1f;
-        IsPause = false;
+        isPause = false;
         panel.SetActive(false);
         pauseMenu.SetActive(false);
     }
 
     public void SetInGame(bool value)
     {
-        InGame = value;
+        inGame = value;
     }
 }
