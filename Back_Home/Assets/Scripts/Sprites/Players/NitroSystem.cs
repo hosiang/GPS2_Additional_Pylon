@@ -9,17 +9,12 @@ public class NitroSystem : MonoBehaviour
     [SerializeField] private float nitroRegenerationRate = 33f;
     [SerializeField] private float nitroRefuelRate = 27f; // Use in Base, Get from BaseSystem
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     // Update is called once per frame
     void Update()
     {
         NitroRegeneration();
     }
+
     // Enter Base increase the regeneration rate
     private void OnCollisionEnter(Collision collision)
     {

@@ -5,30 +5,47 @@ using UnityEngine;
 public class Parallax : MonoBehaviour
 {
     private float length;
-    private float startPosition;
+    private float width;
+    private float startPositionX;
+    private float startPositionZ;
     [SerializeField] GameObject mainCamera;
-    [SerializeField] private float parallaxEffect;
+    [SerializeField] private float horizontalParallaxEffect;
+    [SerializeField] private float verticalParallaxEffect;
 
     private void Start()
     {
-        startPosition = transform.position.x;
+        startPositionX = transform.position.x;
         length = GetComponent<SpriteRenderer>().bounds.size.x;
+
+        startPositionZ = transform.position.z;
+        width = GetComponent<SpriteRenderer>().bounds.size.z;
     }
 
     private void FixedUpdate()
     {
-        float temporary = mainCamera.transform.position.x * (1 - parallaxEffect);
+        float temporaryX = mainCamera.transform.position.x * (1 - horizontalParallaxEffect);
+        float temporaryZ = mainCamera.transform.position.z * (1 - verticalParallaxEffect);
 
-        float distance = mainCamera.transform.position.x * parallaxEffect;
-        transform.position = new Vector3(startPosition + distance, transform.position.y, transform.position.z);
+        float distanceX = mainCamera.transform.position.x * horizontalParallaxEffect;
+        float distanceZ = mainCamera.transform.position.z * verticalParallaxEffect;
+        transform.position = new Vector3(startPositionX + distanceX, transform.position.y, startPositionZ + distanceZ);
 
-        if (temporary > startPosition + length)
+        if (temporaryX > startPositionX + length)
         {
-            startPosition += length;
+            startPositionX += length;
         }
-        else if (temporary < startPosition - length)
+        else if (temporaryX < startPositionX - length)
         {
-            startPosition -= length;
+            startPositionX -= length;
+        }
+
+        if (temporaryZ > startPositionZ + width)
+        {
+            startPositionZ += width;
+        }
+        else if (temporaryZ < startPositionZ - width)
+        {
+            startPositionZ -= width;
         }
     }
 }

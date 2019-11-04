@@ -10,7 +10,6 @@ public class ShipEntity : MonoBehaviour
     [SerializeField]
     protected float healthRecoverPoint = 0;
 
-
     public float HealthPoint { get { return healthPoint; } }
     public float HealthPointMaximal { get { return healthPointMaximal; } }
 
@@ -51,13 +50,11 @@ public class ShipEntity : MonoBehaviour
         // !!! For Testing
         //oresAmount[Global.OresTypes.Iron] = 100.0f;
         //oresAmount[Global.OresTypes.no2_Ores] = 300.0f;
-
     }
 
     void Update()
     {
         //Debug.Log("No 1 ore : " + oresAmount[Global.OresTypes.Iron] + " , No 2 ore : " + oresAmount[Global.OresTypes.no2_Ores]);
-
     }
 
     private void OnCollisionEnter(Collision collision) {
@@ -65,9 +62,7 @@ public class ShipEntity : MonoBehaviour
         if (collision.relativeVelocity.magnitude >= astroidCollisionSpeed && collision.collider.CompareTag(Global.tag_Astroid)) {
 
             playCollisionEffect(ref collision, Global.ParticleEffectType.astroid);
-
         }
-
     }
 
     private void playCollisionEffect(ref Collision collision, Global.ParticleEffectType particleObject) {
@@ -79,11 +74,8 @@ public class ShipEntity : MonoBehaviour
                 case Global.ParticleEffectType.astroid:
                     Instantiate(astroidHitParticle, collision.contacts[i].point, Quaternion.identity);
                     break;
-
             }
-
         }
-
     }
 
     public Dictionary<Global.OresTypes, float> UnloadResources(Object requireObject, Dictionary<Global.OresTypes, float> baseOresAmount)
