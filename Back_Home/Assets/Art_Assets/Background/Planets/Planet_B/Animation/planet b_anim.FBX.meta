@@ -6,12 +6,7 @@ ModelImporter:
   - first:
       74: 1827226128182048838
     second: Idle
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: 13 - Default
-    second: {fileID: 2100000, guid: fa21242e91832324cab6b61bd8a7417d, type: 2}
+  externalObjects: {}
   materials:
     importMaterials: 1
     materialName: 0
@@ -44,7 +39,7 @@ ModelImporter:
       takeName: Take 001
       internalID: 1827226128182048838
       firstFrame: 0
-      lastFrame: 199
+      lastFrame: 200
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
