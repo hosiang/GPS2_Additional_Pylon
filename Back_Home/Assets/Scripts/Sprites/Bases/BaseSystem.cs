@@ -5,18 +5,24 @@ using UnityEngine.UI;
 
 public class BaseSystem : MonoBehaviour
 {
+    private float currentTime = 0.0f;
+    private float targetToExtendTime = 0.0f;
     private float currentShieldRadius = 0.0f;
     private float targetToExtendShieldRadius = 0.0f;
-    [SerializeField] private float startShieldRadius = 6.0f;
+    private float startShieldRadius = 10.0f;
     private float minimalShieldRadius = 4.5f;
-    [SerializeField] private float maximalShieldRadius = 12.0f;
-    [SerializeField] private float shieldDeclineRate = 1f;
+    [SerializeField] private float maximalShieldRadius = 10.0f;
+    [SerializeField] private float shieldDeclineRate = 0.01f; // 0.01s is one second
     private float shieldSizeCovertValue = 1.5f;
     private Transform detectShieldOriginTransform;
     private bool isExtendingShield = false;
     private LayerMask layerMask_player;
 
+    private float eachSpecialOreIncreaseTime = 0.05f;
+
     [SerializeField] private bool debugMode;
+
+    public float CurrentTime { get { return currentTime; } }
 
     public float BeginShieldRadius { get { return startShieldRadius; } }
 
@@ -76,18 +82,16 @@ public class BaseSystem : MonoBehaviour
         layerMask_player = LayerMask.GetMask("Player");
 
         eachAngle = (2f * Mathf.PI) / borderLinesAmount; // For count the each border lines's angle
-
-        currentShieldRadius = startShieldRadius;
+        
+        currentTime = Global.ValueToTime(startShieldRadius);
     }
 
     void Update()
     {
-        
-
         ShieldSizeUpdate();
         BorderLinesMarkerRotating();
 
-        playerCollider = Physics.OverlapSphere(detectShieldOriginTransform.position, ((currentShieldRadius + minimalShieldRadius) * shieldSizeCovertValue), layerMask_player);
+        playerCollider = Physics.OverlapSphere(detectShieldOriginTransform.position, currentShieldRadius, layerMask_player);
         
         if(playerCollider.Length > 0)
         {
@@ -98,8 +102,9 @@ public class BaseSystem : MonoBehaviour
 
                 Debug.Log("Iron = " + storageOresResources[Global.OresTypes.Iron]);
                 Debug.Log("No2_Ores = " + storageOresResources[Global.OresTypes.no2_Ores]);
+                RepairTheShield();
             }
-            if (currentShieldRadius > 0.0f)
+            if (currentTime > 0.0f)
             {
                 playerCollider[0].GetComponentInParent<ShipEntity>().ReplenishHealthPoint(this);
                 playerCollider[0].GetComponentInParent<ShipEntity>().ReplenishNitroPoint(this);
@@ -122,20 +127,20 @@ public class BaseSystem : MonoBehaviour
     {
         for (int i = 0; i < borderLinesAmount; i++)
         {
-            eachBorderLinesPosition.x = ((currentShieldRadius + minimalShieldRadius) * shieldSizeCovertValue) * Mathf.Sin((Time.time / slowDownBorderLinesRotationSpeed) + (eachAngle * i));
+            eachBorderLinesPosition.x = currentShieldRadius * Mathf.Sin((Time.time / slowDownBorderLinesRotationSpeed) + (eachAngle * i));
             eachBorderLinesPosition.y = 0.0f; //borderLines_Transform[i].position.y;
-            eachBorderLinesPosition.z = ((currentShieldRadius + minimalShieldRadius) * shieldSizeCovertValue) * Mathf.Cos((Time.time / slowDownBorderLinesRotationSpeed) + (eachAngle * i));
+            eachBorderLinesPosition.z = currentShieldRadius * Mathf.Cos((Time.time / slowDownBorderLinesRotationSpeed) + (eachAngle * i));
 
             eachBorderLinesRotation.SetLookRotation(borderLines_Transform[i].position - transform.position);
             eachBorderLinesRotation *= Quaternion.Euler(0.0f, 90.0f, 0.0f);
 
             borderLines_Transform[i].SetPositionAndRotation(eachBorderLinesPosition, eachBorderLinesRotation);
 
-            if(currentShieldRadius <= 0.0f)
+            if(currentShieldRadius <= minimalShieldRadius)
             {
                 borderLines_SpriteRenderer[i].color = colorNotShield;
             }
-            else if(currentShieldRadius > 0.0f && borderLines_SpriteRenderer[i].color != borderLineOriginalColor)
+            else if(currentShieldRadius > minimalShieldRadius && borderLines_SpriteRenderer[i].color != borderLineOriginalColor)
             {
                 borderLines_SpriteRenderer[i].color = borderLineOriginalColor;
             }
@@ -146,30 +151,41 @@ public class BaseSystem : MonoBehaviour
 
     private void ShieldSizeUpdate()
     {
-        if ((currentShieldRadius > 0.0f) && !isExtendingShield)
+        if ((currentTime > 0.0f) && !isExtendingShield)
         {
-            currentShieldRadius -= (shieldDeclineRate * 0.01f) * Time.deltaTime;
-            if(currentShieldRadius < 0.0f) { currentShieldRadius = 0.0f; }
+            currentTime -= shieldDeclineRate * Time.deltaTime;
+            if(currentTime < 0.0f) { currentTime = 0.0f; }
+
+            currentShieldRadius = (((maximalShieldRadius - minimalShieldRadius) / maximalShieldRadius) * Global.TimeToValue(currentTime)) + minimalShieldRadius;
+
+            targetToExtendTime = currentTime;
             targetToExtendShieldRadius = currentShieldRadius;
+            if(currentShieldRadius > maximalShieldRadius) { currentShieldRadius = maximalShieldRadius; }
         }
     }
 
-    public void RepairTheShield()
+    private void RepairTheShield()
     {
         if (playerCollider.Length > 0)
         {
-            if((storageOresResources[Global.OresTypes.no2_Ores] >= 100.0f) && (targetToExtendShieldRadius < (maximalShieldRadius - 5.0f)))
+            if (storageOresResources[Global.OresTypes.no2_Ores] > 0.0f)
             {
                 isExtendingShield = true;
 
-                storageOresResources[Global.OresTypes.no2_Ores] -= 100.0f;
+                targetToExtendTime = (targetToExtendTime != currentTime) ? (targetToExtendTime + (eachSpecialOreIncreaseTime * storageOresResources[Global.OresTypes.no2_Ores])) : (currentTime + (eachSpecialOreIncreaseTime * storageOresResources[Global.OresTypes.no2_Ores]));
+                Debug.Log(targetToExtendTime - currentTime );
+                targetToExtendShieldRadius = (((maximalShieldRadius - minimalShieldRadius) / maximalShieldRadius) * Global.TimeToValue(targetToExtendTime)) + minimalShieldRadius;
+                if (targetToExtendShieldRadius > maximalShieldRadius) { targetToExtendShieldRadius = maximalShieldRadius; }
 
-                targetToExtendShieldRadius = (targetToExtendShieldRadius != currentShieldRadius) ? (targetToExtendShieldRadius + 5.0f) : (currentShieldRadius + 5.0f);
-                if (targetToExtendShieldRadius > maximalShieldRadius) targetToExtendShieldRadius = maximalShieldRadius;
+                storageOresResources[Global.OresTypes.no2_Ores] = 0.0f;
 
                 StopCoroutine("SmoothlyExtendTheShield");
                 StartCoroutine("SmoothlyExtendTheShield");
             }
+        }
+        else
+        {
+            storageOresResources[Global.OresTypes.no2_Ores] = 0.0f;
         }
     }
 
@@ -178,11 +194,12 @@ public class BaseSystem : MonoBehaviour
         float countTimeRate = 0.0f;
         while (true)
         {
-            countTimeRate += 0.1f * Time.deltaTime;
+            countTimeRate += 0.5f * Time.deltaTime;
 
+            currentTime = Mathf.Lerp(currentTime, targetToExtendTime, countTimeRate);
             currentShieldRadius = Mathf.Lerp(currentShieldRadius, targetToExtendShieldRadius, countTimeRate);
 
-            if (currentShieldRadius == targetToExtendShieldRadius)
+            if (currentTime == targetToExtendTime)
             {
                 isExtendingShield = false;
                 break;
@@ -197,7 +214,7 @@ public class BaseSystem : MonoBehaviour
         if (debugMode)
         {
             Gizmos.color = Color.green;
-            Gizmos.DrawWireSphere(detectShieldOriginTransform.position, ((currentShieldRadius + minimalShieldRadius) * shieldSizeCovertValue));
+            Gizmos.DrawWireSphere(detectShieldOriginTransform.position, currentShieldRadius);
         }
     }
 

@@ -45,6 +45,25 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 197059890529627577, guid: 6bb81004d34dbe1458b7e815a1b4003f, type: 3}
+--- !u!95 &7203703508017374419
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3456315575769170462}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 4169a305b904f6e45b5a6a98e80a03c1, type: 3}
+  m_Controller: {fileID: 9100000, guid: 28416cbda19a1e345bd2009022877273, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &6689712014791564055
 PrefabInstance:
   m_ObjectHideFlags: 0

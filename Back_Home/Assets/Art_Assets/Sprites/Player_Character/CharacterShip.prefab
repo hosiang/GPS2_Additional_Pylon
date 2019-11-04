@@ -404,6 +404,7 @@ MonoBehaviour:
   healthSystem: {fileID: 1755108445}
   nitroSystem: {fileID: 1755108444}
   weightSystem: {fileID: 1755108443}
+  slowDrillToggle: {fileID: 0}
   joystickTouchController: {fileID: 0}
 --- !u!136 &5840365889849182806
 CapsuleCollider:
@@ -461,6 +462,7 @@ GameObject:
   - component: {fileID: 6493898023376296447}
   - component: {fileID: 119675592093214595}
   - component: {fileID: 2014525847}
+  - component: {fileID: 8387136146638602897}
   m_Layer: 8
   m_Name: 3D_Model
   m_TagString: Untagged
@@ -541,6 +543,25 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: -3613724358419971262, guid: f99531381c8c8e6448e5c25a701e7e80, type: 3}
+--- !u!95 &8387136146638602897
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6204107388099171769}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 122517803bf65fb43a763b2ca1021ffd, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &8341910522274937843
 GameObject:
   m_ObjectHideFlags: 0

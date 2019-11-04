@@ -60,8 +60,8 @@ public class UIInformationManager : MonoBehaviour
         //rawNumber = (int)baseSystem.CurrentShieldRadius;
         //radixPoint = (int)((baseSystem.CurrentShieldRadius - (int)baseSystem.CurrentShieldRadius) * 100);
 
-        timeValueRawNumber = ((int)(baseSystem.CurrentShieldRadius * 100) / 60);
-        timeValueRadixPoint = ((int)(baseSystem.CurrentShieldRadius * 100) % 60);
+        timeValueRawNumber = (int)(baseSystem.CurrentTime * 100) / 60; //((int)(baseSystem.CurrentShieldRadius * 100) / 60);
+        timeValueRadixPoint = (int)(baseSystem.CurrentTime * 100) % 60; //((int)(baseSystem.CurrentShieldRadius * 100) % 60);
 
         timerText.text = timeValueRawNumber.ToString() + ":" + ((timeValueRadixPoint < 10) ? ("0" + timeValueRadixPoint.ToString()) : timeValueRadixPoint.ToString());
 
