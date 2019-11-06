@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using EZCameraShake;
 
 public class PlayerControl : MonoBehaviour
 {
@@ -81,6 +82,7 @@ public class PlayerControl : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
+            CameraShaker.Instance.ShakeOnce(4f, 4f, 0.1f, 2f);
             healthSystem.TakeDamage(50f);
             //heatSystem.AddHeatAmount(heatCollisionEnemyIncreaseRate);
         }
