@@ -7,6 +7,7 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] private float thrustPower = 20f;
     [SerializeField] private float rotateSpeed = 90f;
     [SerializeField] private float nitroConsume = 15f;
+    [SerializeField] private ParticleSystem drillerVibrationFrequencyParticleSystem;
 
     private BoxCollider playerCollision;
     private Rigidbody playerRigidbody;
@@ -58,6 +59,8 @@ public class PlayerControl : MonoBehaviour
         basePosition = FindObjectOfType<BaseSystem>().transform.position;
 
         slowDrillToggle.isOn = (drillSpeed == DrillSpeed.slow) ? true : false;
+
+        drillerVibrationFrequencyParticleSystem.Stop();
 
         //heatAmount = GetComponent<HeatSystem>().getHeatAmount();
         //maxHeatAmount = GetComponent<HeatSystem>().getMaxHeatAmount();
@@ -243,7 +246,11 @@ public class PlayerControl : MonoBehaviour
                     playerRigidbody.velocity = Vector3.zero;
                     playerTransform.position = playerTransform.position;
 
-            
+                    if (drillerVibrationFrequencyParticleSystem.isStopped)
+                    {
+                        drillerVibrationFrequencyParticleSystem.Play();
+                    }
+
                     drillCollide[i].gameObject.GetComponentInParent<Asteroid>().Drill(drillSpeed == DrillSpeed.fast ? damage * drillFastSpeedMultiplier : damage,
                                                                              drillSpeed == DrillSpeed.fast ? vibrationFrequency * drillFastSpeedMultiplier : vibrationFrequency);
                 }
@@ -253,6 +260,10 @@ public class PlayerControl : MonoBehaviour
         }
         else
         {
+            if (drillerVibrationFrequencyParticleSystem.isPlaying)
+            {
+                drillerVibrationFrequencyParticleSystem.Stop();
+            }
             onDrilling = false;
         }
 
@@ -260,6 +271,7 @@ public class PlayerControl : MonoBehaviour
 
     public void StopDrilling()
     {
+        drillerVibrationFrequencyParticleSystem.Stop();
         onDrilling = false;
         /*
         if (drillCollide.Length > 0)
