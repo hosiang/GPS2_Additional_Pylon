@@ -6,6 +6,7 @@ using UnityEngine.AI;
 public class GameManager : MonoBehaviour {
 
     private EnemySpawner enemySpawner;
+    public GameObject taskCompletedUI;
 
     private void Awake() {
 
@@ -25,6 +26,12 @@ public class GameManager : MonoBehaviour {
 
         //
 
+    }
+
+    public void TaskCompleted()
+    {
+        taskCompletedUI.SetActive(true);
+        Debug.Log("Task Completed");
     }
 
 }
