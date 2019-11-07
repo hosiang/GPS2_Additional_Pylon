@@ -15,13 +15,13 @@ public class ShipEntity : MonoBehaviour
 
     [SerializeField]
     protected float weightAmount = 0;
-    protected Dictionary<Global.OresTypes, float> oresAmount = new Dictionary<Global.OresTypes, float>();
     protected float weightAmountMaximal = 100;
+    protected Dictionary<Global.OresTypes, float> oresAmount = new Dictionary<Global.OresTypes, float>();
 
     public float WeightAmount { get { return weightAmount; } }
     public float WeightAmountMaximal { get { return weightAmountMaximal; } }
 
-    protected float nitroPoint = 0; // nitroPoint?
+    protected float nitroPoint = 0;
     protected float nitroPointMaximal = 100;
     protected float nitroDepletePoint = 0;
 

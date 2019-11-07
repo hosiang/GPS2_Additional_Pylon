@@ -10,6 +10,7 @@ public class UIInformationManager : MonoBehaviour
 
     [SerializeField] private Slider healthPointSlider;
     [SerializeField] private Slider nitroPointSlider;
+    [SerializeField] private Slider weightPointSlider;
     [SerializeField] private Text distanceBetweenShipAndBaseText;
     [SerializeField] private Text timerText;
 
@@ -49,6 +50,7 @@ public class UIInformationManager : MonoBehaviour
 
         healthPointSlider.maxValue = shipEntity.HealthPointMaximal;
         nitroPointSlider.maxValue = shipEntity.NitroPointMaximal;
+        weightPointSlider.maxValue = shipEntity.WeightAmountMaximal;
     }
 
     // Update is called once per frame
@@ -56,6 +58,7 @@ public class UIInformationManager : MonoBehaviour
     {
         healthPointSlider.value = shipEntity.HealthPoint;
         nitroPointSlider.value = nitroSystem.GetNitro();
+        weightPointSlider.value = shipEntity.WeightAmount;
 
         //rawNumber = (int)baseSystem.CurrentShieldRadius;
         //radixPoint = (int)((baseSystem.CurrentShieldRadius - (int)baseSystem.CurrentShieldRadius) * 100);

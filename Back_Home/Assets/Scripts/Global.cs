@@ -6,6 +6,7 @@ public static class Global {
 
     //Managers
     public static AudioManager audioManager;
+    public static UIActiveManager userInterfaceActiveManager;
 
     //Save location
     public static string saveFile_Test = "";
@@ -30,11 +31,16 @@ public static class Global {
     //Controls
     public static string controls_Test = "";
 
+    //Menus
+    public static readonly string nameGameObject_UI = "UI";
+    public static readonly string[] nameGameObject_Menus = { "ScreenBlock", "UIControllerPrefab", "UIInformationContainer", "QuitConfirmation" };
+
     //Enums
     public enum AstroidType { small, big, special };
     public enum OresTypes { Iron, no2_Ores, Length };
     public enum ZoneLevels { ShieldZone, EasyZone, MediumZone, HardZone };
     public enum ParticleEffectType { astroid };
+    public enum MenusType {ScreenBlock, UIControllerPrefab, UIInformationContainer, QuitConfirmation};
 
     //List or Array
     public static readonly float[] zoneValues = { 10.0f, 20.0f, 40.0f, 60.0f };
