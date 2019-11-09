@@ -270,9 +270,6 @@ GameObject:
   - component: {fileID: 3156877941114343623}
   - component: {fileID: 9131247227049082097}
   - component: {fileID: 1755108442}
-  - component: {fileID: 1755108443}
-  - component: {fileID: 1755108444}
-  - component: {fileID: 1755108445}
   - component: {fileID: 1755108446}
   m_Layer: 8
   m_Name: CharacterShip
@@ -328,57 +325,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e84939423188cd64caca7200c15859f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthPoint: 100
-  healthRecoverPoint: 3
-  weightAmount: 0
-  astroidHitParticle: {fileID: 0}
-  astroidCollisionSpeed: 0
---- !u!114 &1755108443
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1055530992759721315}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b3edeab789fb4348ac41922c1e95d8c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxWeight: 100
-  currentWeight: 0
---- !u!114 &1755108444
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1055530992759721315}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cfa6f3fbe75229a4f9acdbcfa871a3df, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxNitro: 100
-  currentNitro: 100
-  nitroRegenerationRate: 5
-  nitroRefuelRate: 10
---- !u!114 &1755108445
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1055530992759721315}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a4f6a51ff94cb2e48b61d1371ffccb93, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 100
   currentHealth: 100
+  maximalHealth: 100
   healthRegenerationRate: 1
   isDead: 0
+  currentNitro: 100
+  maximalNitro: 100
+  nitroRegenerationRate: 5
+  nitroRefuelRate: 10
+  isOverheat: 0
+  currentWeight: 0
+  maximalWeight: 100
+  astroidHitParticle: {fileID: 0}
+  astroidCollisionSpeed: 0
 --- !u!114 &1755108446
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -392,6 +351,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   thrustPower: 5
+  minimalThrustPower: 10
   rotateSpeed: 90
   nitroConsume: 15
   drillerVibrationFrequencyParticleSystem: {fileID: 0}
@@ -402,9 +362,6 @@ MonoBehaviour:
   damage: 4
   vibrationFrequency: 10
   drillFastSpeedMultiplier: 2
-  healthSystem: {fileID: 1755108445}
-  nitroSystem: {fileID: 1755108444}
-  weightSystem: {fileID: 1755108443}
   slowDrillToggle: {fileID: 0}
   joystickTouchController: {fileID: 0}
 --- !u!1 &1736434520931369591

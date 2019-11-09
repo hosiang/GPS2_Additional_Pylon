@@ -5,10 +5,13 @@ using EZCameraShake;
 
 public class PlayerControl : MonoBehaviour
 {
+    private float currentThrustPower;
     [SerializeField] private float thrustPower = 20f;
+    [SerializeField] private float minimalThrustPower = 10f;
+    private float eachWeightAffectThrustRate;
     [SerializeField] private float rotateSpeed = 90f;
     [SerializeField] private float nitroConsume = 15f;
-    [SerializeField] private ParticleSystem drillerVibrationFrequencyParticleSystem;
+    //[SerializeField] private ParticleSystem drillerVibrationFrequencyParticleSystem;
 
     private BoxCollider playerCollision;
     private Rigidbody playerRigidbody;
@@ -30,9 +33,11 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] private float vibrationFrequency;
     [SerializeField] private float drillFastSpeedMultiplier;
 
-    [SerializeField] HealthSystem healthSystem;
-    [SerializeField] NitroSystem nitroSystem;
-    [SerializeField] WeightSystem weightSystem;
+    //[SerializeField] HealthSystem healthSystem;
+    //[SerializeField] NitroSystem nitroSystem;
+    //[SerializeField] WeightSystem weightSystem;
+
+    private ShipEntity shipEntity;
 
     [SerializeField] UnityEngine.UI.Toggle slowDrillToggle;
 
@@ -44,15 +49,11 @@ public class PlayerControl : MonoBehaviour
 
     private Vector3 basePosition = Vector3.zero;
 
-    //[SerializeField] HeatSystem heatSystem;
-    //[SerializeField] private float heatAmount;
-    //[SerializeField] private float maxHeatAmount;
-    //[SerializeField] private float heatCollisionEnemyIncreaseRate;
-    //[SerializeField] private float heatCollisionThrustRate;
-
     // Start is called before the first frame update
     void Start()
     {
+        shipEntity = GetComponent<ShipEntity>();
+
         playerCollision = GetComponent<BoxCollider>();
         playerRigidbody = GetComponent<Rigidbody>();
         playerTransform = GetComponent<Transform>();
@@ -61,7 +62,10 @@ public class PlayerControl : MonoBehaviour
 
         slowDrillToggle.isOn = (drillSpeed == DrillSpeed.slow) ? true : false;
 
-        drillerVibrationFrequencyParticleSystem.Stop();
+        //drillerVibrationFrequencyParticleSystem.Stop();
+
+        eachWeightAffectThrustRate = (thrustPower - minimalThrustPower) / shipEntity.MaximalWeight;
+        ControlThrustPowerByWeightRate(); // The thrust power will follow current weight rate
 
         //heatAmount = GetComponent<HeatSystem>().getHeatAmount();
         //maxHeatAmount = GetComponent<HeatSystem>().getMaxHeatAmount();
@@ -74,11 +78,11 @@ public class PlayerControl : MonoBehaviour
         {
             Rotation();
             Thrust();
-            WeightToNitroConsume();
+            //WeightToNitroConsume();
         }
 
         CircularEdgeWallEffect();
-
+        //ControlThrustPowerByWeightRate();
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -86,7 +90,7 @@ public class PlayerControl : MonoBehaviour
         if (collision.gameObject.CompareTag("Enemy"))
         {
             CameraShaker.Instance.ShakeOnce(4f, 4f, 0.1f, 2f);
-            healthSystem.TakeDamage(50f);
+            shipEntity.TakeDamage(50f);
             //heatSystem.AddHeatAmount(heatCollisionEnemyIncreaseRate);
         }
     }
@@ -155,11 +159,11 @@ public class PlayerControl : MonoBehaviour
 
     public void Thrusting()
     {
-        if (nitroSystem.GetNitro() > 0)
+        if (!shipEntity.IsOverheat)
         {
-            playerRigidbody.velocity += transform.forward * (thrustPower * Time.deltaTime);
+            playerRigidbody.velocity += transform.forward * (currentThrustPower * Time.deltaTime);
             //playerRigidbody.AddForce(transform.forward * thrustPower);
-            nitroSystem.NitroReduction(nitroConsume);
+            shipEntity.NitroReduction();
         }
     }
 
@@ -167,10 +171,10 @@ public class PlayerControl : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (nitroSystem.GetNitro() > 0)
+            if (shipEntity.CurrentWeight > 0)
             {
-                playerRigidbody.AddForce(transform.right * thrustPower);
-                nitroSystem.NitroReduction(nitroConsume);
+                playerRigidbody.AddForce(transform.right * currentThrustPower);
+                shipEntity.NitroReduction();
             }
 
             //if (heatSystem.GetHeatAmount() < heatSystem.GetMaxHeatAmount())
@@ -182,11 +186,19 @@ public class PlayerControl : MonoBehaviour
         }
     }
 
+
+    private void ControlThrustPowerByWeightRate()
+    {
+        currentThrustPower = thrustPower - (eachWeightAffectThrustRate * shipEntity.CurrentWeight); // The thrust power will follow current weight rate
+    }
+
+    /*
     /// <summary>
     /// Energy deplete point style for Weight–Thrust system
     /// </summary>
     void WeightToNitroConsume()
     {
+        /*
         if (weightSystem.GetWeight() <= 0)
         {
             nitroConsume = 15f;
@@ -203,7 +215,9 @@ public class PlayerControl : MonoBehaviour
         {
             nitroConsume = 21f;
         }
+        
     }
+    */
 
     // Increase thrust power style for Weight–Thrust system
     //void WeightToThrustPower()
@@ -248,9 +262,9 @@ public class PlayerControl : MonoBehaviour
                     playerRigidbody.velocity = Vector3.zero;
                     playerTransform.position = playerTransform.position;
 
-                    if (drillerVibrationFrequencyParticleSystem.isStopped)
+                    //if (drillerVibrationFrequencyParticleSystem.isStopped)
                     {
-                        drillerVibrationFrequencyParticleSystem.Play();
+                        //drillerVibrationFrequencyParticleSystem.Play();
                     }
 
                     drillCollide[i].gameObject.GetComponentInParent<Asteroid>().Drill(drillSpeed == DrillSpeed.fast ? damage * drillFastSpeedMultiplier : damage,
@@ -262,9 +276,9 @@ public class PlayerControl : MonoBehaviour
         }
         else
         {
-            if (drillerVibrationFrequencyParticleSystem.isPlaying)
+            //if (drillerVibrationFrequencyParticleSystem.isPlaying)
             {
-                drillerVibrationFrequencyParticleSystem.Stop();
+                //drillerVibrationFrequencyParticleSystem.Stop();
             }
             onDrilling = false;
         }
@@ -273,7 +287,7 @@ public class PlayerControl : MonoBehaviour
 
     public void StopDrilling()
     {
-        drillerVibrationFrequencyParticleSystem.Stop();
+        //drillerVibrationFrequencyParticleSystem.Stop();
         onDrilling = false;
         /*
         if (drillCollide.Length > 0)

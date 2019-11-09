@@ -28,9 +28,9 @@ public class ResourseAmountShow : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        shipOreNo1Text.text = text_ShipOreNo1 + shipEntity.GetShipOresAmount(Global.OresTypes.Iron);
-        shipOreNo2Text.text = text_ShipOreNo2 + shipEntity.GetShipOresAmount(Global.OresTypes.no2_Ores);
-        baseOreNo1Text.text = text_BaseOreNo1 + baseSystem.GetBaseStorageOres(Global.OresTypes.Iron);
-        baseOreNo2Text.text = text_BaseOreNo2 + baseSystem.GetBaseStorageOres(Global.OresTypes.no2_Ores);
+        shipOreNo1Text.text = text_ShipOreNo1 + shipEntity.GetShipOresAmount(Global.OresTypes.Ore_No1);
+        shipOreNo2Text.text = text_ShipOreNo2 + shipEntity.GetShipOresAmount(Global.OresTypes.Special_Ore);
+        baseOreNo1Text.text = text_BaseOreNo1 + baseSystem.GetBaseStorageOres(Global.OresTypes.Ore_No1);
+        baseOreNo2Text.text = text_BaseOreNo2 + baseSystem.GetBaseStorageOres(Global.OresTypes.Special_Ore);
     }
 }

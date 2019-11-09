@@ -4,8 +4,12 @@ using UnityEngine;
 
 public class WeightSystem : MonoBehaviour
 {
-    [SerializeField] private float maxWeight = 100;
-    [SerializeField] private float currentWeight = 0;
+    [SerializeField] protected float currentWeight = 100f;
+    [SerializeField] protected float maximalWeight = 100f;
+    protected Dictionary<Global.OresTypes, float> oresAmount = new Dictionary<Global.OresTypes, float>();
+
+    public float CurrentWeight { get { return currentWeight; } }
+    public float MaximalWeight { get { return maximalWeight; } }
 
     private Rigidbody playerRigidbody;
 
@@ -34,15 +38,15 @@ public class WeightSystem : MonoBehaviour
         {
             playerRigidbody.drag = 0.5f;
         }
-        else if (currentWeight > 0 && currentWeight <= (maxWeight / 3))
+        else if (currentWeight > 0 && currentWeight <= (maximalWeight / 3))
         {
             playerRigidbody.drag = 0.7f;
         }
-        else if (currentWeight > (maxWeight / 3) && currentWeight <= ((maxWeight / 3) * 2))
+        else if (currentWeight > (maximalWeight / 3) && currentWeight <= ((maximalWeight / 3) * 2))
         {
             playerRigidbody.drag = 0.9f;
         }
-        else if (currentWeight > ((maxWeight / 3) * 2))
+        else if (currentWeight > ((maximalWeight / 3) * 2))
         {
             playerRigidbody.drag = 1.1f;
         }
@@ -54,7 +58,7 @@ public class WeightSystem : MonoBehaviour
     }
     public float GetMaxWeight()
     {
-        return maxWeight;
+        return maximalWeight;
     }
     public void SetWeight()
     {

@@ -16,7 +16,6 @@ public class UIInformationManager : MonoBehaviour
 
     private float distanceBetweenShipAndBase = 0.0f;
 
-    private NitroSystem nitroSystem;
     private ShipEntity shipEntity;
     private BaseSystem baseSystem;
 
@@ -34,8 +33,6 @@ public class UIInformationManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        nitroSystem = FindObjectOfType<NitroSystem>();
-
         if (!(shipEntity = FindObjectOfType<ShipEntity>()))
             Debug.Log(this.GetType().Name + " have not found " + typeof(ShipEntity));
 
@@ -48,17 +45,17 @@ public class UIInformationManager : MonoBehaviour
         if (baseSystem != null)
             baseTransform = baseSystem.GetComponent<Transform>();
 
-        healthPointSlider.maxValue = shipEntity.HealthPointMaximal;
-        nitroPointSlider.maxValue = shipEntity.NitroPointMaximal;
-        weightPointSlider.maxValue = shipEntity.WeightAmountMaximal;
+        healthPointSlider.maxValue = shipEntity.MaximalHealth;
+        nitroPointSlider.maxValue = shipEntity.MaximalNitro;
+        weightPointSlider.maxValue = shipEntity.MaximalWeight;
     }
 
     // Update is called once per frame
     void Update()
     {
-        healthPointSlider.value = shipEntity.HealthPoint;
-        nitroPointSlider.value = nitroSystem.GetNitro();
-        weightPointSlider.value = shipEntity.WeightAmount;
+        healthPointSlider.value = shipEntity.CurrentHealth;
+        nitroPointSlider.value = shipEntity.CurrentNitro;
+        weightPointSlider.value = shipEntity.CurrentWeight;
 
         //rawNumber = (int)baseSystem.CurrentShieldRadius;
         //radixPoint = (int)((baseSystem.CurrentShieldRadius - (int)baseSystem.CurrentShieldRadius) * 100);

@@ -96,12 +96,12 @@ public class BaseSystem : MonoBehaviour
         if(playerCollider.Length > 0)
         {
 
-            if (playerCollider[0].GetComponentInParent<ShipEntity>().WeightAmount > 0.0f)
+            if (playerCollider[0].GetComponentInParent<ShipEntity>().CurrentWeight > 0.0f)
             {
                 storageOresResources = playerCollider[0].GetComponentInParent<ShipEntity>().UnloadResources(this, storageOresResources);
 
-                Debug.Log("Iron = " + storageOresResources[Global.OresTypes.Iron]);
-                Debug.Log("No2_Ores = " + storageOresResources[Global.OresTypes.no2_Ores]);
+                Debug.Log("Iron = " + storageOresResources[Global.OresTypes.Ore_No1]);
+                Debug.Log("No2_Ores = " + storageOresResources[Global.OresTypes.Special_Ore]);
                 RepairTheShield();
             }
             if (currentTime > 0.0f)
@@ -168,25 +168,27 @@ public class BaseSystem : MonoBehaviour
     {
         if (playerCollider.Length > 0)
         {
-            if (storageOresResources[Global.OresTypes.no2_Ores] > 0.0f)
+            if (storageOresResources[Global.OresTypes.Special_Ore] > 0.0f)
             {
                 isExtendingShield = true;
 
-                targetToExtendTime = (targetToExtendTime != currentTime) ? (targetToExtendTime + (eachSpecialOreIncreaseTime * storageOresResources[Global.OresTypes.no2_Ores])) : (currentTime + (eachSpecialOreIncreaseTime * storageOresResources[Global.OresTypes.no2_Ores]));
+                targetToExtendTime = (targetToExtendTime != currentTime) ? (targetToExtendTime + (eachSpecialOreIncreaseTime * storageOresResources[Global.OresTypes.Special_Ore])) : (currentTime + (eachSpecialOreIncreaseTime * storageOresResources[Global.OresTypes.Special_Ore]));
                 Debug.Log(targetToExtendTime - currentTime );
                 targetToExtendShieldRadius = (((maximalShieldRadius - minimalShieldRadius) / maximalShieldRadius) * Global.TimeToValue(targetToExtendTime)) + minimalShieldRadius;
                 if (targetToExtendShieldRadius > maximalShieldRadius) { targetToExtendShieldRadius = maximalShieldRadius; }
 
-                storageOresResources[Global.OresTypes.no2_Ores] = 0.0f;
+                storageOresResources[Global.OresTypes.Special_Ore] = 0.0f;
 
                 StopCoroutine("SmoothlyExtendTheShield");
                 StartCoroutine("SmoothlyExtendTheShield");
             }
         }
+        /*
         else
         {
-            storageOresResources[Global.OresTypes.no2_Ores] = 0.0f;
+            storageOresResources[Global.OresTypes.Special_Ore] = 0.0f;
         }
+        */
     }
 
     private IEnumerator SmoothlyExtendTheShield()
