@@ -26,7 +26,7 @@ public class EndScoreUpdating : MonoBehaviour
     }
     public void EndGameResult()
     {
-        float numberOres = baseSystem.GetBaseStorageOres(Global.OresTypes.Iron);
+        float numberOres = baseSystem.GetBaseStorageOres(Global.OresTypes.Ore_No1);
         currentPlayerScore.text = numberOres.ToString();
 
         if (numberOres > PlayerPrefs.GetFloat("SCORE: ", 0))

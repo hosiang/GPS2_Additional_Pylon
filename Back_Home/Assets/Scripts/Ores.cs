@@ -18,14 +18,14 @@ public class Ores : MonoBehaviour
     {
         switch (oresType)
         {
-            case Global.OresTypes.Iron:
-                FindObjectOfType<ShipEntity>().GainOresFromAsteroid(this, Global.OresTypes.Iron, AstroidOreProvide[(int)Global.AstroidType.small]);
+            case Global.OresTypes.Ore_No1:
+                FindObjectOfType<ShipEntity>().GainOresFromAsteroid(this, Global.OresTypes.Ore_No1, AstroidOreProvide[(int)Global.AstroidType.small]);
                 break;
-            case Global.OresTypes.no2_Ores:
-                FindObjectOfType<ShipEntity>().GainOresFromAsteroid(this, Global.OresTypes.Iron, AstroidOreProvide[(int)Global.AstroidType.big]);
+            case Global.OresTypes.Special_Ore:
+                FindObjectOfType<ShipEntity>().GainOresFromAsteroid(this, Global.OresTypes.Special_Ore, AstroidOreProvide[(int)Global.AstroidType.big]);
                 break;
             case Global.OresTypes.Length:
-                FindObjectOfType<ShipEntity>().GainOresFromAsteroid(this, Global.OresTypes.no2_Ores, AstroidOreProvide[(int)Global.AstroidType.special]);
+                FindObjectOfType<ShipEntity>().GainOresFromAsteroid(this, Global.OresTypes.Length, AstroidOreProvide[(int)Global.AstroidType.special]);
                 break;
         }
         Destroy(gameObject);

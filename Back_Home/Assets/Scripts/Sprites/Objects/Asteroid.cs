@@ -64,13 +64,13 @@ public class Asteroid : MonoBehaviour
         switch (astroidType)
         {
             case Global.AstroidType.small:
-                FindObjectOfType<ShipEntity>().GainOresFromAsteroid(this, Global.OresTypes.Iron, AstroidOreProvide[(int)Global.AstroidType.small]);
+                FindObjectOfType<ShipEntity>().GainOresFromAsteroid(this, Global.OresTypes.Ore_No1, AstroidOreProvide[(int)Global.AstroidType.small]);
                 break;
             case Global.AstroidType.big:
-                FindObjectOfType<ShipEntity>().GainOresFromAsteroid(this, Global.OresTypes.Iron, AstroidOreProvide[(int)Global.AstroidType.big]);
+                FindObjectOfType<ShipEntity>().GainOresFromAsteroid(this, Global.OresTypes.Ore_No1, AstroidOreProvide[(int)Global.AstroidType.big]);
                 break;
             case Global.AstroidType.special:
-                FindObjectOfType<ShipEntity>().GainOresFromAsteroid(this, Global.OresTypes.no2_Ores, AstroidOreProvide[(int)Global.AstroidType.special]);
+                FindObjectOfType<ShipEntity>().GainOresFromAsteroid(this, Global.OresTypes.Special_Ore, AstroidOreProvide[(int)Global.AstroidType.special]);
                 break;
         }
 

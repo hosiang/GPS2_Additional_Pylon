@@ -4,29 +4,42 @@ using UnityEngine;
 
 public class ShipEntity : MonoBehaviour
 {
-    [SerializeField]
-    protected float healthPoint = 0;
-    protected float healthPointMaximal = 100;
-    [SerializeField]
-    protected float healthRecoverPoint = 0;
+    [Header("Health")]
+    [SerializeField] protected float currentHealth = 100f;
+    [SerializeField] protected float maximalHealth = 100f;
 
-    public float HealthPoint { get { return healthPoint; } }
-    public float HealthPointMaximal { get { return healthPointMaximal; } }
+    [SerializeField] private float healthRegenerationRate = 1f; // Take from BaseSystem
 
-    [SerializeField]
-    protected float weightAmount = 0;
-    protected float weightAmountMaximal = 100;
+    [SerializeField] protected bool isDead = false;
+
+    public float CurrentHealth { get { return currentHealth; } }
+    public float MaximalHealth { get { return maximalHealth; } }
+    public bool IsDead { get { return isDead; } }
+
+
+    [Header("Nitro")]
+    [SerializeField] protected float currentNitro = 100f;
+    [SerializeField] protected float maximalNitro = 100f;
+
+    [SerializeField] private float nitroRegenerationRate = 33f;
+    [SerializeField] private float nitroRefuelRate = 27f; // Use in Base, Get from BaseSystem
+
+    [SerializeField] protected bool isOverheat = false;
+
+    public float CurrentNitro { get { return currentNitro; } }
+    public float MaximalNitro { get { return maximalNitro; } }
+    public bool IsOverheat { get { return isOverheat; } }
+
+
+    [Header("Weight")]
+    [SerializeField] protected float currentWeight = 0f;
+    [SerializeField] protected float maximalWeight = 100f;
+
+    public float CurrentWeight { get { return currentWeight; } }
+    public float MaximalWeight { get { return maximalWeight; } }
+
+
     protected Dictionary<Global.OresTypes, float> oresAmount = new Dictionary<Global.OresTypes, float>();
-
-    public float WeightAmount { get { return weightAmount; } }
-    public float WeightAmountMaximal { get { return weightAmountMaximal; } }
-
-    protected float nitroPoint = 0;
-    protected float nitroPointMaximal = 100;
-    protected float nitroDepletePoint = 0;
-
-    public float NitroPoint { get { return nitroPoint; } }
-    public float NitroPointMaximal { get { return nitroPointMaximal; } }
 
     private BaseSystem baseSystem;
 
@@ -38,7 +51,7 @@ public class ShipEntity : MonoBehaviour
     {
         for(int i = 0; i < (int)Global.OresTypes.Length; i++)
         {
-            oresAmount.Add((Global.OresTypes)i, 0.0f);
+            oresAmount.Add((Global.OresTypes)i, 0.0f); // Set up all kind of ores type to |*|oresAmount|*|
         }
         //Debug.Log(oresAmount.Count);
 
@@ -54,6 +67,7 @@ public class ShipEntity : MonoBehaviour
 
     void Update()
     {
+        // !!! For Debug
         //Debug.Log("No 1 ore : " + oresAmount[Global.OresTypes.Iron] + " , No 2 ore : " + oresAmount[Global.OresTypes.no2_Ores]);
     }
 
@@ -78,6 +92,86 @@ public class ShipEntity : MonoBehaviour
         }
     }
 
+
+    #region |* Health fuctions *|
+    private void HealthChecker()
+    {
+        if (currentHealth <= 0.0f)
+        {
+            currentHealth = 0.0f;
+            isDead = true;
+        }
+    }
+    public void TakeDamage(float damage)
+    {
+        //Debug.Log($"<color=red>Player took {damage}</color>");
+
+        currentHealth -= damage;
+        HealthChecker();
+    }
+    public void ReplenishHealthPoint(Object requireObject)
+    {
+        //if(requireObject.GetType().Name == nameof(BaseSystem))
+        if (requireObject == baseSystem)
+        {
+            if (currentHealth < maximalHealth)
+            {
+                currentHealth += healthRegenerationRate * Time.deltaTime; // Smooth the regeneration speed.
+            }
+            else if (currentHealth > maximalHealth) // This only will trigger one time when |*|currentHealth|*| overstep the |*|maximalHealth|*|
+            {
+                currentHealth = maximalHealth; // For limit the overstep |*|currentHealth|*| to |*|maximalHealth|*|
+            }
+        }
+        else
+        {
+            Debug.LogError("Alert! Have some Unauthorized class try to entry to invoking this functions!");
+        }
+    }
+    #endregion |* End Of Health fuctions *|
+
+
+    #region |* Nitro fuctions *|
+    private void NitroChecker()
+    {
+        if (currentNitro <= 0.0f)
+        {
+            currentNitro = 0.0f;
+            isOverheat = true;
+        }
+    }
+    public void ReplenishNitroPoint(Object requireObject)
+    {
+        if (requireObject == baseSystem)
+        {
+            if (currentNitro < maximalNitro)
+            {
+                currentNitro += nitroRegenerationRate * Time.deltaTime;
+            }
+            // If isOverheat is true and |*|currentNitro|*| is more then or equal to |*|maximalNitro|*|, then it will allow player able to thrust again
+            else if (isOverheat && currentNitro >= maximalNitro)
+            {
+                isOverheat = false;
+                currentNitro = maximalNitro;
+            } 
+            else if (currentNitro > maximalNitro)
+            {
+                currentNitro = maximalNitro;
+            }
+        }
+        else
+        {
+            Debug.LogError("Alert! Have some Unauthorized class try to entry to invoking this functions!");
+        }
+    }
+    public void NitroReduction()
+    {
+        currentNitro -= nitroRefuelRate * Time.deltaTime;
+    }
+    #endregion |* End Of Nitro fuctions *|
+
+
+    #region |* Weight fuctions *|
     public Dictionary<Global.OresTypes, float> UnloadResources(Object requireObject, Dictionary<Global.OresTypes, float> baseOresAmount)
     {
         if (requireObject == baseSystem)
@@ -87,61 +181,45 @@ public class ShipEntity : MonoBehaviour
                 baseOresAmount[(Global.OresTypes)i] += oresAmount[(Global.OresTypes)i];
                 oresAmount[(Global.OresTypes)i] = 0.0f;
             }
-            weightAmount = 0.0f;
+            currentWeight = 0.0f;
 
             return baseOresAmount;
         }
         else
         {
+            Debug.LogError("Alert! Have some Unauthorized class try to entry to invoking this functions!");
             return null;
         }
     }
 
-    public void ReplenishHealthPoint(Object requireObject)
-    {
-        //if(requireObject.GetType().Name == nameof(BaseSystem))
-        if (requireObject == baseSystem && healthPoint < healthPointMaximal)
-        {
-            healthPoint += healthRecoverPoint * Time.deltaTime;
-        }
-    }
-
-    public void ReplenishNitroPoint(Object requireObject)
-    {
-        if (requireObject == baseSystem && nitroPoint < nitroPointMaximal)
-        {
-            nitroPoint = nitroPointMaximal;
-        }
-    }
-
-    public Dictionary<Global.OresTypes, float> GetOresAmount(Object requireObject)
-    {
-        if (requireObject == baseSystem)
-        {
-            return oresAmount;
-        }
-        else
-        {
-            return null;
-        }
-    }
-
-    public void GainOresFromAsteroid(Object requireObject, Global.OresTypes oresTypes, float oreAmount)
+    public void GainOresFromAsteroid(Object requireObject, Global.OresTypes oresTypes, float oreAmount = 1.0f)
     {
         if (requireObject.GetType().Name == nameof(Asteroid))
         {
-            oresAmount[oresTypes] += oreAmount;
-            CheckWeightAmount();
+            if (oresTypes == Global.OresTypes.Special_Ore)
+            {
+                // time system
+            }
+            else
+            {
+                oresAmount[oresTypes] += oreAmount;
+                CheckWeightAmount();
+            }
         }
     }
-
     private void CheckWeightAmount()
     {
-        weightAmount = (oresAmount[Global.OresTypes.Iron] * 1) + (oresAmount[Global.OresTypes.no2_Ores] * 2);
-    }
+        float tempWeight = 0.0f;
+        for (int i = 0; i < (int)Global.OresTypes.Length; i++)
+        {
+            tempWeight += oresAmount[(Global.OresTypes)i] * Global.OresWeight[i];
+        }
 
-    public float GetShipOresAmount(Global.OresTypes oresTypes)
-    {
-        return oresAmount[oresTypes];
+        currentWeight = tempWeight;
     }
+    #endregion |* End Of Weight fuctions *|
+
+
+    public float GetShipOresAmount(Global.OresTypes oresTypes) { return oresAmount[oresTypes]; }
+
 }

@@ -37,13 +37,14 @@ public static class Global {
 
     //Enums
     public enum AstroidType { small, big, special };
-    public enum OresTypes { Iron, no2_Ores, Length };
+    public enum OresTypes { Special_Ore, Ore_No1, Length };
     public enum ZoneLevels { ShieldZone, EasyZone, MediumZone, HardZone };
     public enum ParticleEffectType { astroid };
     public enum MenusType {ScreenBlock, UIControllerPrefab, UIInformationContainer, QuitConfirmation};
 
     //List or Array
     public static readonly float[] zoneValues = { 10.0f, 20.0f, 40.0f, 60.0f };
+    public static readonly float[] OresWeight = { 0.0f, 1.0f };
 
     public static float ValueToTime(float value)
     {

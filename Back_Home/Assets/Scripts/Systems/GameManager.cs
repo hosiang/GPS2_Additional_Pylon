@@ -9,7 +9,6 @@ public class GameManager : MonoBehaviour {
     public GameObject taskCompletedUI;
 
     private void Awake() {
-
         enemySpawner = transform.Find("Enemy Spawner").GetComponent<EnemySpawner>();
 
     }
