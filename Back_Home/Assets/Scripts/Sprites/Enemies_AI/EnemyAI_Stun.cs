@@ -4,8 +4,12 @@ using UnityEngine;
 
 public class EnemyAI_Stun : EnemyAI_Abstract {
 
+    [SerializeField] Animator stunnerAnimator;
+
     [SerializeField] private float stunRadius;
     [SerializeField] private float stunRecoveryTime;
+
+    [SerializeField] private GameObject stunBullet;
 
     private float stunRecoveryCountdown;
 
@@ -26,10 +30,9 @@ public class EnemyAI_Stun : EnemyAI_Abstract {
 
         currentState = PirateState.patrol;
 
-        moveToPosition = RandomRadiusPosition(patrolCenter, patrolRadius);
+        //moveToPosition = RandomRadiusPosition(patrolCenter, patrolRadius);
 
-        transform.LookAt(moveToPosition);
-
+        //transform.LookAt(moveToPosition);
     }
 
     // Update is called once per frame
@@ -39,16 +42,11 @@ public class EnemyAI_Stun : EnemyAI_Abstract {
 
             case PirateState.patrol:
 
-                Patrol();
-
-                if (stunRecoveryCountdown <= 0f) { DetectPlayer(); }
+                if (stunRecoveryCountdown <= 0f) { LookAtPlayer(); }
 
                 break;
 
             case PirateState.chase:
-
-                DetectPlayer();
-                ChasePlayer();
 
                 float playerDistance = Vector3.Distance(transform.position, playerPosition);
 
@@ -75,6 +73,29 @@ public class EnemyAI_Stun : EnemyAI_Abstract {
 
     }
 
+    private void LookAtPlayer()
+    {
+        Collider[] playerCollideCheck = Physics.OverlapSphere(transform.position, stunRadius, Global.layer_Player);
+
+        if (playerCollideCheck.Length > 0)
+        {
+            currentState = PirateState.chase;
+
+            playerPosition = playerCollideCheck[0].gameObject.GetComponent<Transform>().position;
+
+            stunnerAnimator.SetTrigger("startMoving");
+
+            transform.LookAt(playerPosition);
+
+            stunnerAnimator.SetTrigger("stopMoving");
+        }
+        else if (playerPosition != Vector3.zero)
+        {
+            playerPosition = Vector3.zero;
+        }
+
+    }
+
     public override void AttackPlayer() {
 
         if (stunRecoveryCountdown <= 0f) {
@@ -87,8 +108,7 @@ public class EnemyAI_Stun : EnemyAI_Abstract {
 
             currentState = PirateState.evacuate;
 
-            transform.LookAt(patrolCenter);
-
+            StartCoroutine(Charge());
         }
 
     }
@@ -98,9 +118,19 @@ public class EnemyAI_Stun : EnemyAI_Abstract {
         if (stunRecoveryCountdown > 0f) {
 
             stunRecoveryCountdown -= Time.deltaTime;
-
         }
 
+    }
+
+    IEnumerator Charge()
+    {
+        stunnerAnimator.SetTrigger("isStunning");
+        yield return new WaitForSeconds(stunnerAnimator.GetCurrentAnimatorStateInfo(0).length);
+
+        GameObject newBullet = Instantiate(stunBullet, transform.position, transform.rotation);
+        newBullet.GetComponent<Enemy_StunBullet>().InitializeBullet(Vector3.forward, this.tag);
+
+        yield break;
     }
 
 }

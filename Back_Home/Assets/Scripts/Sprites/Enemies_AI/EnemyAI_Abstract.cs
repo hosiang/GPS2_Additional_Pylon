@@ -78,7 +78,6 @@ public abstract class EnemyAI_Abstract : MonoBehaviour {
             playerPosition = Vector3.zero;
 
         }
-
     }
 
     protected void ChasePlayer() {

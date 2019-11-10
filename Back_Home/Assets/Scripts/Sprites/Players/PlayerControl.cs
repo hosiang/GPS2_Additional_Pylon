@@ -8,6 +8,10 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] private float thrustPower = 20f;
     [SerializeField] private float rotateSpeed = 90f;
     [SerializeField] private float nitroConsume = 15f;
+    [SerializeField] private Animator playerAnimator;
+    [SerializeField] private ParticleSystem mainThruster;
+    [SerializeField] private ParticleSystem leftSideThruster;
+    [SerializeField] private ParticleSystem rightSideThruster;
     [SerializeField] private ParticleSystem drillerVibrationFrequencyParticleSystem;
 
     private BoxCollider playerCollision;
@@ -85,6 +89,8 @@ public class PlayerControl : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
+            playerAnimator.SetTrigger("isHurt");
+
             CameraShaker.Instance.ShakeOnce(4f, 4f, 0.1f, 2f);
             healthSystem.TakeDamage(50f);
             //heatSystem.AddHeatAmount(heatCollisionEnemyIncreaseRate);
@@ -157,10 +163,31 @@ public class PlayerControl : MonoBehaviour
     {
         if (nitroSystem.GetNitro() > 0)
         {
+            playerAnimator.SetTrigger("isThrustPress");
+            mainThruster.Play();
+            leftSideThruster.Play();
+            rightSideThruster.Play();
+
             playerRigidbody.velocity += transform.forward * (thrustPower * Time.deltaTime);
             //playerRigidbody.AddForce(transform.forward * thrustPower);
             nitroSystem.NitroReduction(nitroConsume);
         }
+        else
+        {
+            if (mainThruster.isPlaying || leftSideThruster.isPlaying || rightSideThruster.isPlaying)
+            {
+                mainThruster.Stop();
+                leftSideThruster.Stop();
+                rightSideThruster.Stop();
+            }
+        }
+    }
+    public void ThrustingRelease()
+    {
+        playerAnimator.SetTrigger("isThrustRelease");
+        mainThruster.Stop();
+        leftSideThruster.Stop();
+        rightSideThruster.Stop();
     }
 
     private void Thrust()
@@ -233,7 +260,6 @@ public class PlayerControl : MonoBehaviour
 
     public void DrillCollideDetect()
     {
-
         drillCollide = Physics.OverlapCapsule(drillStart.position, drillEnd.position, drillRadius, Global.layer_Astroid);
 
         if (drillCollide.Length > 0)
@@ -242,6 +268,8 @@ public class PlayerControl : MonoBehaviour
             {
                 if (!(drillCollide[i].gameObject.GetComponentInParent<Asteroid>().GetAstroidType() == Global.AstroidType.big && drillSpeed == DrillSpeed.slow))
                 {
+                    playerAnimator.SetTrigger("isDrillPress");
+
                     onDrilling = true;
 
                     playerRigidbody.angularVelocity = Vector3.zero;
@@ -273,6 +301,8 @@ public class PlayerControl : MonoBehaviour
 
     public void StopDrilling()
     {
+        playerAnimator.SetTrigger("isDrillRelease");
+
         drillerVibrationFrequencyParticleSystem.Stop();
         onDrilling = false;
         /*
