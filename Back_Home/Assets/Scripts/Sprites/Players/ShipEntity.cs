@@ -44,12 +44,21 @@ public class ShipEntity : MonoBehaviour
     private BaseSystem baseSystem;
 
     //Particle
+    [SerializeField] private ParticleSystem healing1;
+    [SerializeField] private ParticleSystem healing2;
+    [SerializeField] private ParticleSystem blingHurt;
+    [SerializeField] private ParticleSystem boomHurt;
     [SerializeField] private ParticleSystem astroidHitParticle;
     [SerializeField] private float astroidCollisionSpeed;
 
     void Start()
     {
-        for(int i = 0; i < (int)Global.OresTypes.Length; i++)
+        healing1.Stop();
+        healing2.Stop();
+        blingHurt.Stop();
+        boomHurt.Stop();
+
+        for (int i = 0; i < (int)Global.OresTypes.Length; i++)
         {
             oresAmount.Add((Global.OresTypes)i, 0.0f); // Set up all kind of ores type to |*|oresAmount|*|
         }
@@ -105,6 +114,8 @@ public class ShipEntity : MonoBehaviour
     public void TakeDamage(float damage)
     {
         //Debug.Log($"<color=red>Player took {damage}</color>");
+        blingHurt.Play();
+        boomHurt.Play();
 
         currentHealth -= damage;
         HealthChecker();
@@ -116,10 +127,19 @@ public class ShipEntity : MonoBehaviour
         {
             if (currentHealth < maximalHealth)
             {
+                healing1.Play();
+                healing2.Play();
+
                 currentHealth += healthRegenerationRate * Time.deltaTime; // Smooth the regeneration speed.
             }
             else if (currentHealth > maximalHealth) // This only will trigger one time when |*|currentHealth|*| overstep the |*|maximalHealth|*|
             {
+                if (healing1.isPlaying || healing2.isPlaying || healing2.isPlaying)
+                {
+                    healing1.Stop();
+                    healing2.Stop();
+                }
+
                 currentHealth = maximalHealth; // For limit the overstep |*|currentHealth|*| to |*|maximalHealth|*|
             }
         }

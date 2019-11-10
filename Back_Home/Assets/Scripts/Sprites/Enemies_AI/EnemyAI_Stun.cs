@@ -10,6 +10,8 @@ public class EnemyAI_Stun : EnemyAI_Abstract {
     [SerializeField] private float stunRecoveryTime;
 
     [SerializeField] private GameObject stunBullet;
+    [SerializeField] private ParticleSystem chargeStun;
+    [SerializeField] private ParticleSystem boomStun;
 
     private float stunRecoveryCountdown;
 
@@ -27,6 +29,9 @@ public class EnemyAI_Stun : EnemyAI_Abstract {
 
     // Start is called before the first frame update
     void Start() {
+
+        chargeStun.Stop();
+        boomStun.Stop();
 
         currentState = PirateState.patrol;
 
@@ -125,6 +130,9 @@ public class EnemyAI_Stun : EnemyAI_Abstract {
     IEnumerator Charge()
     {
         stunnerAnimator.SetTrigger("isStunning");
+        chargeStun.Play();
+        boomStun.Play();
+
         yield return new WaitForSeconds(stunnerAnimator.GetCurrentAnimatorStateInfo(0).length);
 
         GameObject newBullet = Instantiate(stunBullet, transform.position, transform.rotation);
