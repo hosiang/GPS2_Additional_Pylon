@@ -64,7 +64,7 @@ public class AsteroidGenerator : MonoBehaviour
             
         }
     */
-        Debug.Log("child amount = " + zoneContainner[0].transform.GetChildCount());
+        Debug.Log("child amount = " + zoneContainner[0].transform.childCount);
 
         #region !! dont delete !!
         /*
