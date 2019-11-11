@@ -12,6 +12,15 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] private float nitroConsume = 15f;
     //[SerializeField] private ParticleSystem drillerVibrationFrequencyParticleSystem;
 
+    // Particle systems
+    [SerializeField] private Animator playerAnimator;
+    [SerializeField] private ParticleSystem mainThruster;
+    [SerializeField] private ParticleSystem leftSideThruster;
+    [SerializeField] private ParticleSystem rightSideThruster;
+    [SerializeField] private ParticleSystem particleDrill;
+    [SerializeField] private ParticleSystem blingDrill;
+    [SerializeField] private ParticleSystem boomDrill;
+
     private BoxCollider playerCollision;
     private Rigidbody playerRigidbody;
     private Transform playerTransform;
@@ -54,7 +63,17 @@ public class PlayerControl : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+<<<<<<< HEAD
         HideDamageIndicator();
+=======
+        mainThruster.Stop();
+        //leftSideThruster.Stop();
+        //rightSideThruster.Stop();
+        particleDrill.Stop();
+        blingDrill.Stop();
+        boomDrill.Stop();
+
+>>>>>>> 606532169cdc74265fafcb859cc6feb43049cbbc
         shipEntity = GetComponent<ShipEntity>();
 
         playerCollision = GetComponent<BoxCollider>();
@@ -164,10 +183,33 @@ public class PlayerControl : MonoBehaviour
     {
         if (!shipEntity.IsOverheat)
         {
+            playerAnimator.SetTrigger("isThrustPress");
+            mainThruster.Play();
+            leftSideThruster.Play();
+            rightSideThruster.Play();
+
+            playerRigidbody.velocity += transform.forward * (thrustPower * Time.deltaTime);
+
             playerRigidbody.velocity += transform.forward * (currentThrustPower * Time.deltaTime);
             //playerRigidbody.AddForce(transform.forward * thrustPower);
             shipEntity.NitroReduction();
         }
+        else
+        {
+            if (mainThruster.isPlaying || leftSideThruster.isPlaying || rightSideThruster.isPlaying)
+            {
+                mainThruster.Stop();
+                leftSideThruster.Stop();
+                rightSideThruster.Stop();
+            }
+        }
+    }
+    public void ThrustingRelease()
+    {
+        playerAnimator.SetTrigger("isThrustRelease");
+        mainThruster.Stop();
+        leftSideThruster.Stop();
+        rightSideThruster.Stop();
     }
 
     private void Thrust()
@@ -188,7 +230,6 @@ public class PlayerControl : MonoBehaviour
             //else {}
         }
     }
-
 
     private void ControlThrustPowerByWeightRate()
     {
@@ -259,6 +300,10 @@ public class PlayerControl : MonoBehaviour
             {
                 if (!(drillCollide[i].gameObject.GetComponentInParent<Asteroid>().GetAstroidType() == Global.AstroidType.big && drillSpeed == DrillSpeed.slow))
                 {
+                    particleDrill.Play();
+                    blingDrill.Play();
+                    boomDrill.Play();
+
                     onDrilling = true;
 
                     playerRigidbody.angularVelocity = Vector3.zero;
@@ -290,6 +335,15 @@ public class PlayerControl : MonoBehaviour
 
     public void StopDrilling()
     {
+        playerAnimator.SetTrigger("isDrillRelease");
+
+        if (particleDrill.isPlaying || blingDrill.isPlaying || boomDrill.isPlaying)
+        {
+            particleDrill.Stop();
+            blingDrill.Stop();
+            boomDrill.Stop();
+        }
+
         //drillerVibrationFrequencyParticleSystem.Stop();
         onDrilling = false;
         /*
