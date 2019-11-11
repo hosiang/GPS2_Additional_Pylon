@@ -1,0 +1,2 @@
+Timer and Number of asteroids collected display thru unity code
+HP bar just render 2 rectangles behind the UI with 1 animated to decrease according to hp and one to make it so u cant see thru the bar itself (isnt animated)
