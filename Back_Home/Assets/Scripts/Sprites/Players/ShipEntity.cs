@@ -43,6 +43,8 @@ public class ShipEntity : MonoBehaviour
 
     private BaseSystem baseSystem;
 
+    [SerializeField] private Animator playerAnimator;
+
     //Particle
     [SerializeField] private ParticleSystem healing1;
     [SerializeField] private ParticleSystem healing2;
@@ -114,6 +116,7 @@ public class ShipEntity : MonoBehaviour
     public void TakeDamage(float damage)
     {
         //Debug.Log($"<color=red>Player took {damage}</color>");
+        playerAnimator.SetTrigger("isHurt");
         blingHurt.Play();
         boomHurt.Play();
 
