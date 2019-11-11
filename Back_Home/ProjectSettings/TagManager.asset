@@ -7,6 +7,7 @@ TagManager:
   - Enemy
   - Ores
   - Asteroid
+  - UI Items
   layers:
   - Default
   - TransparentFX

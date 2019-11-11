@@ -59,11 +59,12 @@ public class PlayerControl : MonoBehaviour
 
     public GameObject damageIndicator;
     private float damageDuration = 1f;
+    public bool isThrust = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        //HideDamageIndicator();
+        HideDamageIndicator();
 
         mainThruster.Stop();
         //leftSideThruster.Stop();
@@ -179,7 +180,7 @@ public class PlayerControl : MonoBehaviour
 
     public void Thrusting()
     {
-        if (!shipEntity.IsOverheat)
+        if (!shipEntity.IsOverheat && !isThrust)
         {
             playerAnimator.SetTrigger("isThrustPress");
             mainThruster.Play();
@@ -191,6 +192,7 @@ public class PlayerControl : MonoBehaviour
             playerRigidbody.velocity += transform.forward * (currentThrustPower * Time.deltaTime);
             //playerRigidbody.AddForce(transform.forward * thrustPower);
             shipEntity.NitroReduction();
+            isThrust = true;
         }
         else
         {
@@ -199,6 +201,7 @@ public class PlayerControl : MonoBehaviour
                 mainThruster.Stop();
                 leftSideThruster.Stop();
                 rightSideThruster.Stop();
+                isThrust = false;
             }
         }
     }
