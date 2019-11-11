@@ -38,7 +38,7 @@ public static class Global {
     //Enums
     public enum AstroidType { small, big, special };
     public enum OresTypes { Special_Ore, Ore_No1, Length };
-    public enum ZoneLevels { ShieldZone, EasyZone, MediumZone, HardZone };
+    public enum ZoneLevels { ShieldZone, EasyZone, MediumZone, HardZone, Length };
     public enum ParticleEffectType { astroid };
     public enum MenusType {ScreenBlock, UIControllerPrefab, UIInformationContainer, QuitConfirmation};
 

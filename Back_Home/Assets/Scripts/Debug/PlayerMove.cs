@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using EZCameraShake;
 
 public class PlayerMove : MonoBehaviour
 {
@@ -36,19 +35,6 @@ public class PlayerMove : MonoBehaviour
             direction.z -= speed;
 
         transform.Translate(direction * Time.deltaTime);
-    }
-
-    void OnTriggerEnter(Collider other)
-    {
-        if(other.tag == "Enemy")
-        {
-            PlayerDamaged();
-            CameraShaker.Instance.ShakeOnce(6f, 6f, 0.1f, 5f);
-        }
-        if(other.tag == "Asteroid")
-        {
-            CameraShaker.Instance.ShakeOnce(4f, 2f, 0.1f, 1f);
-        }
     }
     private void PlayerDamaged()
     {

@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using EZCameraShake;
 
 public class PlayerControl : MonoBehaviour
 {
@@ -58,9 +57,15 @@ public class PlayerControl : MonoBehaviour
 
     private Vector3 basePosition = Vector3.zero;
 
+    public GameObject damageIndicator;
+    private float damageDuration = 1f;
+
     // Start is called before the first frame update
     void Start()
     {
+<<<<<<< HEAD
+        HideDamageIndicator();
+=======
         mainThruster.Stop();
         //leftSideThruster.Stop();
         //rightSideThruster.Stop();
@@ -68,6 +73,7 @@ public class PlayerControl : MonoBehaviour
         blingDrill.Stop();
         boomDrill.Stop();
 
+>>>>>>> 606532169cdc74265fafcb859cc6feb43049cbbc
         shipEntity = GetComponent<ShipEntity>();
 
         playerCollision = GetComponent<BoxCollider>();
@@ -105,7 +111,7 @@ public class PlayerControl : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            CameraShaker.Instance.ShakeOnce(4f, 4f, 0.1f, 2f);
+            PlayerDamaged();
             shipEntity.TakeDamage(50f);
             //heatSystem.AddHeatAmount(heatCollisionEnemyIncreaseRate);
         }
@@ -349,5 +355,19 @@ public class PlayerControl : MonoBehaviour
             }
         }
         */
+    }
+    private void ShowDamageIndicator()
+    {
+        damageIndicator.SetActive(true);
+    }
+    private void HideDamageIndicator()
+    {
+        damageIndicator.SetActive(false);
+    }
+    private void PlayerDamaged()
+    {
+        ShowDamageIndicator();
+        CancelInvoke("HideDamageIndicator");
+        Invoke("HideDamageIndicator", damageDuration);
     }
 }
