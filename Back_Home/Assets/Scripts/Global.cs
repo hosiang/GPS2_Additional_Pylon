@@ -43,8 +43,8 @@ public static class Global {
     public enum MenusType {ScreenBlock, UIControllerPrefab, UIInformationContainer, QuitConfirmation};
 
     //List or Array
-    public static readonly float[] zoneValues = { 10.0f, 20.0f, 40.0f, 60.0f };
-    public static readonly float[] OresWeight = { 0.0f, 1.0f };
+    public static readonly float[] zoneValues = { 15.0f, 30.0f, 50.0f, 75.0f };
+    public static readonly float[] OresWeight = { 0.0f, 2.5f };
 
     public static float ValueToTime(float value)
     {
