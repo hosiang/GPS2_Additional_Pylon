@@ -7817,6 +7817,7 @@ MonoBehaviour:
   drillFastSpeedMultiplier: 0
   slowDrillToggle: {fileID: 0}
   joystickTouchController: {fileID: 0}
+  damageIndicator: {fileID: 0}
 --- !u!65 &896169940
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9762,10 +9763,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8433f92d0c2e4ab41a53d27cbfb90097, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  asteroids:
-  - asteroidGameObject: {fileID: 7455624774527631368, guid: efee509b3a245b640b844f0ca25f4f4f,
-      type: 3}
-    amount: 40
+  eachZoenAsteroids: []
 --- !u!4 &1131074291
 Transform:
   m_ObjectHideFlags: 0
@@ -16889,6 +16887,10 @@ PrefabInstance:
       propertyPath: healing2
       value: 
       objectReference: {fileID: 1617925899}
+    - target: {fileID: 1755108442, guid: c7757eb10e0cd954a80d8b7b54134eda, type: 3}
+      propertyPath: playerAnimator
+      value: 
+      objectReference: {fileID: 49186082}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c7757eb10e0cd954a80d8b7b54134eda, type: 3}
 --- !u!198 &1883635208 stripped
