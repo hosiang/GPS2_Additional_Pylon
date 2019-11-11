@@ -63,9 +63,8 @@ public class PlayerControl : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-<<<<<<< HEAD
         HideDamageIndicator();
-=======
+
         mainThruster.Stop();
         //leftSideThruster.Stop();
         //rightSideThruster.Stop();
@@ -73,7 +72,6 @@ public class PlayerControl : MonoBehaviour
         blingDrill.Stop();
         boomDrill.Stop();
 
->>>>>>> 606532169cdc74265fafcb859cc6feb43049cbbc
         shipEntity = GetComponent<ShipEntity>();
 
         playerCollision = GetComponent<BoxCollider>();

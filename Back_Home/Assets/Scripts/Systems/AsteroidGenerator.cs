@@ -41,6 +41,7 @@ public class AsteroidGenerator : MonoBehaviour
 
     void Start()
     {
+        /*
         for (Global.ZoneLevels i = Global.ZoneLevels.EasyZone; i < Global.ZoneLevels.Length; i++)
         {
             //for (int j = 0; j < asteroids[0].amount; j++)
@@ -50,18 +51,19 @@ public class AsteroidGenerator : MonoBehaviour
                 asteroidBigGameObjects.Add(i, Instantiate<GameObject>(eachZoenAsteroids[(int)i - 1].asteroidGameObject[randomAsteroids]));
                 asteroidBigTransforms.Add(i, asteroidBigGameObjects[(Global.ZoneLevels)i].GetComponent<Transform>());
                 asteroidBigTransforms[j].SetParent(zoneContainner[0].transform);
-                Debug.Log(asteroidBigTransforms[j].parent.name);
+                //Debug.Log(asteroidBigTransforms[j].parent.name);
             }
             Debug.Log("zone amount = " + asteroidBigGameObjects.Count);
-            /*
+            
             for (int j = 0; j < (eachZoneAsteroidAmount[i] / 3) * 2; j++) // Small asteroids
             {
                 asteroidSmallGameObjects.Add(Instantiate<GameObject>(asteroids[1].asteroidGameObject));
                 asteroidSmallTransforms.Add(asteroidSmallGameObjects[j].GetComponent<Transform>());
                 asteroidSmallTransforms[j].SetParent(zoneContainner[i].transform);
             }
-            */
+            
         }
+    */
         Debug.Log("child amount = " + zoneContainner[0].transform.GetChildCount());
 
         #region !! dont delete !!

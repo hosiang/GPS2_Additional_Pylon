@@ -336,6 +336,10 @@ MonoBehaviour:
   isOverheat: 0
   currentWeight: 0
   maximalWeight: 100
+  healing1: {fileID: 0}
+  healing2: {fileID: 0}
+  blingHurt: {fileID: 0}
+  boomHurt: {fileID: 0}
   astroidHitParticle: {fileID: 0}
   astroidCollisionSpeed: 0
 --- !u!114 &1755108446
@@ -354,7 +358,13 @@ MonoBehaviour:
   minimalThrustPower: 10
   rotateSpeed: 90
   nitroConsume: 15
-  drillerVibrationFrequencyParticleSystem: {fileID: 0}
+  playerAnimator: {fileID: 0}
+  mainThruster: {fileID: 0}
+  leftSideThruster: {fileID: 0}
+  rightSideThruster: {fileID: 0}
+  particleDrill: {fileID: 0}
+  blingDrill: {fileID: 0}
+  boomDrill: {fileID: 0}
   drillSpeed: 0
   drillStart: {fileID: 5354784451090378843}
   drillEnd: {fileID: 3849383927870369367}
@@ -364,6 +374,7 @@ MonoBehaviour:
   drillFastSpeedMultiplier: 2
   slowDrillToggle: {fileID: 0}
   joystickTouchController: {fileID: 0}
+  damageIndicator: {fileID: 0}
 --- !u!1 &1736434520931369591
 GameObject:
   m_ObjectHideFlags: 0
@@ -458,7 +469,7 @@ MeshCollider:
   serializedVersion: 3
   m_Convex: 1
   m_CookingOptions: 14
-  m_Mesh: {fileID: -3292925553009838691, guid: 948749cb7d74da6459fd08b703f31295, type: 3}
+  m_Mesh: {fileID: 4300000, guid: 7ef0220b438be054a9f5afe70c4bed9e, type: 2}
 --- !u!64 &1074589073523519223
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -472,7 +483,7 @@ MeshCollider:
   serializedVersion: 3
   m_Convex: 1
   m_CookingOptions: 14
-  m_Mesh: {fileID: 7485205316709286908, guid: 948749cb7d74da6459fd08b703f31295, type: 3}
+  m_Mesh: {fileID: 4300000, guid: a9772d47329444747804da18ac46b11b, type: 2}
 --- !u!1 &8341910522274937843
 GameObject:
   m_ObjectHideFlags: 0
@@ -630,6 +641,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 180
       objectReference: {fileID: 0}
+    - target: {fileID: -2584082072932632373, guid: 948749cb7d74da6459fd08b703f31295,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 4300000, guid: 7ef0220b438be054a9f5afe70c4bed9e, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 948749cb7d74da6459fd08b703f31295, type: 3}
 --- !u!1 &5273547867809957203 stripped

@@ -17,6 +17,8 @@ public class BaseSystem : MonoBehaviour
     private Transform detectShieldOriginTransform;
     private bool isExtendingShield = false;
     private LayerMask layerMask_player;
+    [SerializeField] private Transform shieldTransform;
+    private Vector3 shieldOriginalScale;
 
     private float eachSpecialOreIncreaseTime = 0.05f;
 
@@ -56,6 +58,7 @@ public class BaseSystem : MonoBehaviour
 
     private void Awake()
     {
+        
         borderLinesContainner = new GameObject(name_borderLinesContainner); // Create the border line containner
         borderLineOriginalColor = borderLine.GetComponentInChildren<SpriteRenderer>().color;
 
@@ -68,7 +71,7 @@ public class BaseSystem : MonoBehaviour
             borderLines_Transform[i].SetParent(borderLinesContainner.transform);
             
         }
-
+        
         detectShieldOriginTransform = this.GetComponent<Transform>();
 
         for (int i = 0; i < (int)Global.OresTypes.Length; i++) // Initialise the ores types resourses
@@ -84,6 +87,8 @@ public class BaseSystem : MonoBehaviour
         eachAngle = (2f * Mathf.PI) / borderLinesAmount; // For count the each border lines's angle
         
         currentTime = Global.ValueToTime(startShieldRadius);
+
+        shieldOriginalScale = shieldTransform.localScale;
     }
 
     void Update()
@@ -122,7 +127,7 @@ public class BaseSystem : MonoBehaviour
     {
         return storageOresResources[oresTypes];
     }
-
+    
     private void BorderLinesMarkerRotating()
     {
         for (int i = 0; i < borderLinesAmount; i++)
@@ -147,6 +152,11 @@ public class BaseSystem : MonoBehaviour
 
             //Debug.Log("Sin : " + Mathf.Rad2Deg * 180 + ", Cos : " + Mathf.Rad2Deg * 180);
         }
+    }
+    
+    private void ShieldSizeFollowSafeZoneRadius()
+    {
+
     }
 
     private void ShieldSizeUpdate()
