@@ -63,7 +63,7 @@ public class PlayerControl : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        HideDamageIndicator();
+        //HideDamageIndicator();
 
         mainThruster.Stop();
         //leftSideThruster.Stop();
@@ -109,7 +109,7 @@ public class PlayerControl : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            PlayerDamaged();
+            //PlayerDamaged();
             shipEntity.TakeDamage(50f);
             //heatSystem.AddHeatAmount(heatCollisionEnemyIncreaseRate);
         }
