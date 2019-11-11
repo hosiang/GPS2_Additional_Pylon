@@ -9,7 +9,14 @@ public class Asteroid : MonoBehaviour
     
     [SerializeField] private Global.AstroidType astroidType;
 
-    [SerializeField] private GameObject ore;
+    [SerializeField] private GameObject ore1;
+    [SerializeField] private GameObject ore2;
+    [SerializeField] private GameObject ore3;
+    [SerializeField] private GameObject ore4;
+    [SerializeField] private GameObject ore5;
+    [SerializeField] private GameObject ore6;
+    [SerializeField] private GameObject ore7;
+    [SerializeField] private GameObject ore8;
 
     [SerializeField] private float health;
     [SerializeField] private float oreScatterRaius;
@@ -21,6 +28,11 @@ public class Asteroid : MonoBehaviour
     private float vibrationDistance;
     private float vibrationFrequency;
     private float vibrationChangeCounter;
+
+    [SerializeField] private Animator specialOresAnimator;
+
+    public GameObject boomEffect;
+    private bool isBoom = false;
 
     private void Awake()
     {
@@ -42,6 +54,11 @@ public class Asteroid : MonoBehaviour
 
     }
 
+    private void Start()
+    {
+        specialOresAnimator = GetComponent<Animator>();
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -53,8 +70,9 @@ public class Asteroid : MonoBehaviour
 
         if (health <= 0f)
         {
+            ExplosionEffect();
             ConvertToOre();
-            //Explode();
+            Explode();
         }
 
     }
@@ -71,6 +89,7 @@ public class Asteroid : MonoBehaviour
                 break;
             case Global.AstroidType.special:
                 FindObjectOfType<ShipEntity>().GainOresFromAsteroid(this, Global.OresTypes.Special_Ore, AstroidOreProvide[(int)Global.AstroidType.special]);
+                specialOresAnimator.SetBool("isDestroyed", true);
                 break;
         }
 
@@ -111,7 +130,7 @@ public class Asteroid : MonoBehaviour
 
     }
 
-    /*
+    
     private void Explode()
     {
 
@@ -119,15 +138,15 @@ public class Asteroid : MonoBehaviour
 
         int oresToSpawn = 0;
 
-        switch (astroidSize)
+        switch (astroidType)
         {
 
-            case AstroidSize.small:
-                oresToSpawn = 3;
+            case Global.AstroidType.small:
+                oresToSpawn = Random.Range(1,4);
                 break;
 
-            case AstroidSize.big:
-                oresToSpawn = 6;
+            case Global.AstroidType.big:
+                oresToSpawn = Random.Range(4, 8);
                 break;
 
         }
@@ -137,16 +156,44 @@ public class Asteroid : MonoBehaviour
 
             Vector3 spawnPosition = new Vector3(Random.Range(transform.position.x + 1, transform.position.x + oreScatterRaius), 0, Random.Range(transform.position.z + 1, transform.position.z + oreScatterRaius));
 
-            Instantiate(ore, spawnPosition, transform.rotation);
+            int randomTypeAsteroid = Random.Range(1,9);
+
+            switch(randomTypeAsteroid)
+            {
+                case 1:
+                    Instantiate(ore1, spawnPosition, transform.rotation);
+                    break;
+                case 2:
+                    Instantiate(ore2, spawnPosition, transform.rotation);
+                    break;
+                case 3:
+                    Instantiate(ore3, spawnPosition, transform.rotation);
+                    break;
+                case 4:
+                    Instantiate(ore4, spawnPosition, transform.rotation);
+                    break;
+                case 5:
+                    Instantiate(ore5, spawnPosition, transform.rotation);
+                    break;
+                case 6:
+                    Instantiate(ore6, spawnPosition, transform.rotation);
+                    break;
+                case 7:
+                    Instantiate(ore7, spawnPosition, transform.rotation);
+                    break;
+                case 8:
+                    Instantiate(ore8, spawnPosition, transform.rotation);
+                    break;
+
+            }
 
         }
 
-        Instantiate(parasiteToSpawn);
+        //Instantiate(parasiteToSpawn);
 
         Destroy(gameObject);
 
     }
-    */
 
     private void AlertEnemy()
     {
@@ -176,6 +223,11 @@ public class Asteroid : MonoBehaviour
             health -= damage;
         }
 
+    }
+
+    private void ExplosionEffect()
+    {
+        Instantiate(boomEffect, transform.position, transform.rotation);
     }
 
     public Global.AstroidType GetAstroidType()
