@@ -7,26 +7,30 @@ using UnityEngine.EventSystems;
 public class DrillingTimer : MonoBehaviour
 {
     private float timeRemaining;
-    private const float maxTimeDrill = 4f;
+    private const float maxTimeDrill = 5f;
     private bool isHolding = false;
     public Slider drillSlider;
 
+    private PlayerDrill playerDrill;
+    private Asteroid asteroid;
+
     public void StartDrilling()
     {
-        isHolding = false;
+        isHolding = true;
     }
 
     public void StopDrilling()
     {
-        isHolding = true;
+        isHolding = false;
     }
     private void Update()
     {
         drillSlider.value = CalculateDrillTime();
 
-        if (isHolding)
+        if (isHolding && playerDrill.isCollidedAsteroid)
         {
             timeRemaining = maxTimeDrill;
+            playerDrill.isCollidedAsteroid = true;
         }
         else
         {

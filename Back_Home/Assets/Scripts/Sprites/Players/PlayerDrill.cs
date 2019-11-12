@@ -13,14 +13,17 @@ public class PlayerDrill : MonoBehaviour {
 
     [SerializeField] private DrillSpeed drillSpeed;
 
+    public bool isCollidedAsteroid = false;
+
     //private bool isDestroyed = false;
 
     //[SerializeField] private GameObject ores;
 
     private void OnTriggerEnter(Collider other) {
 
-        if (other.gameObject.tag == "Asteroid") {
+        if (other.gameObject.tag == "Asteroid" && !isCollidedAsteroid) {
 
+            isCollidedAsteroid = true;
             other.gameObject.GetComponent<Asteroid>().Drill(drillSpeed == DrillSpeed.fast ? damage * fastSpeedMultiplier : damage,
                                                            drillSpeed == DrillSpeed.fast ? vibrationFrequency * fastSpeedMultiplier : vibrationFrequency);
 
@@ -46,6 +49,10 @@ public class PlayerDrill : MonoBehaviour {
 
             */
 
+        }
+        else
+        {
+            isCollidedAsteroid = false;
         }
 
     }
