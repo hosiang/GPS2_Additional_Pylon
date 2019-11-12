@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class UIInformationManager : MonoBehaviour
 {
     private string text_DistanceBetweenShipAndBase = "Distance With Base: ";
+    private string text_OreAmount = "Ore x ";
     //private string text_Timer = "Distance With Base: ";
 
     [SerializeField] private Slider healthPointSlider;
@@ -13,6 +14,7 @@ public class UIInformationManager : MonoBehaviour
     [SerializeField] private Slider weightPointSlider;
     [SerializeField] private Text distanceBetweenShipAndBaseText;
     [SerializeField] private Text timerText;
+    [SerializeField] private Text oreAmountText;
 
     private float distanceBetweenShipAndBase = 0.0f;
 
@@ -61,11 +63,13 @@ public class UIInformationManager : MonoBehaviour
         nitroPointSlider.value = shipEntity.CurrentNitro;
         weightPointSlider.value = shipEntity.CurrentWeight;
 
+        oreAmountText.text = text_OreAmount + shipEntity.GetShipOresAmount(Global.OresTypes.Ore_No1);
+
         //rawNumber = (int)baseSystem.CurrentShieldRadius;
         //radixPoint = (int)((baseSystem.CurrentShieldRadius - (int)baseSystem.CurrentShieldRadius) * 100);
 
-        timeValueRawNumber = (int)(timerManager.CurrentTime * 100) / 60; //((int)(baseSystem.CurrentShieldRadius * 100) / 60);
-        timeValueRadixPoint = (int)(timerManager.CurrentTime * 100) % 60; //((int)(baseSystem.CurrentShieldRadius * 100) % 60);
+        timeValueRawNumber = (int)(timerManager.CurrentTime * 1) / 60; //((int)(baseSystem.CurrentShieldRadius * 100) / 60);
+        timeValueRadixPoint = (int)(timerManager.CurrentTime * 1) % 60; //((int)(baseSystem.CurrentShieldRadius * 100) % 60);
 
         timerText.text = timeValueRawNumber.ToString() + ":" + ((timeValueRadixPoint < 10) ? ("0" + timeValueRadixPoint.ToString()) : timeValueRadixPoint.ToString());
 
@@ -73,7 +77,7 @@ public class UIInformationManager : MonoBehaviour
         distanceBetweenShipAndBase = (int)(distanceBetweenShipAndBase * 100f); // Getting radix point first step (3.200f * 100)
         distanceBetweenShipAndBase = distanceBetweenShipAndBase / 100f; // Getting radix point last step
 
-        distanceBetweenShipAndBaseText.text = text_DistanceBetweenShipAndBase + Mathf.Abs(distanceBetweenShipAndBase) + "m";
+        distanceBetweenShipAndBaseText.text = text_DistanceBetweenShipAndBase + Mathf.Abs(distanceBetweenShipAndBase).ToString() + "m";
 
         Vector3 shipAndBaseNormalized = (shipTransform.position - baseTransform.position).normalized;
 

@@ -5,8 +5,17 @@ using UnityEngine;
 public class Ores : MonoBehaviour
 {
     [SerializeField] private Global.OresTypes oresType;
+    private ShipEntity shipEntity;
     private bool isCollectable = false;
+
+    [SerializeField] private GameObject gainEffect;
     //private float[] AstroidOreProvide = { 3, 5, 4 };
+
+    private void Start()
+    {
+        shipEntity = FindObjectOfType<ShipEntity>();
+    }
+
 
     public void SetOresToColletable(Object requireObject)
     {
@@ -24,9 +33,22 @@ public class Ores : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log(other.gameObject.tag);
-        if (other.gameObject.tag == Global.tag_Player && isCollectable)
+        if (other.gameObject.tag == Global.tag_Player && isCollectable && shipEntity.CurrentWeight < shipEntity.MaximalWeight)
         {
-            PickUpOre();
+            Debug.Log("In");
+            other.gameObject.transform.parent.GetComponentInParent<ShipEntity>().GainOres(this, oresType, 1);
+            if(oresType == Global.OresTypes.Special_Ore)
+            {
+                Destroy(gameObject.transform.parent.parent.gameObject);
+            }
+            else
+            {
+                GameObject tempGameObject = Instantiate(gainEffect, transform.position, transform.rotation);
+                Destroy(tempGameObject, 0.1f); // Destroy the boom effect after 10 second
+                Destroy(gameObject);
+            }
+            
+            //PickUpOre();
         }
     }
     private void PickUpOre()

@@ -51,7 +51,7 @@ public class BaseSystem : MonoBehaviour
         
         borderLinesContainner = new GameObject(name_borderLinesContainner); // Create the border line containner
         borderLineOriginalColor = borderLine.GetComponentInChildren<SpriteRenderer>().color;
-        /*
+        
         for (int i = 0; i < borderLinesAmount; i++) // Create the border line
         {
             borderLines_GameObject.Add(Instantiate<GameObject>(borderLine));
@@ -61,7 +61,7 @@ public class BaseSystem : MonoBehaviour
             borderLines_Transform[i].SetParent(borderLinesContainner.transform);
             
         }
-        */
+        
         detectShieldOriginTransform = this.GetComponent<Transform>();
 
         for (int i = 0; i < (int)Global.OresTypes.Length; i++) // Initialise the ores types resourses
@@ -92,14 +92,14 @@ public class BaseSystem : MonoBehaviour
     {
         
         ShieldSizeUpdate();
-        //BorderLinesMarkerRotating();
+        BorderLinesMarkerRotating();
 
-        playerCollider = Physics.OverlapSphere(detectShieldOriginTransform.position, currentShieldRadius, layerMask_player);
-        
-        if(playerCollider.Length > 0)
+        playerCollider = Physics.OverlapSphere(detectShieldOriginTransform.position, currentShieldRadius, LayerMask.GetMask("Player"));
+        Debug.Log(playerCollider.Length);
+        if (playerCollider.Length > 0)
         {
-
-            if (playerCollider[0].GetComponentInParent<ShipEntity>().CurrentWeight > 0.0f)
+            
+            if (playerCollider[0].transform.parent.GetComponentInParent<ShipEntity>().CurrentWeight > 0.0f)
             {
                 storageOresResources = playerCollider[0].GetComponentInParent<ShipEntity>().UnloadResources(this, storageOresResources);
 
@@ -115,7 +115,12 @@ public class BaseSystem : MonoBehaviour
         {
             // Set something here
         }
-        
+
+        if (storageOresResources[Global.OresTypes.Ore_No1] >= Global.targetOreToWinValue)
+        {
+            Global.gameManager.TaskCompleted();
+        }
+
     }
 
     public float GetBaseStorageOres(Global.OresTypes oresTypes)
@@ -136,7 +141,7 @@ public class BaseSystem : MonoBehaviour
         
     }
 
-    /*
+    
     private void BorderLinesMarkerRotating()
     {
         for (int i = 0; i < borderLinesAmount; i++)
@@ -162,11 +167,11 @@ public class BaseSystem : MonoBehaviour
             //Debug.Log("Sin : " + Mathf.Rad2Deg * 180 + ", Cos : " + Mathf.Rad2Deg * 180);
         }
     }
-    */
+    
 
     private void ShieldSizeUpdate()
     {
-        shieldTransform.localScale = new Vector3(20.0f, 20.0f, 20.0f);
+        shieldTransform.localScale = new Vector3((20.0f / maximalShieldRadius) * currentShieldRadius, (20.0f / maximalShieldRadius) * currentShieldRadius, (20.0f / maximalShieldRadius) * currentShieldRadius);
 
         currentShieldRadius = (((maximalShieldRadius - minimalShieldRadius) / timerManager.StartTime) * timerManager.CurrentTime) + minimalShieldRadius; // Convert time to shield radius
         currentShieldRadius = (currentShieldRadius > maximalShieldRadius) ? maximalShieldRadius : currentShieldRadius; // Limit to maximal number

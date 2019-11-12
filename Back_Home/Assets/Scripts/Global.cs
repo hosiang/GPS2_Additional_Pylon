@@ -5,6 +5,7 @@ using UnityEngine;
 public static class Global {
 
     //Managers
+    public static GameManager gameManager;
     public static AudioManager audioManager;
     public static UIActiveManager userInterfaceActiveManager;
 
@@ -46,6 +47,9 @@ public static class Global {
     //List or Array
     public static readonly float[] zoneValues = { 15.0f, 30.0f, 50.0f, 75.0f };
     public static readonly float[] OresWeight = { 0.0f, 2.5f };
+
+    // Quest
+    public static float targetOreToWinValue = 5.0f;
 
     public static float ValueToTime(float value)
     {

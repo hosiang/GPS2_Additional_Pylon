@@ -304,12 +304,12 @@ public class PlayerControl : MonoBehaviour
 
         drillCollide = Physics.OverlapCapsule(drillStart.position, drillEnd.position, drillRadius, Global.layer_Astroid);
 
-        if (drillCollide.Length > 0)
+        if (drillCollide.Length > 0 && shipEntity.CurrentWeight <= shipEntity.MaximalWeight)
         {
             for (int i = 0; i < drillCollide.Length; ++i)
             {
                 Global.AstroidType tempAstroidType = drillCollide[i].gameObject.GetComponentInParent<Asteroid>().GetAstroidType();
-                if (tempAstroidType != Global.AstroidType.Special && tempAstroidType != Global.AstroidType.Ore)
+                if (tempAstroidType != Global.AstroidType.Ore) // && tempAstroidType != Global.AstroidType.Special)
                 {
                     if (particleDrill.isStopped || blingDrill.isStopped || boomDrill.isStopped)
                     {

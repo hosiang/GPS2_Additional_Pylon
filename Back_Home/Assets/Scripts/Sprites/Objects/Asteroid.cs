@@ -63,7 +63,7 @@ public class Asteroid : MonoBehaviour
 
     private void Start()
     {
-        specialOresAnimator = GetComponent<Animator>();
+        specialOresAnimator = GetComponentInChildren<Animator>();
     }
 
     // Update is called once per frame
@@ -89,6 +89,7 @@ public class Asteroid : MonoBehaviour
             case Global.AstroidType.AsteroidSmall:
             case Global.AstroidType.AsteroidBig:
                 Explode();
+                Destroy(gameObject);
                 break;
             case Global.AstroidType.Special:
                 this.GetComponentInChildren<Ores>().SetOresToColletable(this); // Make sure the special ore is get from the correct way
@@ -96,7 +97,6 @@ public class Asteroid : MonoBehaviour
                 break;
         }
 
-        Destroy(gameObject);
     }
     
     private void VibrationDissipate()

@@ -43,7 +43,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8676243179534671349}
-  - {fileID: 7291832079878158996}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -73,93 +72,8 @@ MonoBehaviour:
   oreScatterRaius: 5
   vibrationDissipateRate: 0
   specialOresAnimator: {fileID: 0}
-  boomEffect: {fileID: 9041395883511426165}
---- !u!1001 &4317289184185501304
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 4776781548320632874}
-    m_Modifications:
-    - target: {fileID: 5085524972032748045, guid: 0859786f3fb4ed7489abc6bd2330a0c2,
-        type: 3}
-      propertyPath: m_Name
-      value: Asteroid Boom VFX
-      objectReference: {fileID: 0}
-    - target: {fileID: 5085524972032748045, guid: 0859786f3fb4ed7489abc6bd2330a0c2,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6835299881782623468, guid: 0859786f3fb4ed7489abc6bd2330a0c2,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6835299881782623468, guid: 0859786f3fb4ed7489abc6bd2330a0c2,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6835299881782623468, guid: 0859786f3fb4ed7489abc6bd2330a0c2,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6835299881782623468, guid: 0859786f3fb4ed7489abc6bd2330a0c2,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6835299881782623468, guid: 0859786f3fb4ed7489abc6bd2330a0c2,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6835299881782623468, guid: 0859786f3fb4ed7489abc6bd2330a0c2,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6835299881782623468, guid: 0859786f3fb4ed7489abc6bd2330a0c2,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6835299881782623468, guid: 0859786f3fb4ed7489abc6bd2330a0c2,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6835299881782623468, guid: 0859786f3fb4ed7489abc6bd2330a0c2,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6835299881782623468, guid: 0859786f3fb4ed7489abc6bd2330a0c2,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6835299881782623468, guid: 0859786f3fb4ed7489abc6bd2330a0c2,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 0859786f3fb4ed7489abc6bd2330a0c2, type: 3}
---- !u!1 &9041395883511426165 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5085524972032748045, guid: 0859786f3fb4ed7489abc6bd2330a0c2,
+  boomEffect: {fileID: 5085524972032748045, guid: 0859786f3fb4ed7489abc6bd2330a0c2,
     type: 3}
-  m_PrefabInstance: {fileID: 4317289184185501304}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &7291832079878158996 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6835299881782623468, guid: 0859786f3fb4ed7489abc6bd2330a0c2,
-    type: 3}
-  m_PrefabInstance: {fileID: 4317289184185501304}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4400722711610423023
 PrefabInstance:
   m_ObjectHideFlags: 0
