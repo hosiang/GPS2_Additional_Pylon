@@ -41,7 +41,7 @@ public class TutorialManager : MonoBehaviour
         }
         else if (popUpIndex == 1)
         {
-            if() // not sure how to detect the player rotate 
+            if(Input.GetMouseButtonDown(0)) // not sure how to detect the player rotate 
             {
                 popUpIndex++;
             }

@@ -14455,7 +14455,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62e764eb2fbc4424bb68ffeee98c4bdc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 7
+  speed: 3
   evacSpeedMultiplier: 2
   chaseSpeedMultiplier: 1.5
   patrolRadius: 15
@@ -14464,9 +14464,9 @@ MonoBehaviour:
   visionDistance: 3
   inspectDuration: 3
   debug: 1
-  shankForce: 300
+  shankForce: 70
   shankDistance: 5
-  shankRecoveryTime: 1
+  shankRecoveryTime: 2
 --- !u!1001 &5873168826735141931
 PrefabInstance:
   m_ObjectHideFlags: 0

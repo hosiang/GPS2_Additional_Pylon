@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour {
 
-    [SerializeField] private float safeZoneRadius;
-    [SerializeField] private float easyZoneRadius;
-    [SerializeField] private float midZoneRadius;
-    [SerializeField] private float hardZoneRadius;
+    //[SerializeField] private float safeZoneRadius;
+    //[SerializeField] private float easyZoneRadius;
+    //[SerializeField] private float midZoneRadius;
+    //[SerializeField] private float hardZoneRadius;
 
-    [SerializeField] private float distanceBetweenEnemies;
+    //[SerializeField] private float distanceBetweenEnemies;
 
     [SerializeField] private int enemiesInEasyZone;
     [SerializeField] private int enemiesInMidZone;
@@ -50,13 +50,19 @@ public class EnemySpawner : MonoBehaviour {
 
         for (int i = 0; i < amountToSpawn; ++i) {
 
+            Instantiate(
+                        enemiesToSpawn[Random.Range(0, enemiesToSpawn.Length)],
+                        randomPosition(Global.zoneValues[(int)currentZone - 1], Global.zoneValues[(int)currentZone]),
+                        new Quaternion()
+                    ).gameObject.transform.SetParent(container);
+            /*
             switch (currentZone) {
 
                 case Global.ZoneLevels.EasyZone:
 
                     Instantiate(
                         enemiesToSpawn[Random.Range(0, enemiesToSpawn.Length)],
-                        randomPosition(safeZoneRadius, easyZoneRadius),
+                        randomPosition(Global.zoneValues[(int)currentZone-1], Global.zoneValues[(int)currentZone]),
                         new Quaternion()
                     ).gameObject.transform.SetParent(container);
 
@@ -66,7 +72,7 @@ public class EnemySpawner : MonoBehaviour {
 
                     Instantiate(
                         enemiesToSpawn[Random.Range(0, enemiesToSpawn.Length)],
-                        randomPosition(easyZoneRadius, midZoneRadius),
+                        randomPosition(Global.zoneValues[(int)currentZone - 1], Global.zoneValues[(int)currentZone]),
                         new Quaternion()
                     ).gameObject.transform.SetParent(container);
 
@@ -76,14 +82,14 @@ public class EnemySpawner : MonoBehaviour {
 
                     Instantiate(
                         enemiesToSpawn[Random.Range(0, enemiesToSpawn.Length)],
-                        randomPosition(midZoneRadius, hardZoneRadius),
+                        randomPosition(Global.zoneValues[(int)currentZone - 1], Global.zoneValues[(int)currentZone]),
                         new Quaternion()
                     ).gameObject.transform.SetParent(container);
 
                     break;
 
             }
-
+            */
         }
 
     }

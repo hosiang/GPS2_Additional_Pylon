@@ -27,9 +27,8 @@ public class PlayerControl : MonoBehaviour
     private Vector3 moveDirection = Vector3.zero;
 
     //Drill
-    private enum DrillSpeed { slow, fast };
-
-    [SerializeField] private DrillSpeed drillSpeed;
+    //private enum DrillSpeed { slow, fast };
+    //[SerializeField] private DrillSpeed drillSpeed;
 
     [SerializeField] private Transform drillStart;
     [SerializeField] private Transform drillEnd;
@@ -47,19 +46,29 @@ public class PlayerControl : MonoBehaviour
 
     private ShipEntity shipEntity;
 
-    [SerializeField] UnityEngine.UI.Toggle slowDrillToggle;
+    //[SerializeField] UnityEngine.UI.Toggle slowDrillToggle;
 
     private Vector3 playerOriginVector3 = Vector3.zero;
     private float rotationSpeed = 100f;
     private float facingAngle;
     private float currentFacingAngle;
-    [SerializeField] private JoystickTouchController joystickTouchController;
+    private JoystickTouchController joystickTouchController;
 
     private Vector3 basePosition = Vector3.zero;
 
     public GameObject damageIndicator;
     private float damageDuration = 1f;
     public bool isThrust = false;
+
+    private void Awake()
+    {
+        if(!(joystickTouchController = FindObjectOfType<JoystickTouchController>()))
+        {
+            joystickTouchController = new JoystickTouchController();
+            Debug.LogError("Error! Joystick are undefine now! Please comfirm to put in the JoystickTouchController.cs in you scene!");
+        }
+    }
+
 
     // Start is called before the first frame update
     void Start()
@@ -81,7 +90,7 @@ public class PlayerControl : MonoBehaviour
 
         basePosition = FindObjectOfType<BaseSystem>().transform.position;
 
-        slowDrillToggle.isOn = (drillSpeed == DrillSpeed.slow) ? true : false;
+        //slowDrillToggle.isOn = (drillSpeed == DrillSpeed.slow) ? true : false;
 
         //drillerVibrationFrequencyParticleSystem.Stop();
 
@@ -285,10 +294,10 @@ public class PlayerControl : MonoBehaviour
     //    }
     //}
 
-    public void SwitchDrillSpeed(int whichDrillSpeed)
-    {
-        drillSpeed = (DrillSpeed)whichDrillSpeed;
-    }
+    //public void SwitchDrillSpeed(int whichDrillSpeed)
+    //{
+    //    drillSpeed = (DrillSpeed)whichDrillSpeed;
+    //}
 
     public void DrillCollideDetect()
     {
@@ -299,25 +308,30 @@ public class PlayerControl : MonoBehaviour
         {
             for (int i = 0; i < drillCollide.Length; ++i)
             {
-                if (!(drillCollide[i].gameObject.GetComponentInParent<Asteroid>().GetAstroidType() == Global.AstroidType.big && drillSpeed == DrillSpeed.slow))
+                Global.AstroidType tempAstroidType = drillCollide[i].gameObject.GetComponentInParent<Asteroid>().GetAstroidType();
+                if (tempAstroidType != Global.AstroidType.Special && tempAstroidType != Global.AstroidType.Ore)
                 {
-                    particleDrill.Play();
-                    blingDrill.Play();
-                    boomDrill.Play();
+                    if (particleDrill.isStopped || blingDrill.isStopped || boomDrill.isStopped)
+                    {
+                        particleDrill.Play();
+                        blingDrill.Play();
+                        boomDrill.Play();
+
+                        playerRigidbody.angularVelocity = Vector3.zero;
+                        playerRigidbody.velocity = Vector3.zero;
+                        playerTransform.position = playerTransform.position;
+                    }
 
                     onDrilling = true;
 
-                    playerRigidbody.angularVelocity = Vector3.zero;
-                    playerRigidbody.velocity = Vector3.zero;
-                    playerTransform.position = playerTransform.position;
+                    
 
                     //if (drillerVibrationFrequencyParticleSystem.isStopped)
                     {
                         //drillerVibrationFrequencyParticleSystem.Play();
                     }
 
-                    drillCollide[i].gameObject.GetComponentInParent<Asteroid>().Drill(drillSpeed == DrillSpeed.fast ? damage * drillFastSpeedMultiplier : damage,
-                                                                             drillSpeed == DrillSpeed.fast ? vibrationFrequency * drillFastSpeedMultiplier : vibrationFrequency);
+                    drillCollide[i].gameObject.GetComponentInParent<Asteroid>().Drill(damage, vibrationFrequency);
                 }
 
             }
@@ -325,6 +339,13 @@ public class PlayerControl : MonoBehaviour
         }
         else
         {
+            if (particleDrill.isPlaying || blingDrill.isPlaying || boomDrill.isPlaying)
+            {
+                particleDrill.Stop();
+                blingDrill.Stop();
+                boomDrill.Stop();
+            }
+
             //if (drillerVibrationFrequencyParticleSystem.isPlaying)
             {
                 //drillerVibrationFrequencyParticleSystem.Stop();
@@ -371,4 +392,13 @@ public class PlayerControl : MonoBehaviour
         CancelInvoke("HideDamageIndicator");
         Invoke("HideDamageIndicator", damageDuration);
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.tag == "Ore")
+        {
+            Destroy(other.gameObject);
+        }
+    }
+
 }

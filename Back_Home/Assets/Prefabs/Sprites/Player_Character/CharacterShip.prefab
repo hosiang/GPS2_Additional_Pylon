@@ -342,6 +342,7 @@ MonoBehaviour:
   isOverheat: 0
   currentWeight: 0
   maximalWeight: 100
+  playerAnimator: {fileID: 1945354157263926341}
   healing1: {fileID: 770889171655388134}
   healing2: {fileID: 8432562189405821437}
   blingHurt: {fileID: 3812425756349504140}
@@ -362,7 +363,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   thrustPower: 5
-  minimalThrustPower: 10
+  minimalThrustPower: 3
   rotateSpeed: 90
   nitroConsume: 15
   playerAnimator: {fileID: 1945354157263926341}
@@ -372,16 +373,14 @@ MonoBehaviour:
   particleDrill: {fileID: 5482617829101328459}
   blingDrill: {fileID: 8374255348161232889}
   boomDrill: {fileID: 7989774832140728789}
-  drillSpeed: 0
   drillStart: {fileID: 5354784451090378843}
   drillEnd: {fileID: 3849383927870369367}
   drillRadius: 0.1
-  damage: 4
+  damage: 10
   vibrationFrequency: 10
   drillFastSpeedMultiplier: 2
-  slowDrillToggle: {fileID: 0}
-  joystickTouchController: {fileID: 0}
   damageIndicator: {fileID: 0}
+  isThrust: 0
 --- !u!95 &49186082
 Animator:
   serializedVersion: 3
@@ -918,6 +917,36 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2673578772757162034, guid: f1b5c217eb97bdd44b6ec19c4df53160,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2673578772757162034, guid: f1b5c217eb97bdd44b6ec19c4df53160,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.069999695
+      objectReference: {fileID: 0}
+    - target: {fileID: 2673578772757162034, guid: f1b5c217eb97bdd44b6ec19c4df53160,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.041
+      objectReference: {fileID: 0}
+    - target: {fileID: 6470433884112385220, guid: f1b5c217eb97bdd44b6ec19c4df53160,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6470433884112385220, guid: f1b5c217eb97bdd44b6ec19c4df53160,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.069999695
+      objectReference: {fileID: 0}
+    - target: {fileID: 6470433884112385220, guid: f1b5c217eb97bdd44b6ec19c4df53160,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.041
+      objectReference: {fileID: 0}
     - target: {fileID: 9211351530509641843, guid: f1b5c217eb97bdd44b6ec19c4df53160,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -957,36 +986,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 180
-      objectReference: {fileID: 0}
-    - target: {fileID: 2673578772757162034, guid: f1b5c217eb97bdd44b6ec19c4df53160,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2673578772757162034, guid: f1b5c217eb97bdd44b6ec19c4df53160,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.069999695
-      objectReference: {fileID: 0}
-    - target: {fileID: 2673578772757162034, guid: f1b5c217eb97bdd44b6ec19c4df53160,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.041
-      objectReference: {fileID: 0}
-    - target: {fileID: 6470433884112385220, guid: f1b5c217eb97bdd44b6ec19c4df53160,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6470433884112385220, guid: f1b5c217eb97bdd44b6ec19c4df53160,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.069999695
-      objectReference: {fileID: 0}
-    - target: {fileID: 6470433884112385220, guid: f1b5c217eb97bdd44b6ec19c4df53160,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.041
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f1b5c217eb97bdd44b6ec19c4df53160, type: 3}

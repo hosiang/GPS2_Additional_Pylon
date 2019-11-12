@@ -12,7 +12,7 @@ public class CameraController : MonoBehaviour
     private Vector3 cameraOffset = Vector3.zero;
     private float distanceY = 0.0f;
 
-    private float cameraFollowingSpeed = 3f;
+    private float cameraFollowingSpeed = 10f;
 
     private Vector3 targetPosition;
     //Debug.Log("#Testing || It work !!!"); // For easy to take it again

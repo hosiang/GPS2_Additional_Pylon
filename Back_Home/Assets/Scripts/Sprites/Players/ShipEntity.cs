@@ -43,6 +43,7 @@ public class ShipEntity : MonoBehaviour
 
     private BaseSystem baseSystem;
 
+
     [SerializeField] private Animator playerAnimator;
 
     //Particle
@@ -215,20 +216,23 @@ public class ShipEntity : MonoBehaviour
         }
     }
 
-    public void GainOresFromAsteroid(Object requireObject, Global.OresTypes oresTypes, float oreAmount = 1.0f)
+    public void GainOres(Object requireObject, Global.OresTypes oresTypes, float oreAmount = 1.0f)
     {
-        if (requireObject.GetType().Name == nameof(Asteroid))
+        if (requireObject.GetType().Name == nameof(Ores))
         {
-            if (oresTypes == Global.OresTypes.Special_Ore)
+            switch (oresTypes)
             {
-                // time system
+                case Global.OresTypes.Ore_No1:
+                    oresAmount[oresTypes] += oreAmount;
+                    CheckWeightAmount();
+                    break;
+                case Global.OresTypes.Special_Ore:
+                    baseSystem.GainOreToExtendTime(this);
+                    break;
             }
-            else
-            {
-                oresAmount[oresTypes] += oreAmount;
-                CheckWeightAmount();
-            }
+                
         }
+
     }
     private void CheckWeightAmount()
     {

@@ -173,8 +173,6 @@ public class UIActiveManager : MonoBehaviour
         float time = (visibilityState ? alpha : 1.0f - alpha);
         bool visibility = visibilityState;
 
-        Debug.Log(time);
-
         if (menusVisibilityState[(int)menusType]) menusCanvasGroup[(int)menusType].interactable = menusCanvasGroup[(int)menusType].blocksRaycasts = visibilityState; // Switch the menu interactable and the mouse raycast block before switching while open the menu
 
         while (true)

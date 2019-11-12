@@ -72,10 +72,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   astroidType: 2
-  ore: {fileID: 0}
+  ore1: {fileID: 0}
+  ore2: {fileID: 0}
+  ore3: {fileID: 0}
+  ore4: {fileID: 0}
+  ore5: {fileID: 0}
+  ore6: {fileID: 0}
+  ore7: {fileID: 0}
+  ore8: {fileID: 0}
   health: 10
   oreScatterRaius: 0
   vibrationDissipateRate: 0
+  specialOresAnimator: {fileID: 0}
+  boomEffect: {fileID: 0}
 --- !u!1001 &5782363754433979258
 PrefabInstance:
   m_ObjectHideFlags: 0

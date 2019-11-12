@@ -23,7 +23,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1574977314182759030}
-  m_Layer: 0
+  - component: {fileID: 6718023479395992179}
+  m_Layer: 12
   m_Name: Broken_Asteroid01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -45,6 +46,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6718023479395992179
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6665611228380994144}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 234e4626adf24084c82b2354fa711cd2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  oresType: 1
 --- !u!1001 &6313077610179347347
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -56,6 +70,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: 3D_Model
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: f688825e09143f647bf5002fdbbea446,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: f688825e09143f647bf5002fdbbea446,
         type: 3}

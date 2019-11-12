@@ -5,34 +5,24 @@ using UnityEngine.UI;
 
 public class BaseSystem : MonoBehaviour
 {
-    private float currentTime = 0.0f;
-    private float targetToExtendTime = 0.0f;
     private float currentShieldRadius = 0.0f;
     private float targetToExtendShieldRadius = 0.0f;
-    private float startShieldRadius = 10.0f;
     private float minimalShieldRadius = 4.5f;
-    [SerializeField] private float maximalShieldRadius = 10.0f;
-    [SerializeField] private float shieldDeclineRate = 0.01f; // 0.01s is one second
+    [SerializeField] private float maximalShieldRadius = 15.0f;
     private float shieldSizeCovertValue = 1.5f;
     private Transform detectShieldOriginTransform;
-    private bool isExtendingShield = false;
     private LayerMask layerMask_player;
     [SerializeField] private Transform shieldTransform;
     private Vector3 shieldOriginalScale;
 
-    private float eachSpecialOreIncreaseTime = 0.05f;
-
     [SerializeField] private bool debugMode;
-
-    public float CurrentTime { get { return currentTime; } }
-
-    public float BeginShieldRadius { get { return startShieldRadius; } }
 
     public float CurrentShieldRadius { get { return currentShieldRadius; } }
 
-    public bool IsExtendingShield { get { return isExtendingShield; } }
-
     protected Dictionary<Global.OresTypes, float> storageOresResources = new Dictionary<Global.OresTypes, float>();
+
+    private TimerManager timerManager;
+
 
     #region !! Border Lines Marker Rotation !!
     [Header("Border Lines Marker")]
@@ -61,7 +51,7 @@ public class BaseSystem : MonoBehaviour
         
         borderLinesContainner = new GameObject(name_borderLinesContainner); // Create the border line containner
         borderLineOriginalColor = borderLine.GetComponentInChildren<SpriteRenderer>().color;
-
+        /*
         for (int i = 0; i < borderLinesAmount; i++) // Create the border line
         {
             borderLines_GameObject.Add(Instantiate<GameObject>(borderLine));
@@ -71,17 +61,23 @@ public class BaseSystem : MonoBehaviour
             borderLines_Transform[i].SetParent(borderLinesContainner.transform);
             
         }
-        
+        */
         detectShieldOriginTransform = this.GetComponent<Transform>();
 
         for (int i = 0; i < (int)Global.OresTypes.Length; i++) // Initialise the ores types resourses
         {
             storageOresResources.Add((Global.OresTypes)i, 0.0f);
         }
+
+        if (!(timerManager = FindObjectOfType<TimerManager>()))
+        {
+            Debug.Log("TimerManager are missing!!!");
+        }
     }
 
     void Start()
     {
+        /*
         layerMask_player = LayerMask.GetMask("Player");
 
         eachAngle = (2f * Mathf.PI) / borderLinesAmount; // For count the each border lines's angle
@@ -89,12 +85,14 @@ public class BaseSystem : MonoBehaviour
         currentTime = Global.ValueToTime(startShieldRadius);
 
         shieldOriginalScale = shieldTransform.localScale;
+        */
     }
 
     void Update()
     {
+        
         ShieldSizeUpdate();
-        BorderLinesMarkerRotating();
+        //BorderLinesMarkerRotating();
 
         playerCollider = Physics.OverlapSphere(detectShieldOriginTransform.position, currentShieldRadius, layerMask_player);
         
@@ -107,13 +105,10 @@ public class BaseSystem : MonoBehaviour
 
                 Debug.Log("Iron = " + storageOresResources[Global.OresTypes.Ore_No1]);
                 Debug.Log("No2_Ores = " + storageOresResources[Global.OresTypes.Special_Ore]);
-                RepairTheShield();
+                //RepairTheShield();
             }
-            if (currentTime > 0.0f)
-            {
-                playerCollider[0].GetComponentInParent<ShipEntity>().ReplenishHealthPoint(this);
-                playerCollider[0].GetComponentInParent<ShipEntity>().ReplenishNitroPoint(this);
-            }
+            playerCollider[0].GetComponentInParent<ShipEntity>().ReplenishHealthPoint(this);
+            playerCollider[0].GetComponentInParent<ShipEntity>().ReplenishNitroPoint(this);
 
         }
         else
@@ -127,7 +122,21 @@ public class BaseSystem : MonoBehaviour
     {
         return storageOresResources[oresTypes];
     }
-    
+
+    public void GainOreToExtendTime(Object requireObject)
+    {
+        if (requireObject.GetType().Name == nameof(ShipEntity))
+        {
+            timerManager.TimeExtend(this);
+        }
+        else
+        {
+            Debug.LogError("Alert! Have some Unauthorized class try to entry to invoking this functions!");
+        }
+        
+    }
+
+    /*
     private void BorderLinesMarkerRotating()
     {
         for (int i = 0; i < borderLinesAmount; i++)
@@ -153,29 +162,21 @@ public class BaseSystem : MonoBehaviour
             //Debug.Log("Sin : " + Mathf.Rad2Deg * 180 + ", Cos : " + Mathf.Rad2Deg * 180);
         }
     }
-    
-    private void ShieldSizeFollowSafeZoneRadius()
-    {
-
-    }
+    */
 
     private void ShieldSizeUpdate()
     {
-        if ((currentTime > 0.0f) && !isExtendingShield)
-        {
-            currentTime -= shieldDeclineRate * Time.deltaTime;
-            if(currentTime < 0.0f) { currentTime = 0.0f; }
+        shieldTransform.localScale = new Vector3(20.0f, 20.0f, 20.0f);
 
-            currentShieldRadius = (((maximalShieldRadius - minimalShieldRadius) / maximalShieldRadius) * Global.TimeToValue(currentTime)) + minimalShieldRadius;
-
-            targetToExtendTime = currentTime;
-            targetToExtendShieldRadius = currentShieldRadius;
-            if(currentShieldRadius > maximalShieldRadius) { currentShieldRadius = maximalShieldRadius; }
-        }
+        currentShieldRadius = (((maximalShieldRadius - minimalShieldRadius) / timerManager.StartTime) * timerManager.CurrentTime) + minimalShieldRadius; // Convert time to shield radius
+        currentShieldRadius = (currentShieldRadius > maximalShieldRadius) ? maximalShieldRadius : currentShieldRadius; // Limit to maximal number
+        currentShieldRadius = (currentShieldRadius < minimalShieldRadius) ? minimalShieldRadius : currentShieldRadius; // Limit to minimal number
     }
 
+    /*
     private void RepairTheShield()
     {
+        
         if (playerCollider.Length > 0)
         {
             if (storageOresResources[Global.OresTypes.Special_Ore] > 0.0f)
@@ -193,14 +194,14 @@ public class BaseSystem : MonoBehaviour
                 StartCoroutine("SmoothlyExtendTheShield");
             }
         }
-        /*
+        
         else
         {
             storageOresResources[Global.OresTypes.Special_Ore] = 0.0f;
         }
-        */
+        
     }
-
+    
     private IEnumerator SmoothlyExtendTheShield()
     {
         float countTimeRate = 0.0f;
@@ -220,6 +221,7 @@ public class BaseSystem : MonoBehaviour
             yield return null;
         }
     }
+    */
 
     private void OnDrawGizmos()
     {

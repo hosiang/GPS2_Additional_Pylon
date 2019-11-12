@@ -16,6 +16,7 @@ public class EndScoreUpdating : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        baseSystem = FindObjectOfType<BaseSystem>();
         endScoreUpdateText.text = PlayerPrefs.GetFloat("SCORE: ", 0).ToString();
     }
 

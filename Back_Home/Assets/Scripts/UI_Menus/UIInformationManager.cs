@@ -18,6 +18,7 @@ public class UIInformationManager : MonoBehaviour
 
     private ShipEntity shipEntity;
     private BaseSystem baseSystem;
+    private TimerManager timerManager;
 
     private Transform shipTransform;
     private Transform baseTransform;
@@ -39,6 +40,9 @@ public class UIInformationManager : MonoBehaviour
         if (!(baseSystem = FindObjectOfType<BaseSystem>()))
             Debug.Log(this.GetType().Name + " have not found " + typeof(BaseSystem));
 
+        if (!(timerManager = FindObjectOfType<TimerManager>()))
+            Debug.Log(this.GetType().Name + " have not found " + typeof(TimerManager));
+        
         if (shipEntity != null)
             shipTransform = shipEntity.GetComponent<Transform>();
 
@@ -60,8 +64,8 @@ public class UIInformationManager : MonoBehaviour
         //rawNumber = (int)baseSystem.CurrentShieldRadius;
         //radixPoint = (int)((baseSystem.CurrentShieldRadius - (int)baseSystem.CurrentShieldRadius) * 100);
 
-        timeValueRawNumber = (int)(baseSystem.CurrentTime * 100) / 60; //((int)(baseSystem.CurrentShieldRadius * 100) / 60);
-        timeValueRadixPoint = (int)(baseSystem.CurrentTime * 100) % 60; //((int)(baseSystem.CurrentShieldRadius * 100) % 60);
+        timeValueRawNumber = (int)(timerManager.CurrentTime * 100) / 60; //((int)(baseSystem.CurrentShieldRadius * 100) / 60);
+        timeValueRadixPoint = (int)(timerManager.CurrentTime * 100) % 60; //((int)(baseSystem.CurrentShieldRadius * 100) % 60);
 
         timerText.text = timeValueRawNumber.ToString() + ":" + ((timeValueRadixPoint < 10) ? ("0" + timeValueRadixPoint.ToString()) : timeValueRadixPoint.ToString());
 

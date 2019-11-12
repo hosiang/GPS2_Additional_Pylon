@@ -1,0 +1,74 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7443423986154948564
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7443423986154948553}
+  - component: {fileID: 7443423986154948554}
+  - component: {fileID: 7443423986154948555}
+  m_Layer: 0
+  m_Name: GeneratesSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7443423986154948553
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7443423986154948564}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7443423986154948554
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7443423986154948564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8433f92d0c2e4ab41a53d27cbfb90097, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eachAsteroidBetweenDistance: 4
+  extraRandomTime: 20
+  asteroidTypes:
+  - {fileID: 1121377639267557821, guid: a291dba80a145284d8e53ffc8adf1496, type: 3}
+  - {fileID: 5381261996436619749, guid: 634a01e7e0627d14b83132f80e6ccc21, type: 3}
+  - {fileID: 2879853365089742946, guid: 4ba4a29a9e85f8449818872390ef0e0f, type: 3}
+  eachZoneAsteroidAmount: 3c00000078000000b4000000
+--- !u!114 &7443423986154948555
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7443423986154948564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e06a37d25f9f47459670680cc75f9d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  borderLine: {fileID: 5436356065730152089, guid: 3a0152dd981076249a8c53b8314aaef2,
+    type: 3}
+  zoneDetails:
+  - borderLinesAmount: 30
+    colorBorderLines: {r: 0, g: 0.9905009, b: 1, a: 1}
+  - borderLinesAmount: 45
+    colorBorderLines: {r: 0.25207198, g: 1, b: 0, a: 1}
+  - borderLinesAmount: 75
+    colorBorderLines: {r: 1, g: 0.9100798, b: 0.32549024, a: 1}

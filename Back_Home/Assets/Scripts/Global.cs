@@ -24,6 +24,7 @@ public static class Global {
     public static int layer_Player = 1 << LayerMask.NameToLayer("Player");
     public static int layer_Astroid = 1 << LayerMask.NameToLayer("Asteroid");
     public static int layer_Enemy = 1 << LayerMask.NameToLayer("Enemy");
+    public static int layer_Ore = 1 << LayerMask.NameToLayer("Ore");
     //Tags
     public static string tag_Player = "Player";
     public static string tag_Astroid = "Asteroid";
@@ -36,7 +37,7 @@ public static class Global {
     public static readonly string[] nameGameObject_Menus = { "ScreenBlock", "UIControllerPrefab", "UIInformationContainer", "QuitConfirmation" };
 
     //Enums
-    public enum AstroidType { small, big, special };
+    public enum AstroidType { AsteroidSmall, AsteroidBig, Special, Ore };
     public enum OresTypes { Special_Ore, Ore_No1, Length };
     public enum ZoneLevels { ShieldZone, EasyZone, MediumZone, HardZone, Length };
     public enum ParticleEffectType { astroid };
