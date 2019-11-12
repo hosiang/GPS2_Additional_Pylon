@@ -5,23 +5,25 @@ using UnityEngine.UI;
 
 public class MainMenuSystem : MonoBehaviour
 {
-    [SerializeField] private Image middleCircleflashEffect;
     [SerializeField] private float alphaValue = 0.5f;
     [SerializeField] private float durationFade = 0.8f;
+
+    [SerializeField] private Image emergencyFlash;
+    [SerializeField] private Image middleCircleflashEffect;
+
     private bool isFaded = false;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-    }
-
-    // Update is called once per frame
     void Update()
     {
-        MiddleCircleFlashEffect();
+        BoolControl();
+
+        if (middleCircleflashEffect.color.a >= 1f || middleCircleflashEffect.color.a <= alphaValue)
+        {
+            StartCoroutine("FadeInOut");
+        }
     }
 
-    void MiddleCircleFlashEffect()
+    void BoolControl()
     {
         if (middleCircleflashEffect.color.a >= 1)
         {
@@ -31,42 +33,39 @@ public class MainMenuSystem : MonoBehaviour
         {
             isFaded = true;
         }
-
-        if (isFaded && middleCircleflashEffect.color.a <= 1f)
-        {
-            StartCoroutine("Increase");
-        }
-        else if (!isFaded && middleCircleflashEffect.color.a >= 1f)
-        {
-            StartCoroutine("Decrease");
-        }
     }
 
-    IEnumerator Decrease()
+    IEnumerator FadeInOut()
     {
-        for (float i = 1f; i >= alphaValue; i -= 0.01f)
+        if (!isFaded)
         {
-            Color tempColor = middleCircleflashEffect.color;
-            tempColor.a = i;
-            middleCircleflashEffect.color = tempColor;
+            for (float i = 1f; i >= alphaValue; i -= 0.01f)
+            {
+                Color tempColor = middleCircleflashEffect.color;
+                tempColor.a = i;
+                middleCircleflashEffect.color = tempColor;
 
-            yield return new WaitForSeconds(0.01f);
+                Color temptempColor = emergencyFlash.color;
+                temptempColor.a = i;
+                emergencyFlash.color = temptempColor;
 
-            if (isFaded && middleCircleflashEffect.color.a <= alphaValue) yield break;
+                yield return new WaitForSeconds(0.01f);
+            }
         }
-    }
-
-    IEnumerator Increase()
-    {
-        for (float i = alphaValue; i <= 1f; i += 0.01f)
+        else if (isFaded)
         {
-            Color tempColor = middleCircleflashEffect.color;
-            tempColor.a = i;
-            middleCircleflashEffect.color = tempColor;
+            for (float i = alphaValue; i <= 1f; i += 0.01f)
+            {
+                Color tempColor = middleCircleflashEffect.color;
+                tempColor.a = i;
+                middleCircleflashEffect.color = tempColor;
 
-            yield return new WaitForSeconds(0.01f);
+                Color temptempColor = emergencyFlash.color;
+                temptempColor.a = i;
+                emergencyFlash.color = temptempColor;
 
-            if (!isFaded && middleCircleflashEffect.color.a >= 1f) yield break;
+                yield return new WaitForSeconds(0.01f);
+            }
         }
     }
 }
