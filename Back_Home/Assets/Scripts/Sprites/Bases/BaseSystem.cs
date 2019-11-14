@@ -95,7 +95,6 @@ public class BaseSystem : MonoBehaviour
         BorderLinesMarkerRotating();
 
         playerCollider = Physics.OverlapSphere(detectShieldOriginTransform.position, currentShieldRadius, LayerMask.GetMask("Player"));
-        Debug.Log(playerCollider.Length);
         if (playerCollider.Length > 0)
         {
             
@@ -103,8 +102,8 @@ public class BaseSystem : MonoBehaviour
             {
                 storageOresResources = playerCollider[0].GetComponentInParent<ShipEntity>().UnloadResources(this, storageOresResources);
 
-                Debug.Log("Iron = " + storageOresResources[Global.OresTypes.Ore_No1]);
-                Debug.Log("No2_Ores = " + storageOresResources[Global.OresTypes.Special_Ore]);
+                //Debug.Log("Iron = " + storageOresResources[Global.OresTypes.Ore_No1]);
+                //Debug.Log("No2_Ores = " + storageOresResources[Global.OresTypes.Special_Ore]);
                 //RepairTheShield();
             }
             playerCollider[0].GetComponentInParent<ShipEntity>().ReplenishHealthPoint(this);

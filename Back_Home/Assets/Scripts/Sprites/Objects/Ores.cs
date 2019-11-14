@@ -32,10 +32,8 @@ public class Ores : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log(other.gameObject.tag);
         if (other.gameObject.tag == Global.tag_Player && isCollectable && shipEntity.CurrentWeight < shipEntity.MaximalWeight)
         {
-            Debug.Log("In");
             other.gameObject.transform.parent.GetComponentInParent<ShipEntity>().GainOres(this, oresType, 1);
             if(oresType == Global.OresTypes.Special_Ore)
             {

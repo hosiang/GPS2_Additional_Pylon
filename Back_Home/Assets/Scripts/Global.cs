@@ -49,7 +49,7 @@ public static class Global {
     public static readonly float[] OresWeight = { 0.0f, 2.5f };
 
     // Quest
-    public static float targetOreToWinValue = 5.0f;
+    public static float targetOreToWinValue = 125.0f;
 
     public static float ValueToTime(float value)
     {
