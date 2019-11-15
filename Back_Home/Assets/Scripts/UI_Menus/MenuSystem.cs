@@ -9,7 +9,6 @@ public class MenuSystem : MonoBehaviour
     private bool inGame = false;
     private bool isPause = true;
 
-    [SerializeField] GameObject panel;
     [SerializeField] GameObject pauseMenu;
 
     // Start is called before the first frame update
@@ -53,26 +52,27 @@ public class MenuSystem : MonoBehaviour
         isPause = false;
         //SceneManager.LoadScene("Back Home");
     }
-    public void QuitGame()
-    {
-        Application.Quit();
-        Debug.Log($"<color=red>Quit</color>");
-    }
     public void PauseGame()
     {
         Time.timeScale = 0f;
         isPause = true;
-        panel.SetActive(true);
         pauseMenu.SetActive(true);
     }
     public void ResumeGame()
     {
         Time.timeScale = 1f;
         isPause = false;
-        panel.SetActive(false);
         pauseMenu.SetActive(false);
     }
-
+    public void ReturnMainMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
+    public void QuitGame()
+    {
+        Application.Quit();
+        Debug.Log($"<color=red>Quit</color>");
+    }
     public void SetInGame(bool value)
     {
         inGame = value;

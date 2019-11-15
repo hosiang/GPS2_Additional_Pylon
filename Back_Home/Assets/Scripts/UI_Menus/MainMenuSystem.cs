@@ -68,4 +68,10 @@ public class MainMenuSystem : MonoBehaviour
             }
         }
     }
+
+    public void ExitGame()
+    {
+        Application.Quit();
+        Debug.Log($"<color=red>Quit</color>");
+    }
 }

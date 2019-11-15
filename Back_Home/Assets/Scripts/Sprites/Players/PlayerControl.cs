@@ -191,10 +191,7 @@ public class PlayerControl : MonoBehaviour
     {
         if (!shipEntity.IsOverheat && !isThrust)
         {
-            playerAnimator.SetTrigger("isThrustPress");
-            mainThruster.Play();
-            leftSideThruster.Play();
-            rightSideThruster.Play();
+            VFX_Thruster(true);
 
             playerRigidbody.velocity += transform.forward * (thrustPower * Time.deltaTime);
 
@@ -207,9 +204,7 @@ public class PlayerControl : MonoBehaviour
         {
             if (mainThruster.isPlaying || leftSideThruster.isPlaying || rightSideThruster.isPlaying)
             {
-                mainThruster.Stop();
-                leftSideThruster.Stop();
-                rightSideThruster.Stop();
+                VFX_Thruster(false);
                 isThrust = false;
             }
         }
@@ -217,9 +212,8 @@ public class PlayerControl : MonoBehaviour
     public void ThrustingRelease()
     {
         playerAnimator.SetTrigger("isThrustRelease");
-        mainThruster.Stop();
-        leftSideThruster.Stop();
-        rightSideThruster.Stop();
+        VFX_Thruster(false);
+        isThrust = false;
     }
 
     private void Thrust()
@@ -313,9 +307,7 @@ public class PlayerControl : MonoBehaviour
                 {
                     if (particleDrill.isStopped || blingDrill.isStopped || boomDrill.isStopped)
                     {
-                        particleDrill.Play();
-                        blingDrill.Play();
-                        boomDrill.Play();
+                        VFX_Drill(true);
 
                         playerRigidbody.angularVelocity = Vector3.zero;
                         playerRigidbody.velocity = Vector3.zero;
@@ -323,8 +315,6 @@ public class PlayerControl : MonoBehaviour
                     }
 
                     onDrilling = true;
-
-                    
 
                     //if (drillerVibrationFrequencyParticleSystem.isStopped)
                     {
@@ -341,9 +331,7 @@ public class PlayerControl : MonoBehaviour
         {
             if (particleDrill.isPlaying || blingDrill.isPlaying || boomDrill.isPlaying)
             {
-                particleDrill.Stop();
-                blingDrill.Stop();
-                boomDrill.Stop();
+                VFX_Drill(false);
             }
 
             //if (drillerVibrationFrequencyParticleSystem.isPlaying)
@@ -358,13 +346,7 @@ public class PlayerControl : MonoBehaviour
     public void StopDrilling()
     {
         playerAnimator.SetTrigger("isDrillRelease");
-
-        if (particleDrill.isPlaying || blingDrill.isPlaying || boomDrill.isPlaying)
-        {
-            particleDrill.Stop();
-            blingDrill.Stop();
-            boomDrill.Stop();
-        }
+        VFX_Drill(false);
 
         //drillerVibrationFrequencyParticleSystem.Stop();
         onDrilling = false;
@@ -401,4 +383,57 @@ public class PlayerControl : MonoBehaviour
         }
     }
 
+    private void VFX_Thruster( bool toPlay )
+    {
+        if (toPlay)
+        {
+            if (mainThruster.isStopped || leftSideThruster.isStopped || rightSideThruster.isStopped)
+            {
+                playerAnimator.SetTrigger("isThrustPress");
+
+                mainThruster.Play();
+                leftSideThruster.Play();
+                rightSideThruster.Play();
+            }
+            else if (mainThruster.isPlaying || leftSideThruster.isPlaying || rightSideThruster.isPlaying)
+            {
+            }
+        }
+        else
+        {
+            if (mainThruster.isPlaying || leftSideThruster.isPlaying || rightSideThruster.isPlaying)
+            {
+                mainThruster.Stop();
+                leftSideThruster.Stop();
+                rightSideThruster.Stop();
+            }
+        }
+        
+    }
+
+    private void VFX_Drill( bool toPlay )
+    {
+        if (toPlay)
+        {
+            if (particleDrill.isStopped || blingDrill.isStopped || boomDrill.isStopped)
+            {
+                playerAnimator.SetTrigger("isDrillPress");
+                particleDrill.Play();
+                blingDrill.Play();
+                boomDrill.Play();
+            }
+            else if (particleDrill.isPlaying || blingDrill.isPlaying || boomDrill.isPlaying)
+            {
+            }
+        }
+        else
+        {
+            if (particleDrill.isPlaying || blingDrill.isPlaying || boomDrill.isPlaying)
+            {
+                particleDrill.Stop();
+                blingDrill.Stop();
+                boomDrill.Stop();
+            }
+        }
+    }
 }
