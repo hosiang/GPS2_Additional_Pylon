@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(ShipEntity))]
 public class PlayerControl : MonoBehaviour
 {
     private float currentThrustPower;
     [SerializeField] private float thrustPower = 20f;
     [SerializeField] private float minimalThrustPower = 10f;
+    [SerializeField]private float maximalThrustPower = 10f;
     private float eachWeightAffectThrustRate;
+    public bool isThrust = false;
     [SerializeField] private float rotateSpeed = 90f;
     [SerializeField] private float nitroConsume = 15f;
     //[SerializeField] private ParticleSystem drillerVibrationFrequencyParticleSystem;
@@ -33,12 +36,12 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] private Transform drillStart;
     [SerializeField] private Transform drillEnd;
     [SerializeField] private float drillRadius;
-    private bool onDrilling = false;
     private Collider[] drillCollide;
+    private bool onDrilling = false;
 
     [SerializeField] private float damage;
     [SerializeField] private float vibrationFrequency;
-    [SerializeField] private float drillFastSpeedMultiplier;
+    //[SerializeField] private float drillFastSpeedMultiplier;
 
     //[SerializeField] HealthSystem healthSystem;
     //[SerializeField] NitroSystem nitroSystem;
@@ -58,7 +61,6 @@ public class PlayerControl : MonoBehaviour
 
     public GameObject damageIndicator;
     private float damageDuration = 1f;
-    public bool isThrust = false;
 
     private void Awake()
     {
@@ -76,8 +78,8 @@ public class PlayerControl : MonoBehaviour
         HideDamageIndicator();
 
         mainThruster.Stop();
-        //leftSideThruster.Stop();
-        //rightSideThruster.Stop();
+        leftSideThruster.Stop();
+        rightSideThruster.Stop();
         particleDrill.Stop();
         blingDrill.Stop();
         boomDrill.Stop();
@@ -111,6 +113,11 @@ public class PlayerControl : MonoBehaviour
             //WeightToNitroConsume();
         }
 
+        if (!isThrust)
+        {
+            shipEntity.ReplenishNitroPoint(this);
+        }
+
         CircularEdgeWallEffect();
         //ControlThrustPowerByWeightRate();
     }
@@ -127,10 +134,11 @@ public class PlayerControl : MonoBehaviour
 
     private void CircularEdgeWallEffect()
     {
-        if( Vector3.Distance(basePosition, transform.position) > Global.zoneValues[(int)Global.ZoneLevels.HardZone])
+        if( Vector3.Distance(basePosition, transform.position) > Global.gameManager.CurrentPermissiveZoneRadius)
         {
-            playerRigidbody.velocity = Vector3.zero;
-            transform.position = transform.position.normalized * Global.zoneValues[(int)Global.ZoneLevels.HardZone];
+            playerRigidbody.velocity += (basePosition - playerTransform.position.normalized) * playerRigidbody.velocity.magnitude;
+            //playerRigidbody.velocity = Vector3.zero;
+            //transform.position = transform.position.normalized * Global.gameManager.CurrentPermissiveZoneRadius;
         }
     }
 
@@ -146,7 +154,7 @@ public class PlayerControl : MonoBehaviour
                 playerOriginVector3.z = playerTransform.position.z;
 
                 playerTransform.position = playerOriginVector3;
-            } 
+            }
             */
             if (playerRigidbody.angularVelocity != Vector3.zero) // For reset the ship torque when the ship collder with something
             {
@@ -189,37 +197,49 @@ public class PlayerControl : MonoBehaviour
 
     public void Thrusting()
     {
-        if (!shipEntity.IsOverheat && !isThrust)
+        if (!shipEntity.IsOverheat && !onDrilling)
         {
             playerAnimator.SetTrigger("isThrustPress");
-            mainThruster.Play();
-            leftSideThruster.Play();
-            rightSideThruster.Play();
-
-            playerRigidbody.velocity += transform.forward * (thrustPower * Time.deltaTime);
+            if (mainThruster.isStopped || leftSideThruster.isStopped || rightSideThruster.isStopped)
+            {
+                mainThruster.Play();
+                leftSideThruster.Play();
+                rightSideThruster.Play();
+            }
 
             playerRigidbody.velocity += transform.forward * (currentThrustPower * Time.deltaTime);
+            if(playerRigidbody.velocity.magnitude > maximalThrustPower)
+            {
+                playerRigidbody.velocity = playerRigidbody.velocity.normalized * maximalThrustPower;
+            }
             //playerRigidbody.AddForce(transform.forward * thrustPower);
             shipEntity.NitroReduction();
             isThrust = true;
         }
-        else
+        else 
         {
             if (mainThruster.isPlaying || leftSideThruster.isPlaying || rightSideThruster.isPlaying)
             {
                 mainThruster.Stop();
                 leftSideThruster.Stop();
                 rightSideThruster.Stop();
-                isThrust = false;
             }
+
+            isThrust = false;
         }
     }
     public void ThrustingRelease()
     {
         playerAnimator.SetTrigger("isThrustRelease");
-        mainThruster.Stop();
-        leftSideThruster.Stop();
-        rightSideThruster.Stop();
+
+        if (mainThruster.isPlaying || leftSideThruster.isPlaying || rightSideThruster.isPlaying)
+        {
+            mainThruster.Stop();
+            leftSideThruster.Stop();
+            rightSideThruster.Stop();
+        }
+
+        isThrust = false;
     }
 
     private void Thrust()
