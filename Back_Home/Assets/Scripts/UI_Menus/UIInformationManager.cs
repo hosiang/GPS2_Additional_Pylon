@@ -6,11 +6,13 @@ using UnityEngine.UI;
 public class UIInformationManager : MonoBehaviour
 {
     private string text_DistanceBetweenShipAndBase = "Distance With Base: ";
-    private string text_OreAmount = "Ore x ";
+    private string text_OreAmount = " x ";
     //private string text_Timer = "Distance With Base: ";
 
     [SerializeField] private Slider healthPointSlider;
-    [SerializeField] private Slider nitroPointSlider;
+    [SerializeField] private Image nitroPointImage;
+    private float eachNitroPointRate;
+    private float coverNitroPointRate = 0.04f;
     [SerializeField] private Slider weightPointSlider;
     [SerializeField] private Text distanceBetweenShipAndBaseText;
     [SerializeField] private Text timerText;
@@ -32,6 +34,7 @@ public class UIInformationManager : MonoBehaviour
     private int timeValueRadixPoint;
 
     public Transform basePointerTransform;
+    
 
     // Start is called before the first frame update
     void Start()
@@ -52,7 +55,8 @@ public class UIInformationManager : MonoBehaviour
             baseTransform = baseSystem.GetComponent<Transform>();
 
         healthPointSlider.maxValue = shipEntity.MaximalHealth;
-        nitroPointSlider.maxValue = shipEntity.MaximalNitro;
+        eachNitroPointRate = (1.0f - (coverNitroPointRate * 2.0f)) / shipEntity.MaximalNitro;
+        nitroPointImage.fillAmount = (eachNitroPointRate * shipEntity.MaximalNitro) + coverNitroPointRate;
         weightPointSlider.maxValue = shipEntity.MaximalWeight;
     }
 
@@ -60,10 +64,10 @@ public class UIInformationManager : MonoBehaviour
     void Update()
     {
         healthPointSlider.value = shipEntity.CurrentHealth;
-        nitroPointSlider.value = shipEntity.CurrentNitro;
+        nitroPointImage.fillAmount = (eachNitroPointRate * shipEntity.CurrentNitro) + coverNitroPointRate;
         weightPointSlider.value = shipEntity.CurrentWeight;
 
-        oreAmountText.text = text_OreAmount + shipEntity.GetShipOresAmount(Global.OresTypes.Ore_No1);
+        oreAmountText.text = shipEntity.GetShipOresAmount(Global.OresTypes.Ore_No1).ToString() + text_OreAmount;
 
         //rawNumber = (int)baseSystem.CurrentShieldRadius;
         //radixPoint = (int)((baseSystem.CurrentShieldRadius - (int)baseSystem.CurrentShieldRadius) * 100);

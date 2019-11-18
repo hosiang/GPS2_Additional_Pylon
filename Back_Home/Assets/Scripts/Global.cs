@@ -42,15 +42,16 @@ public static class Global {
     public enum OresTypes { Special_Ore, Ore_No1, Length };
     public enum ZoneLevels { ShieldZone, EasyZone, MediumZone, HardZone, Length };
     public enum ParticleEffectType { astroid };
-    public enum MenusType {ScreenBlock, UIControllerPrefab, UIInformationContainer, QuitConfirmation, TaskCompletedContainer };
+    public enum MenusType {ScreenBlock, UIControllerPrefab, UIInformationContainer, QuitConfirmation, TaskCompletedContainer, Length };
     public enum QuestLevels { Quest_01, Quest_02, Quest_03, Length };
+    public enum GameSceneIndex { MainMenu, Level_01 };
 
     //List or Array
     public static readonly float[] zonesRadius = { 20.0f, 40.0f, 80.0f, 160.0f };
     public static readonly float[] OresWeight = { 0.0f, 2.5f };
 
     // Quest
-    public static float[] targetQuest_OreNo1_Amount = { 50, 100, 150 };
+    public static float[] targetQuest_OreNo1_Amount = { 1, 1, 1 };
     public static float targetOreToWinValue = 1.0f;
 
     public static float ValueToTime(float value)

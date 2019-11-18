@@ -9,6 +9,8 @@ public class InGameMenuManager : MonoBehaviour
     [SerializeField] private CanvasGroup optionsMenu;
     [SerializeField] private CanvasGroup quitConfirmationCanvasGroup;
 
+    [SerializeField] private CustomButton drillButton;
+
     private bool isPause = false;
     private bool optionsMenuBool = false;
     private bool quitPromptBool = false;
@@ -32,6 +34,8 @@ public class InGameMenuManager : MonoBehaviour
     {
         Time.timeScale = 1f;
         isPause = false;
+
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         //SceneManager.LoadScene("Kenze");
     }
     public void ContinueGame()
@@ -62,6 +66,11 @@ public class InGameMenuManager : MonoBehaviour
         quitConfirmationCanvasGroup.alpha = quitPromptBool ? 1 : 0;
         quitConfirmationCanvasGroup.interactable = quitPromptBool;
         quitConfirmationCanvasGroup.blocksRaycasts = quitPromptBool;
+    }
+
+    public void SetDrillButtonInteractable(bool interactable)
+    {
+        drillButton.interactable = interactable;
     }
 
     public void ReturnMainMenu()

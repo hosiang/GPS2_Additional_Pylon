@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MainMenuSystem : MonoBehaviour
@@ -67,6 +68,16 @@ public class MainMenuSystem : MonoBehaviour
                 yield return new WaitForSeconds(0.01f);
             }
         }
+    }
+
+    public void NewGame()
+    {
+        SceneManager.LoadScene((int)Global.GameSceneIndex.Level_01);
+    }
+
+    public void Resume()
+    {
+
     }
 
     public void ExitGame()

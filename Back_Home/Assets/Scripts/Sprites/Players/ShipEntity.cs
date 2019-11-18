@@ -167,7 +167,7 @@ public class ShipEntity : MonoBehaviour
     }
     public void ReplenishNitroPoint(Object requireObject)
     {
-        Debug.Log("Recover Nitro : Object " + requireObject.GetType().Name);
+        //Debug.Log("Recover Nitro : Object " + requireObject.GetType().Name);
         if (requireObject.GetType().Name == nameof(PlayerControl))
         {
             if (currentNitro < maximalNitro)

@@ -20,10 +20,32 @@ public class UIActiveManager : MonoBehaviour
 
         userInterfaceCanvas = GameObject.Find(Global.nameGameObject_UI).GetComponent<Canvas>();
 
+        for (int i = 0; i < (int)Global.MenusType.Length; i++)
+        {
+            menusCanvasGroup.Add(null);
+            menusVisibilityState.Add(true);
+        }
+
+        int checkMenusAmount = 0;
         foreach (CanvasGroup tempCanvasGroup in userInterfaceCanvas.GetComponentsInChildren<CanvasGroup>())
         {
-            menusCanvasGroup.Add(tempCanvasGroup);
-            menusVisibilityState.Add(tempCanvasGroup.interactable);
+            for (int i = 0; i < (int)Global.MenusType.Length; i++)
+            {
+                if (tempCanvasGroup.name == Global.nameGameObject_Menus[i])
+                {
+                    checkMenusAmount++;
+
+                    menusCanvasGroup[i] = tempCanvasGroup;
+                    menusVisibilityState[i] = tempCanvasGroup.interactable;
+
+                    break;
+                }
+            }
+        }
+
+        if(checkMenusAmount != (int)Global.MenusType.Length) // check the menus amount
+        {
+            Debug.LogError("Error! Menus are not setting corectlly!");
         }
     }
 

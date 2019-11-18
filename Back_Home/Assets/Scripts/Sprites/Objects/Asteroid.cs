@@ -154,15 +154,20 @@ public class Asteroid : MonoBehaviour
 
         }
 
+        Vector3 spawnPosition = Vector3.zero;
+        int randomTypeAsteroid = 0;
+        float rotationY = 0.0f;
         for (int i = 0; i < oresToSpawn; ++i)
         {
+            spawnPosition.x = Random.Range(transform.position.x - oreScatterRaius, transform.position.x + oreScatterRaius);
+            spawnPosition.y = 0.0f;
+            spawnPosition.z = Random.Range(transform.position.z - oreScatterRaius, transform.position.z + oreScatterRaius);
 
-            Vector3 spawnPosition = new Vector3(Random.Range(transform.position.x - oreScatterRaius, transform.position.x + oreScatterRaius), 0,
-                Random.Range(transform.position.z - oreScatterRaius, transform.position.z + oreScatterRaius));
+            rotationY = Random.Range(0.0f, 360.0f);
 
-            int randomTypeAsteroid = Random.Range(0, brokenOresTypes.Count);
+            randomTypeAsteroid = Random.Range(0, brokenOresTypes.Count);
 
-            GameObject tempGameObject = Instantiate(brokenOresTypes[randomTypeAsteroid], spawnPosition, Quaternion.identity);
+            GameObject tempGameObject = Instantiate(brokenOresTypes[randomTypeAsteroid], spawnPosition, Quaternion.Euler(0.0f, rotationY, 0.0f));
             tempGameObject.GetComponent<Ores>().SetOresToColletable(this); // Make sure the ore is explode in correct way
             /*
             switch (randomTypeAsteroid)

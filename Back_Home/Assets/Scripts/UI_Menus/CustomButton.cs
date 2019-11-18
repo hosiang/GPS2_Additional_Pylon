@@ -23,28 +23,36 @@ public class CustomButton : Selectable
 
     public override void OnPointerDown(PointerEventData eventData)
     {
-        buttonOnPressing = true;
+        if (interactable)
+        {
+            buttonOnPressing = true;
 
-        onClick.Invoke();
+            onClick.Invoke();
 
-        StopCoroutine("StartOnPressingFuctions");
-        StartCoroutine("StartOnPressingFuctions");
+            StopCoroutine("StartOnPressingFuctions");
+            StartCoroutine("StartOnPressingFuctions");
+        }
 
         base.OnPointerDown(eventData);
     }
     
     public override void OnPointerUp(PointerEventData eventData)
     {
-        buttonOnPressing = false;
-        onRelease.Invoke();
-
+        if (buttonOnPressing == true)
+        {
+            buttonOnPressing = false;
+            onRelease.Invoke();
+        }
         base.OnPointerUp(eventData);
     }
 
     public override void OnPointerExit(PointerEventData eventData)
     {
-        buttonOnPressing = false;
-        onRelease.Invoke();
+        if (buttonOnPressing == true)
+        {
+            buttonOnPressing = false;
+            onRelease.Invoke();
+        }
 
         base.OnPointerExit(eventData);
     }
@@ -53,8 +61,13 @@ public class CustomButton : Selectable
     {
         while (buttonOnPressing)
         {
+            if (!interactable)
+            {
+                buttonOnPressing = false;
+            }
             onPressing.Invoke();
             yield return null;
+            
         }
     }
 

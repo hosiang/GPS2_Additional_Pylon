@@ -55,7 +55,7 @@ MonoBehaviour:
   - {fileID: 21345714789697661, guid: 431c550f9512de6498a644d21f4e13c9, type: 3}
   - {fileID: 4525068530081090353, guid: 3f14952690749ac4e9f5a94c6ddbeea5, type: 3}
   health: 50
-  oreScatterRaius: 0
+  oreScatterRaius: 1.5
   vibrationDissipateRate: 0
   specialOresAnimator: {fileID: 0}
   boomEffect: {fileID: 5085524972032748045, guid: 0859786f3fb4ed7489abc6bd2330a0c2,

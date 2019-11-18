@@ -40,6 +40,7 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] private Transform drillEnd;
     [SerializeField] private float drillRadius;
     private Collider[] drillCollide;
+    Global.AstroidType drillWhichAstroidType;
     private bool onDrilling = false;
 
     [SerializeField] private float damage;
@@ -52,6 +53,7 @@ public class PlayerControl : MonoBehaviour
 
     private ShipEntity shipEntity;
     private BaseSystem baseSystem;
+    private InGameMenuManager inGameMenuManager;
 
     //[SerializeField] UnityEngine.UI.Toggle slowDrillToggle;
 
@@ -94,6 +96,7 @@ public class PlayerControl : MonoBehaviour
 
         shipEntity = GetComponent<ShipEntity>();
         baseSystem = FindObjectOfType<BaseSystem>();
+        inGameMenuManager = FindObjectOfType<InGameMenuManager>();
 
         playerCollision = GetComponent<BoxCollider>();
         playerRigidbody = GetComponent<Rigidbody>();
@@ -128,7 +131,7 @@ public class PlayerControl : MonoBehaviour
         {
             shipEntity.ReplenishNitroPoint(this);
         }
-        Debug.Log(baseSystem.IsPlayerInBase);
+
         if (baseSystem.IsPlayerInBase && shipEntity.CurrentHealth < shipEntity.MaximalHealth)
         {
             VFX_Healing(onHealing = true);
@@ -137,6 +140,8 @@ public class PlayerControl : MonoBehaviour
         {
             VFX_Healing(onHealing = false);
         }
+
+        DrillCollideDetect();
 
         CircularEdgeWallEffect();
         //ControlThrustPowerByWeightRate();
@@ -332,51 +337,54 @@ public class PlayerControl : MonoBehaviour
     //    drillSpeed = (DrillSpeed)whichDrillSpeed;
     //}
 
-    public void DrillCollideDetect()
+    private void DrillCollideDetect()
     {
-
         drillCollide = Physics.OverlapCapsule(drillStart.position, drillEnd.position, drillRadius, Global.layer_Astroid);
 
         if (drillCollide.Length > 0 && shipEntity.CurrentWeight <= shipEntity.MaximalWeight)
         {
             for (int i = 0; i < drillCollide.Length; ++i)
             {
-                Global.AstroidType tempAstroidType = drillCollide[i].gameObject.GetComponentInParent<Asteroid>().GetAstroidType();
-                if (tempAstroidType != Global.AstroidType.Ore) // Not allow drill the Broken_Asteroid
+                drillWhichAstroidType = drillCollide[i].gameObject.GetComponentInParent<Asteroid>().GetAstroidType();
+                if (drillWhichAstroidType != Global.AstroidType.Ore) // Not allow drill the Broken_Asteroid
                 {
-                    if (!onDrilling)
+                    inGameMenuManager.SetDrillButtonInteractable(true);
+                    if (onDrilling)
                     {
-                        playerRigidbody.angularVelocity = Vector3.zero;
-                        playerRigidbody.velocity = Vector3.zero;
-                        playerTransform.position = playerTransform.position;
-                    }
+                        VFX_Drill(onDrilling);
 
-                    VFX_Drill(onDrilling = true);
-                    
-                    //if (drillerVibrationFrequencyParticleSystem.isStopped)
-                    //{
+                        //if (drillerVibrationFrequencyParticleSystem.isStopped)
+                        //{
                         //drillerVibrationFrequencyParticleSystem.Play();
-                    //}
+                        //}
 
-                    drillCollide[i].gameObject.GetComponentInParent<Asteroid>().Drill(damage, vibrationFrequency);
+                        drillCollide[i].gameObject.GetComponentInParent<Asteroid>().Drill(damage, vibrationFrequency);
+                    }
                 }
-
             }
-
         }
         else
         {
-            VFX_Drill(onDrilling = false);
+            inGameMenuManager.SetDrillButtonInteractable(false);
 
-            //if (drillerVibrationFrequencyParticleSystem.isPlaying)
-            //{
-                //drillerVibrationFrequencyParticleSystem.Stop();
-            //}
+            VFX_Drill(onDrilling = false);
+        }
+    }
+
+    public void Drilling()
+    {
+        if (!onDrilling)
+        {
+            onDrilling = true;
+
+            playerRigidbody.angularVelocity = Vector3.zero;
+            playerRigidbody.velocity = Vector3.zero;
+            playerTransform.position = playerTransform.position;
         }
 
     }
 
-    public void StopDrilling()
+    public void DrillingRelease()
     {
         VFX_Drill(onDrilling = false);
 

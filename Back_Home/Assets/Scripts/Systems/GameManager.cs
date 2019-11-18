@@ -70,6 +70,7 @@ public class GameManager : MonoBehaviour {
 
     public void NewGame()
     {
+        SceneManager.LoadScene((int)Global.GameSceneIndex.Level_01);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
