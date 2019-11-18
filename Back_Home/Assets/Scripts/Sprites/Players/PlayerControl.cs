@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(ShipEntity))]
 public class PlayerControl : MonoBehaviour
 {
     private float currentThrustPower;
     [SerializeField] private float thrustPower = 20f;
     [SerializeField] private float minimalThrustPower = 10f;
+    [SerializeField]private float maximalThrustPower = 10f;
     private float eachWeightAffectThrustRate;
+    public bool isThrust = false;
     [SerializeField] private float rotateSpeed = 90f;
     [SerializeField] private float nitroConsume = 15f;
     //[SerializeField] private ParticleSystem drillerVibrationFrequencyParticleSystem;
@@ -20,11 +23,14 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] private ParticleSystem particleDrill;
     [SerializeField] private ParticleSystem blingDrill;
     [SerializeField] private ParticleSystem boomDrill;
+    [SerializeField] private ParticleSystem healing1;
+    [SerializeField] private ParticleSystem healing2;
 
     private BoxCollider playerCollision;
     private Rigidbody playerRigidbody;
     private Transform playerTransform;
     private Vector3 moveDirection = Vector3.zero;
+    private float originalDragRate;
 
     //Drill
     //private enum DrillSpeed { slow, fast };
@@ -33,18 +39,19 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] private Transform drillStart;
     [SerializeField] private Transform drillEnd;
     [SerializeField] private float drillRadius;
-    private bool onDrilling = false;
     private Collider[] drillCollide;
+    private bool onDrilling = false;
 
     [SerializeField] private float damage;
     [SerializeField] private float vibrationFrequency;
-    [SerializeField] private float drillFastSpeedMultiplier;
+    //[SerializeField] private float drillFastSpeedMultiplier;
 
     //[SerializeField] HealthSystem healthSystem;
     //[SerializeField] NitroSystem nitroSystem;
     //[SerializeField] WeightSystem weightSystem;
 
     private ShipEntity shipEntity;
+    private BaseSystem baseSystem;
 
     //[SerializeField] UnityEngine.UI.Toggle slowDrillToggle;
 
@@ -58,7 +65,13 @@ public class PlayerControl : MonoBehaviour
 
     public GameObject damageIndicator;
     private float damageDuration = 1f;
-    public bool isThrust = false;
+
+    private bool onHealing = false;
+
+    // Getter
+    public bool IsThrust { get { return isThrust; } }
+    public bool OnDrilling { get { return onDrilling; } }
+    public bool OnHealing { get { return onHealing; } }
 
     private void Awake()
     {
@@ -75,14 +88,12 @@ public class PlayerControl : MonoBehaviour
     {
         HideDamageIndicator();
 
-        mainThruster.Stop();
-        //leftSideThruster.Stop();
-        //rightSideThruster.Stop();
-        particleDrill.Stop();
-        blingDrill.Stop();
-        boomDrill.Stop();
+        VFX_Drill(false);
+        VFX_Thrust(false);
+        VFX_Healing(false);
 
         shipEntity = GetComponent<ShipEntity>();
+        baseSystem = FindObjectOfType<BaseSystem>();
 
         playerCollision = GetComponent<BoxCollider>();
         playerRigidbody = GetComponent<Rigidbody>();
@@ -99,6 +110,8 @@ public class PlayerControl : MonoBehaviour
 
         //heatAmount = GetComponent<HeatSystem>().getHeatAmount();
         //maxHeatAmount = GetComponent<HeatSystem>().getMaxHeatAmount();
+
+        originalDragRate = playerRigidbody.drag;
     }
 
     // Update is called once per frame
@@ -109,6 +122,20 @@ public class PlayerControl : MonoBehaviour
             Rotation();
             Thrust();
             //WeightToNitroConsume();
+        }
+
+        if (!isThrust)
+        {
+            shipEntity.ReplenishNitroPoint(this);
+        }
+        Debug.Log(baseSystem.IsPlayerInBase);
+        if (baseSystem.IsPlayerInBase && shipEntity.CurrentHealth < shipEntity.MaximalHealth)
+        {
+            VFX_Healing(onHealing = true);
+        }
+        else
+        {
+            VFX_Healing(onHealing = false);
         }
 
         CircularEdgeWallEffect();
@@ -127,10 +154,11 @@ public class PlayerControl : MonoBehaviour
 
     private void CircularEdgeWallEffect()
     {
-        if( Vector3.Distance(basePosition, transform.position) > Global.zoneValues[(int)Global.ZoneLevels.HardZone])
+        if( Vector3.Distance(basePosition, transform.position) > Global.gameManager.CurrentPermissiveZoneRadius)
         {
-            playerRigidbody.velocity = Vector3.zero;
-            transform.position = transform.position.normalized * Global.zoneValues[(int)Global.ZoneLevels.HardZone];
+            playerRigidbody.velocity += (basePosition - playerTransform.position.normalized) * playerRigidbody.velocity.magnitude;
+            //playerRigidbody.velocity = Vector3.zero;
+            //transform.position = transform.position.normalized * Global.gameManager.CurrentPermissiveZoneRadius;
         }
     }
 
@@ -146,7 +174,7 @@ public class PlayerControl : MonoBehaviour
                 playerOriginVector3.z = playerTransform.position.z;
 
                 playerTransform.position = playerOriginVector3;
-            } 
+            }
             */
             if (playerRigidbody.angularVelocity != Vector3.zero) // For reset the ship torque when the ship collder with something
             {
@@ -189,31 +217,42 @@ public class PlayerControl : MonoBehaviour
 
     public void Thrusting()
     {
-        if (!shipEntity.IsOverheat && !isThrust)
+        if (!shipEntity.IsOverheat && !onDrilling)
         {
-            VFX_Thruster(true);
-
-            playerRigidbody.velocity += transform.forward * (thrustPower * Time.deltaTime);
+            VFX_Thrust(isThrust = true);
+            DragRateSwitch(isThrust);
 
             playerRigidbody.velocity += transform.forward * (currentThrustPower * Time.deltaTime);
-            //playerRigidbody.AddForce(transform.forward * thrustPower);
-            shipEntity.NitroReduction();
-            isThrust = true;
-        }
-        else
-        {
-            if (mainThruster.isPlaying || leftSideThruster.isPlaying || rightSideThruster.isPlaying)
+
+            if(playerRigidbody.velocity.magnitude > maximalThrustPower) // Limit the maximal speed of player
             {
-                VFX_Thruster(false);
-                isThrust = false;
+                playerRigidbody.velocity = playerRigidbody.velocity.normalized * maximalThrustPower; 
             }
+
+            shipEntity.NitroReduction();
+        }
+        else 
+        {
+            VFX_Thrust(isThrust = false);
         }
     }
     public void ThrustingRelease()
     {
-        playerAnimator.SetTrigger("isThrustRelease");
-        VFX_Thruster(false);
-        isThrust = false;
+        VFX_Thrust(isThrust = false);
+        DragRateSwitch(isThrust);
+    }
+
+    private void DragRateSwitch(bool withDrag)
+    {
+        if (withDrag)
+        {
+            playerRigidbody.drag = 0.0f;
+        }
+        else
+        {
+            playerRigidbody.drag = originalDragRate;
+        }
+        
     }
 
     private void Thrust()
@@ -235,37 +274,37 @@ public class PlayerControl : MonoBehaviour
         }
     }
 
-    private void ControlThrustPowerByWeightRate()
+    private void ControlThrustPowerByWeightRate() // The thrust power will follow current weight rate
     {
-        currentThrustPower = thrustPower - (eachWeightAffectThrustRate * shipEntity.CurrentWeight); // The thrust power will follow current weight rate
+        currentThrustPower = thrustPower - (eachWeightAffectThrustRate * shipEntity.CurrentWeight);
     }
 
-    /*
+
     /// <summary>
     /// Energy deplete point style for Weight–Thrust system
     /// </summary>
-    void WeightToNitroConsume()
-    {
-        /*
-        if (weightSystem.GetWeight() <= 0)
-        {
-            nitroConsume = 15f;
-        }
-        else if (weightSystem.GetWeight() > 0 && weightSystem.GetWeight() <= weightSystem.GetMaxWeight() / 3)
-        {
-            nitroConsume = 17f;
-        }
-        else if (weightSystem.GetWeight() > weightSystem.GetMaxWeight() / 3 && weightSystem.GetWeight() <= (weightSystem.GetMaxWeight() / 3) * 2)
-        {
-            nitroConsume = 19f;
-        }
-        else if (weightSystem.GetWeight() > (weightSystem.GetMaxWeight() / 3) * 2)
-        {
-            nitroConsume = 21f;
-        }
-        
-    }
-    */
+    //void WeightToNitroConsume()
+    //{
+    //    
+    //    if (weightSystem.GetWeight() <= 0)
+    //    {
+    //        nitroConsume = 15f;
+    //    }
+    //    else if (weightSystem.GetWeight() > 0 && weightSystem.GetWeight() <= weightSystem.GetMaxWeight() / 3)
+    //    {
+    //nitroConsume = 17f;
+    //}
+    //   else if (weightSystem.GetWeight() > weightSystem.GetMaxWeight() / 3 && weightSystem.GetWeight() <= (weightSystem.GetMaxWeight() / 3) * 2)
+    //  {
+    // nitroConsume = 19f;
+    //  }
+    // else if (weightSystem.GetWeight() > (weightSystem.GetMaxWeight() / 3) * 2)
+    //  {
+    //      nitroConsume = 21f;
+    //}
+
+    //}
+
 
     // Increase thrust power style for Weight–Thrust system
     //void WeightToThrustPower()
@@ -303,23 +342,21 @@ public class PlayerControl : MonoBehaviour
             for (int i = 0; i < drillCollide.Length; ++i)
             {
                 Global.AstroidType tempAstroidType = drillCollide[i].gameObject.GetComponentInParent<Asteroid>().GetAstroidType();
-                if (tempAstroidType != Global.AstroidType.Ore) // && tempAstroidType != Global.AstroidType.Special)
+                if (tempAstroidType != Global.AstroidType.Ore) // Not allow drill the Broken_Asteroid
                 {
-                    if (particleDrill.isStopped || blingDrill.isStopped || boomDrill.isStopped)
+                    if (!onDrilling)
                     {
-                        VFX_Drill(true);
-
                         playerRigidbody.angularVelocity = Vector3.zero;
                         playerRigidbody.velocity = Vector3.zero;
                         playerTransform.position = playerTransform.position;
                     }
 
-                    onDrilling = true;
-
+                    VFX_Drill(onDrilling = true);
+                    
                     //if (drillerVibrationFrequencyParticleSystem.isStopped)
-                    {
+                    //{
                         //drillerVibrationFrequencyParticleSystem.Play();
-                    }
+                    //}
 
                     drillCollide[i].gameObject.GetComponentInParent<Asteroid>().Drill(damage, vibrationFrequency);
                 }
@@ -329,27 +366,21 @@ public class PlayerControl : MonoBehaviour
         }
         else
         {
-            if (particleDrill.isPlaying || blingDrill.isPlaying || boomDrill.isPlaying)
-            {
-                VFX_Drill(false);
-            }
+            VFX_Drill(onDrilling = false);
 
             //if (drillerVibrationFrequencyParticleSystem.isPlaying)
-            {
+            //{
                 //drillerVibrationFrequencyParticleSystem.Stop();
-            }
-            onDrilling = false;
+            //}
         }
 
     }
 
     public void StopDrilling()
     {
-        playerAnimator.SetTrigger("isDrillRelease");
-        VFX_Drill(false);
+        VFX_Drill(onDrilling = false);
 
         //drillerVibrationFrequencyParticleSystem.Stop();
-        onDrilling = false;
         /*
         if (drillCollide.Length > 0)
         {
@@ -375,15 +406,33 @@ public class PlayerControl : MonoBehaviour
         Invoke("HideDamageIndicator", damageDuration);
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void VFX_Drill(bool toPlay)
     {
-        if(other.gameObject.tag == "Ore")
+        if (toPlay)
         {
-            Destroy(other.gameObject);
+            if (particleDrill.isStopped || blingDrill.isStopped || boomDrill.isStopped)
+            {
+                playerAnimator.SetTrigger("isDrillPress");
+
+                particleDrill.Play();
+                blingDrill.Play();
+                boomDrill.Play();
+            }
+        }
+        else
+        {
+            if (particleDrill.isPlaying || blingDrill.isPlaying || boomDrill.isPlaying)
+            {
+                playerAnimator.SetTrigger("isDrillRelease");
+
+                particleDrill.Stop();
+                blingDrill.Stop();
+                boomDrill.Stop();
+            }
         }
     }
 
-    private void VFX_Thruster( bool toPlay )
+    private void VFX_Thrust(bool toPlay)
     {
         if (toPlay)
         {
@@ -395,45 +444,47 @@ public class PlayerControl : MonoBehaviour
                 leftSideThruster.Play();
                 rightSideThruster.Play();
             }
-            else if (mainThruster.isPlaying || leftSideThruster.isPlaying || rightSideThruster.isPlaying)
-            {
-            }
         }
         else
         {
             if (mainThruster.isPlaying || leftSideThruster.isPlaying || rightSideThruster.isPlaying)
             {
+                playerAnimator.SetTrigger("isThrustRelease");
+
                 mainThruster.Stop();
                 leftSideThruster.Stop();
                 rightSideThruster.Stop();
             }
         }
-        
     }
 
-    private void VFX_Drill( bool toPlay )
+    private void VFX_Healing(bool toPlay)
     {
         if (toPlay)
         {
-            if (particleDrill.isStopped || blingDrill.isStopped || boomDrill.isStopped)
+            if (healing1.isStopped || healing2.isStopped)
             {
-                playerAnimator.SetTrigger("isDrillPress");
-                particleDrill.Play();
-                blingDrill.Play();
-                boomDrill.Play();
-            }
-            else if (particleDrill.isPlaying || blingDrill.isPlaying || boomDrill.isPlaying)
-            {
+                healing1.Play();
+                healing2.Play();
             }
         }
         else
         {
-            if (particleDrill.isPlaying || blingDrill.isPlaying || boomDrill.isPlaying)
+            if (healing1.isPlaying || healing2.isPlaying)
             {
-                particleDrill.Stop();
-                blingDrill.Stop();
-                boomDrill.Stop();
+                healing1.Stop();
+                healing2.Stop();
             }
         }
+        
     }
+    /*
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.tag == "Ore")
+        {
+            Destroy(other.gameObject);
+        }
+    }
+    */
 }

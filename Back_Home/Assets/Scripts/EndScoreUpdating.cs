@@ -12,6 +12,9 @@ public class EndScoreUpdating : MonoBehaviour
     public Text currentPlayerScore;
     public Text endScoreUpdateText;
 
+    private readonly string text_Score = "SCORE : ";
+    private readonly string text_NewScore = "NEW SCORE : ";
+    private readonly string text_OldScore = "OLD SCORE : ";
 
     // Start is called before the first frame update
     void Start()
@@ -23,17 +26,25 @@ public class EndScoreUpdating : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        EndGameResult();
+        //EndGameResult();
     }
     public void EndGameResult()
     {
-        float numberOres = baseSystem.GetBaseStorageOres(Global.OresTypes.Ore_No1);
-        currentPlayerScore.text = numberOres.ToString();
+        Global.userInterfaceActiveManager.SetMenuVisibilitySmoothly(Global.MenusType.TaskCompletedContainer, true);
 
-        if (numberOres > PlayerPrefs.GetFloat("SCORE: ", 0))
+        float numberOresCurrent = baseSystem.GetFinalStorageOresAmount(Global.OresTypes.Ore_No1);
+        float numberOresLast = PlayerPrefs.GetFloat("SCORE: ", 0.0f);
+        currentPlayerScore.text = text_Score + numberOresCurrent.ToString();
+
+        if (numberOresCurrent > numberOresLast)
         {
-            PlayerPrefs.SetFloat("SCORE: ", numberOres);
-            endScoreUpdateText.text = numberOres.ToString();
+            PlayerPrefs.SetFloat("SCORE: ", numberOresCurrent);
+            endScoreUpdateText.text = text_NewScore + numberOresCurrent.ToString();
+        }
+        else
+        {
+            
+            endScoreUpdateText.text = text_OldScore + numberOresLast.ToString();
         }
     }
 }

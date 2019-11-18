@@ -74,9 +74,9 @@ public class ZoneVisualize : MonoBehaviour
                 eachBorderLinesPosition = Vector3.zero;
                 eachBorderLinesRotation = Quaternion.identity;
 
-                eachBorderLinesPosition.x = Global.zoneValues[i+1] * Mathf.Sin((Time.time / slowDownBorderLinesRotationSpeed) + (eachAngles[i] * j));
+                eachBorderLinesPosition.x = Global.zonesRadius[i+1] * Mathf.Sin((Time.time / slowDownBorderLinesRotationSpeed) + (eachAngles[i] * j));
                 eachBorderLinesPosition.y = 0.0f; //borderLines_Transform[i].position.y;
-                eachBorderLinesPosition.z = Global.zoneValues[i + 1] * Mathf.Cos((Time.time / slowDownBorderLinesRotationSpeed) + (eachAngles[i] * j));
+                eachBorderLinesPosition.z = Global.zonesRadius[i + 1] * Mathf.Cos((Time.time / slowDownBorderLinesRotationSpeed) + (eachAngles[i] * j));
 
                 eachBorderLinesRotation.SetLookRotation(zoneBorderLinesDetails[i].borderLines_Transform[j].position - baseTransform.position);
                 eachBorderLinesRotation *= Quaternion.Euler(0.0f, 90.0f, 0.0f);

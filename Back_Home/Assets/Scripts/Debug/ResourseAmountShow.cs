@@ -36,9 +36,9 @@ public class ResourseAmountShow : MonoBehaviour
         //shipOreNo2Text.text = text_ShipOreNo2 + shipEntity.GetShipOresAmount(Global.OresTypes.Special_Ore);
 
         oreAmountText.text = text_OreAmount + baseSystem.GetBaseStorageOres(Global.OresTypes.Ore_No1);
-        targetOreAmountText.text = text_TargetOreAmount + Global.targetOreToWinValue;
+        targetOreAmountText.text = text_TargetOreAmount + Global.targetQuest_OreNo1_Amount[Global.gameManager.CurrentQuestLevel];
 
-        LeftOreAmount = Global.targetOreToWinValue - baseSystem.GetBaseStorageOres(Global.OresTypes.Ore_No1);
+         LeftOreAmount = Global.targetQuest_OreNo1_Amount[Global.gameManager.CurrentQuestLevel] - baseSystem.GetBaseStorageOres(Global.OresTypes.Ore_No1);
         LeftOreAmount = (LeftOreAmount <= 0.0f) ? 0.0f : LeftOreAmount;
         leftOreAmountText.text = text_LeftOreAmount + LeftOreAmount;
     }

@@ -52,7 +52,7 @@ public class EnemySpawner : MonoBehaviour {
 
             Instantiate(
                         enemiesToSpawn[Random.Range(0, enemiesToSpawn.Length)],
-                        randomPosition(Global.zoneValues[(int)currentZone - 1], Global.zoneValues[(int)currentZone]),
+                        randomPosition(Global.zonesRadius[(int)currentZone - 1], Global.zonesRadius[(int)currentZone]),
                         new Quaternion()
                     ).gameObject.transform.SetParent(container);
             /*

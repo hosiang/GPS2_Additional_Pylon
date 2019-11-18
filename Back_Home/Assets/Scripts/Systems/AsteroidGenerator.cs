@@ -191,30 +191,30 @@ public class AsteroidGenerator : MonoBehaviour
 
         RandomPosition( eachZoneAsteroidAmount[0],
             ref asteroidBigTransforms_EasyZone, ref asteroidSmallTransforms_EasyZone,
-            Global.zoneValues[(int)Global.ZoneLevels.ShieldZone], Global.zoneValues[(int)Global.ZoneLevels.EasyZone] );
+            Global.zonesRadius[(int)Global.ZoneLevels.ShieldZone], Global.zonesRadius[(int)Global.ZoneLevels.EasyZone] );
 
         RandomPosition(eachZoneAsteroidAmount[1],
             ref asteroidBigTransforms_MediumZone, ref asteroidSmallTransforms_MediumZone,
-            Global.zoneValues[(int)Global.ZoneLevels.EasyZone], Global.zoneValues[(int)Global.ZoneLevels.MediumZone]);
+            Global.zonesRadius[(int)Global.ZoneLevels.EasyZone], Global.zonesRadius[(int)Global.ZoneLevels.MediumZone]);
 
         RandomPosition(eachZoneAsteroidAmount[2],
             ref asteroidBigTransforms_HardZone, ref asteroidSmallTransforms_HardZone,
-            Global.zoneValues[(int)Global.ZoneLevels.MediumZone], Global.zoneValues[(int)Global.ZoneLevels.HardZone]);
+            Global.zonesRadius[(int)Global.ZoneLevels.MediumZone], Global.zonesRadius[(int)Global.ZoneLevels.HardZone]);
 
 
         for (int i = 0; i < 50; i++)
         {
             ExtraRandomPosition(eachZoneAsteroidAmount[0],
             ref asteroidBigTransforms_EasyZone, ref asteroidSmallTransforms_EasyZone,
-            Global.zoneValues[(int)Global.ZoneLevels.ShieldZone], Global.zoneValues[(int)Global.ZoneLevels.EasyZone]);
+            Global.zonesRadius[(int)Global.ZoneLevels.ShieldZone], Global.zonesRadius[(int)Global.ZoneLevels.EasyZone]);
 
             ExtraRandomPosition(eachZoneAsteroidAmount[1],
             ref asteroidBigTransforms_MediumZone, ref asteroidSmallTransforms_MediumZone,
-            Global.zoneValues[(int)Global.ZoneLevels.EasyZone], Global.zoneValues[(int)Global.ZoneLevels.MediumZone]);
+            Global.zonesRadius[(int)Global.ZoneLevels.EasyZone], Global.zonesRadius[(int)Global.ZoneLevels.MediumZone]);
 
             ExtraRandomPosition(eachZoneAsteroidAmount[2],
             ref asteroidBigTransforms_HardZone, ref asteroidSmallTransforms_HardZone,
-            Global.zoneValues[(int)Global.ZoneLevels.MediumZone], Global.zoneValues[(int)Global.ZoneLevels.HardZone]);
+            Global.zonesRadius[(int)Global.ZoneLevels.MediumZone], Global.zonesRadius[(int)Global.ZoneLevels.HardZone]);
         }
 
         /*
