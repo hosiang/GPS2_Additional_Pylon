@@ -49,6 +49,8 @@ public class UIActiveManager : MonoBehaviour
         SetMenuVisibilityDirectly(Global.MenusType.QuitConfirmation, false);
         SetMenuVisibilityDirectly(Global.MenusType.UIControllerPrefab, true);
         SetMenuVisibilityDirectly(Global.MenusType.UIInformationContainer, true);
+
+        SetMenuVisibilityDirectly(Global.MenusType.TaskCompletedContainer, false);
     }
 
 
@@ -162,9 +164,44 @@ public class UIActiveManager : MonoBehaviour
         if (menusVisibilityState[(int)menusType] != visibilityState)
         {
             menusVisibilityState[(int)menusType] = visibilityState;
-            StartCoroutine(VisibilitySmoothlySwitchCoroutine(menusType, visibilityState, smoothlTime, slowToFast));
+            StopAllCoroutines();
+            StartCoroutine(VisibilitySmoothlySwitchCoroutine(menusType, menusVisibilityState[(int)menusType], smoothlTime, slowToFast));
         }
         
+    }
+
+    public void ShowMenuSmoothly(string menuName)
+    {
+        for (int i = 0; i < Global.nameGameObject_Menus.Length; i++)
+        {
+            if(menuName == Global.nameGameObject_Menus[i])
+            {
+                if (menusVisibilityState[i] != true)
+                {
+                    menusVisibilityState[i] = true;
+                    StopAllCoroutines();
+                    StartCoroutine(VisibilitySmoothlySwitchCoroutine((Global.MenusType)i, menusVisibilityState[i], 1.0f, true));
+                }
+                break;
+            }
+        }
+    }
+
+    public void HideMenuSmoothly(string menuName)
+    {
+        for (int i = 0; i < Global.nameGameObject_Menus.Length; i++)
+        {
+            if (menuName == Global.nameGameObject_Menus[i])
+            {
+                if (menusVisibilityState[i] != false)
+                {
+                    menusVisibilityState[i] = false;
+                    StopAllCoroutines();
+                    StartCoroutine(VisibilitySmoothlySwitchCoroutine((Global.MenusType)i, menusVisibilityState[i], 1.0f, true));
+                }
+                break;
+            }
+        }
     }
 
     private IEnumerator VisibilitySmoothlySwitchCoroutine(Global.MenusType menusType, bool visibilityState, float smoothlTime, bool slowToFast = true)

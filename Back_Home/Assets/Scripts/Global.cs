@@ -35,21 +35,23 @@ public static class Global {
 
     //Menus
     public static readonly string nameGameObject_UI = "UI";
-    public static readonly string[] nameGameObject_Menus = { "ScreenBlock", "UIControllerPrefab", "UIInformationContainer", "QuitConfirmation" };
+    public static readonly string[] nameGameObject_Menus = { "ScreenBlock", "UIControllerPrefab", "UIInformationContainer", "QuitConfirmation", "TaskCompletedContainer" };
 
     //Enums
     public enum AstroidType { AsteroidSmall, AsteroidBig, Special, Ore };
     public enum OresTypes { Special_Ore, Ore_No1, Length };
     public enum ZoneLevels { ShieldZone, EasyZone, MediumZone, HardZone, Length };
     public enum ParticleEffectType { astroid };
-    public enum MenusType {ScreenBlock, UIControllerPrefab, UIInformationContainer, QuitConfirmation};
+    public enum MenusType {ScreenBlock, UIControllerPrefab, UIInformationContainer, QuitConfirmation, TaskCompletedContainer };
+    public enum QuestLevels { Quest_01, Quest_02, Quest_03, Length };
 
     //List or Array
-    public static readonly float[] zoneValues = { 15.0f, 30.0f, 50.0f, 75.0f };
+    public static readonly float[] zonesRadius = { 20.0f, 40.0f, 80.0f, 160.0f };
     public static readonly float[] OresWeight = { 0.0f, 2.5f };
 
     // Quest
-    public static float targetOreToWinValue = 125.0f;
+    public static float[] targetQuest_OreNo1_Amount = { 50, 100, 150 };
+    public static float targetOreToWinValue = 1.0f;
 
     public static float ValueToTime(float value)
     {

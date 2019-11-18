@@ -5,26 +5,26 @@ using UnityEngine;
 public class ShipEntity : MonoBehaviour
 {
     [Header("Health")]
-    [SerializeField] protected float currentHealth = 100f;
-    [SerializeField] protected float maximalHealth = 100f;
+    private float currentHealth = 100f;
+    private float maximalHealth = 100f;
 
-    [SerializeField] private float healthRegenerationRate = 1f; // Take from BaseSystem
+    private float healthRegenerationRate = 10f; // Take from BaseSystem
 
-    [SerializeField] protected bool isDead = false;
+    [SerializeField] private bool isDead = false;
+    private bool onHealing = false;
 
     public float CurrentHealth { get { return currentHealth; } }
     public float MaximalHealth { get { return maximalHealth; } }
     public bool IsDead { get { return isDead; } }
 
-
     [Header("Nitro")]
-    [SerializeField] protected float currentNitro = 100f;
-    [SerializeField] protected float maximalNitro = 100f;
+    [SerializeField] private float currentNitro = 100f;
+    [SerializeField] private float maximalNitro = 100f;
 
-    [SerializeField] private float nitroRegenerationRate = 33f;
-    [SerializeField] private float nitroRefuelRate = 27f; // Use in Base, Get from BaseSystem
+    private float nitroRegenerationRate = 1f;
+    private float nitroRefuelRate = 10f; // Use in Base, Get from BaseSystem
 
-    [SerializeField] protected bool isOverheat = false;
+    [SerializeField] private bool isOverheat = false;
 
     public float CurrentNitro { get { return currentNitro; } }
     public float MaximalNitro { get { return maximalNitro; } }
@@ -32,14 +32,14 @@ public class ShipEntity : MonoBehaviour
 
 
     [Header("Weight")]
-    [SerializeField] protected float currentWeight = 0f;
-    [SerializeField] protected float maximalWeight = 100f;
+    [SerializeField] private float currentWeight = 0f;
+    [SerializeField] private float maximalWeight = 100f;
 
     public float CurrentWeight { get { return currentWeight; } }
     public float MaximalWeight { get { return maximalWeight; } }
 
 
-    protected Dictionary<Global.OresTypes, float> oresAmount = new Dictionary<Global.OresTypes, float>();
+    private Dictionary<Global.OresTypes, float> oresAmount = new Dictionary<Global.OresTypes, float>();
 
     private BaseSystem baseSystem;
 
@@ -47,8 +47,8 @@ public class ShipEntity : MonoBehaviour
     [SerializeField] private Animator playerAnimator;
 
     //Particle
-    [SerializeField] private ParticleSystem healing1;
-    [SerializeField] private ParticleSystem healing2;
+    //[SerializeField] private ParticleSystem healing1;
+    //[SerializeField] private ParticleSystem healing2;
     [SerializeField] private ParticleSystem blingHurt;
     [SerializeField] private ParticleSystem boomHurt;
     [SerializeField] private ParticleSystem astroidHitParticle;
@@ -56,10 +56,10 @@ public class ShipEntity : MonoBehaviour
 
     void Start()
     {
-        healing1.Stop();
-        healing2.Stop();
-        blingHurt.Stop();
-        boomHurt.Stop();
+        //healing1.Stop();
+        //healing2.Stop();
+        //blingHurt.Stop();
+        //boomHurt.Stop();
 
         for (int i = 0; i < (int)Global.OresTypes.Length; i++)
         {
@@ -118,12 +118,13 @@ public class ShipEntity : MonoBehaviour
     {
         //Debug.Log($"<color=red>Player took {damage}</color>");
         playerAnimator.SetTrigger("isHurt");
-        blingHurt.Play();
-        boomHurt.Play();
+        //blingHurt.Play();
+        //boomHurt.Play();
 
         currentHealth -= damage;
         HealthChecker();
     }
+
     public void ReplenishHealthPoint(Object requireObject)
     {
         //if(requireObject.GetType().Name == nameof(BaseSystem))
@@ -131,18 +132,18 @@ public class ShipEntity : MonoBehaviour
         {
             if (currentHealth < maximalHealth)
             {
-                healing1.Play();
-                healing2.Play();
+                //healing1.Play();
+                //healing2.Play();
 
                 currentHealth += healthRegenerationRate * Time.deltaTime; // Smooth the regeneration speed.
             }
             else if (currentHealth > maximalHealth) // This only will trigger one time when |*|currentHealth|*| overstep the |*|maximalHealth|*|
             {
-                if (healing1.isPlaying || healing2.isPlaying || healing2.isPlaying)
-                {
-                    healing1.Stop();
-                    healing2.Stop();
-                }
+                //if (healing1.isPlaying || healing2.isPlaying || healing2.isPlaying)
+                //{
+                 //   healing1.Stop();
+                  //  healing2.Stop();
+                //}
 
                 currentHealth = maximalHealth; // For limit the overstep |*|currentHealth|*| to |*|maximalHealth|*|
             }
@@ -166,11 +167,27 @@ public class ShipEntity : MonoBehaviour
     }
     public void ReplenishNitroPoint(Object requireObject)
     {
-        if (requireObject == baseSystem)
+        Debug.Log("Recover Nitro : Object " + requireObject.GetType().Name);
+        if (requireObject.GetType().Name == nameof(PlayerControl))
         {
             if (currentNitro < maximalNitro)
             {
-                currentNitro += nitroRegenerationRate * Time.deltaTime;
+                currentNitro += (isOverheat ? (nitroRegenerationRate * 20f) : nitroRegenerationRate) * Time.deltaTime;
+                if (currentNitro > maximalNitro) { currentNitro = maximalNitro; }
+            }
+            // If isOverheat is true and |*|currentNitro|*| is more then or equal to |*|maximalNitro|*|, then it will allow player able to thrust again
+            else if (isOverheat && currentNitro >= maximalNitro)
+            {
+                isOverheat = false;
+                currentNitro = maximalNitro;
+            }
+        }
+        else if (requireObject == baseSystem)
+        {
+            if (currentNitro < maximalNitro)
+            {
+                currentNitro += nitroRegenerationRate * 2.0f * Time.deltaTime;
+                if (currentNitro > maximalNitro) { currentNitro = maximalNitro; }
             }
             // If isOverheat is true and |*|currentNitro|*| is more then or equal to |*|maximalNitro|*|, then it will allow player able to thrust again
             else if (isOverheat && currentNitro >= maximalNitro)
@@ -178,10 +195,7 @@ public class ShipEntity : MonoBehaviour
                 isOverheat = false;
                 currentNitro = maximalNitro;
             } 
-            else if (currentNitro > maximalNitro)
-            {
-                currentNitro = maximalNitro;
-            }
+            
         }
         else
         {
@@ -191,28 +205,27 @@ public class ShipEntity : MonoBehaviour
     public void NitroReduction()
     {
         currentNitro -= nitroRefuelRate * Time.deltaTime;
+        NitroChecker();
     }
     #endregion |* End Of Nitro fuctions *|
 
 
     #region |* Weight fuctions *|
-    public Dictionary<Global.OresTypes, float> UnloadResources(Object requireObject, Dictionary<Global.OresTypes, float> baseOresAmount)
+    public void UnloadResources(Object requireObject, ref Dictionary<Global.OresTypes, float> baseOresAmount, ref Dictionary<Global.OresTypes, float> finalOresAmount)
     {
         if (requireObject == baseSystem)
         {
             for (int i = 0; i < (int)Global.OresTypes.Length; i++)
             {
                 baseOresAmount[(Global.OresTypes)i] += oresAmount[(Global.OresTypes)i];
+                finalOresAmount[(Global.OresTypes)i] += oresAmount[(Global.OresTypes)i];
                 oresAmount[(Global.OresTypes)i] = 0.0f;
             }
             currentWeight = 0.0f;
-
-            return baseOresAmount;
         }
         else
         {
             Debug.LogError("Alert! Have some Unauthorized class try to entry to invoking this functions!");
-            return null;
         }
     }
 
