@@ -12,7 +12,7 @@ public class UIInformationManager : MonoBehaviour
     [SerializeField] private Slider healthPointSlider;
     [SerializeField] private Image nitroPointImage;
     private float eachNitroPointRate;
-    private float coverNitroPointRate = 0.04f;
+    private float coverNitroPointRate = 0.03f;
     [SerializeField] private Slider weightPointSlider;
     [SerializeField] private Text distanceBetweenShipAndBaseText;
     [SerializeField] private Text timerText;

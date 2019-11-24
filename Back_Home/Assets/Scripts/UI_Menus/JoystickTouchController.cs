@@ -11,17 +11,14 @@ public class JoystickTouchController : MonoBehaviour, IDragHandler, IPointerUpHa
     private Image joystickContainer;
     private Image joystick;
 
-    public bool centerWhileRelease = true;
-
-    private Vector2 touchingPosition = Vector2.zero;
-
     private Vector3 inputDirection = Vector3.zero;
+    private Vector2 touchingPosition = Vector2.zero;
     private Vector2 touchingJoystickPosition = Vector2.zero;
-    private Vector2 touchingScreenJoystickPosition = Vector2.zero;
+    //private Vector2 touchingScreenJoystickPosition = Vector2.zero;
 
     public Vector3 InputDirection { get { return inputDirection; } }
     public Vector2 TouchingJoystickPosition { get { return touchingJoystickPosition; } }
-    public Vector2 TouchingScreenJoystickPosition { get { return touchingScreenJoystickPosition; } }
+    //public Vector2 TouchingScreenJoystickPosition { get { return touchingScreenJoystickPosition; } }
 
     /*
     public Rigidbody objectRigidbody;

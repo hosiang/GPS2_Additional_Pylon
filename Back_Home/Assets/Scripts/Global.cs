@@ -10,7 +10,7 @@ public static class Global {
     public static UIActiveManager userInterfaceActiveManager;
 
     //Save location
-    public static string saveFile_Test = "";
+    public static string saveFile_HighScore = "/HighScore.dat";
 
     //SFX
     public static string sfx_Test = "";
@@ -51,7 +51,7 @@ public static class Global {
     public static readonly float[] OresWeight = { 0.0f, 2.5f };
 
     // Quest
-    public static float[] targetQuest_OreNo1_Amount = { 1, 1, 1 };
+    public static float[] targetQuest_OreNo1_Amount = { 1, 100, 150 };
     public static float targetOreToWinValue = 1.0f;
 
     public static float ValueToTime(float value)

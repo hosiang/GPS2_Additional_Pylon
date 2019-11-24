@@ -545,31 +545,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7988311205905773058, guid: fb55e5340350db74d9782b0a0b947c64,
-        type: 3}
-      propertyPath: drillButton
-      value: 
-      objectReference: {fileID: 8727342438982081415}
-    - target: {fileID: 2454464617607422166, guid: fb55e5340350db74d9782b0a0b947c64,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2454464617607422166, guid: fb55e5340350db74d9782b0a0b947c64,
-        type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2454464617568414511, guid: fb55e5340350db74d9782b0a0b947c64,
-        type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2454464617896237171, guid: fb55e5340350db74d9782b0a0b947c64,
-        type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 256892626835758044, guid: fb55e5340350db74d9782b0a0b947c64,
         type: 3}
       propertyPath: onPressing.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -580,11 +555,6 @@ PrefabInstance:
       propertyPath: onRelease.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1755108446}
-    - target: {fileID: 2454464618625882247, guid: fb55e5340350db74d9782b0a0b947c64,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 8727342438982081415, guid: fb55e5340350db74d9782b0a0b947c64,
         type: 3}
       propertyPath: onPressing.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -595,41 +565,6 @@ PrefabInstance:
       propertyPath: onRelease.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1755108446}
-    - target: {fileID: 8727342438982081415, guid: fb55e5340350db74d9782b0a0b947c64,
-        type: 3}
-      propertyPath: m_Interactable
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8727342438982081415, guid: fb55e5340350db74d9782b0a0b947c64,
-        type: 3}
-      propertyPath: m_Colors.m_DisabledColor.a
-      value: 0.39215687
-      objectReference: {fileID: 0}
-    - target: {fileID: 8727342438982081415, guid: fb55e5340350db74d9782b0a0b947c64,
-        type: 3}
-      propertyPath: m_Colors.m_DisabledColor.r
-      value: 0.46226418
-      objectReference: {fileID: 0}
-    - target: {fileID: 8727342438982081415, guid: fb55e5340350db74d9782b0a0b947c64,
-        type: 3}
-      propertyPath: m_Colors.m_DisabledColor.g
-      value: 0.46226418
-      objectReference: {fileID: 0}
-    - target: {fileID: 8727342438982081415, guid: fb55e5340350db74d9782b0a0b947c64,
-        type: 3}
-      propertyPath: m_Colors.m_DisabledColor.b
-      value: 0.46226418
-      objectReference: {fileID: 0}
-    - target: {fileID: 8727342438982081415, guid: fb55e5340350db74d9782b0a0b947c64,
-        type: 3}
-      propertyPath: onPressing.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Drilling
-      objectReference: {fileID: 0}
-    - target: {fileID: 8727342438982081415, guid: fb55e5340350db74d9782b0a0b947c64,
-        type: 3}
-      propertyPath: onRelease.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: DrillingRelease
-      objectReference: {fileID: 0}
     - target: {fileID: 5392201166007415016, guid: fb55e5340350db74d9782b0a0b947c64,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -695,74 +630,27 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4389260841277513046, guid: fb55e5340350db74d9782b0a0b947c64,
-        type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4389260841277513046, guid: fb55e5340350db74d9782b0a0b947c64,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 1875803310, guid: fb55e5340350db74d9782b0a0b947c64, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3352204147894919067, guid: fb55e5340350db74d9782b0a0b947c64,
-        type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3352204147894919067, guid: fb55e5340350db74d9782b0a0b947c64,
-        type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3352204147894919067, guid: fb55e5340350db74d9782b0a0b947c64,
-        type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3352204147894919067, guid: fb55e5340350db74d9782b0a0b947c64,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3352204147894919067, guid: fb55e5340350db74d9782b0a0b947c64,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -192.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3352204147894919067, guid: fb55e5340350db74d9782b0a0b947c64,
-        type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 260
-      objectReference: {fileID: 0}
-    - target: {fileID: 3352204147894919067, guid: fb55e5340350db74d9782b0a0b947c64,
-        type: 3}
+    - target: {fileID: 302639359, guid: fb55e5340350db74d9782b0a0b947c64, type: 3}
+      propertyPath: onValueChange.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1755108446}
+    - target: {fileID: 87566574, guid: fb55e5340350db74d9782b0a0b947c64, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 260
-      objectReference: {fileID: 0}
-    - target: {fileID: 3352204147894919068, guid: fb55e5340350db74d9782b0a0b947c64,
-        type: 3}
-      propertyPath: m_Type
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 3352204147894919068, guid: fb55e5340350db74d9782b0a0b947c64,
-        type: 3}
-      propertyPath: m_FillAmount
-      value: 0.96
-      objectReference: {fileID: 0}
-    - target: {fileID: 3352204147894919068, guid: fb55e5340350db74d9782b0a0b947c64,
-        type: 3}
-      propertyPath: m_FillClockwise
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3352204147894919068, guid: fb55e5340350db74d9782b0a0b947c64,
+    - target: {fileID: 4799814188924580548, guid: fb55e5340350db74d9782b0a0b947c64,
         type: 3}
-      propertyPath: m_FillOrigin
-      value: 2
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4799814188924580548, guid: fb55e5340350db74d9782b0a0b947c64,
+        type: 3}
+      propertyPath: m_Color.a
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fb55e5340350db74d9782b0a0b947c64, type: 3}
@@ -1009,7 +897,7 @@ GameObject:
   m_Component:
   - component: {fileID: 397433197}
   - component: {fileID: 397433198}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Easy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1173,7 +1061,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 619933435}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: DebugZone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1616,7 +1504,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1262348317}
   - component: {fileID: 1262348318}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Hard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1966,6 +1854,11 @@ PrefabInstance:
       propertyPath: orthographic
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8868805955402224872, guid: 9b9f3f3b0c2bfbf42baa63ba213a94c9,
+        type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 7991
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9b9f3f3b0c2bfbf42baa63ba213a94c9, type: 3}
 --- !u!1 &1641538891 stripped
@@ -2096,7 +1989,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1855667110}
   - component: {fileID: 1855667111}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Medium
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2814,15 +2707,3 @@ PlayableDirector:
     value: {fileID: 619933434}
   m_ExposedReferences:
     m_References: []
---- !u!114 &8727342438982081415 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8727342438982081415, guid: fb55e5340350db74d9782b0a0b947c64,
-    type: 3}
-  m_PrefabInstance: {fileID: 113166459}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 778f9b60b3e59704db82be78bc909161, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

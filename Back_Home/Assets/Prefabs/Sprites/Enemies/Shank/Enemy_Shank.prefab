@@ -46,7 +46,7 @@ MeshCollider:
   serializedVersion: 3
   m_Convex: 1
   m_CookingOptions: 14
-  m_Mesh: {fileID: 4300000, guid: 6e7896a2317810449adfc61326251170, type: 2}
+  m_Mesh: {fileID: 3196837263284220070, guid: 8a34f632d01a13e4f9679981f05fb3cf, type: 3}
 --- !u!95 &3756175134463747255
 Animator:
   serializedVersion: 3
@@ -4831,7 +4831,7 @@ MeshCollider:
   serializedVersion: 3
   m_Convex: 1
   m_CookingOptions: 14
-  m_Mesh: {fileID: 4300000, guid: 2696fcdd264015143a2ea76c7936e094, type: 2}
+  m_Mesh: {fileID: 7044721228194421919, guid: 09a392fa8d48aa04397ba3ae6a06c81f, type: 3}
 --- !u!1 &7964092265986765419
 GameObject:
   m_ObjectHideFlags: 0
@@ -14538,12 +14538,14 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: 4300000, guid: 2696fcdd264015143a2ea76c7936e094, type: 2}
+      objectReference: {fileID: 7044721228194421919, guid: 09a392fa8d48aa04397ba3ae6a06c81f,
+        type: 3}
     - target: {fileID: 693552719113277633, guid: 8a34f632d01a13e4f9679981f05fb3cf,
         type: 3}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: 4300000, guid: 6e7896a2317810449adfc61326251170, type: 2}
+      objectReference: {fileID: 3196837263284220070, guid: 8a34f632d01a13e4f9679981f05fb3cf,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8a34f632d01a13e4f9679981f05fb3cf, type: 3}
 --- !u!1 &2495067827983973666 stripped

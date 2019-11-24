@@ -64,11 +64,13 @@ public class PlayerControl : MonoBehaviour
     private JoystickTouchController joystickTouchController;
 
     private Vector3 basePosition = Vector3.zero;
+    private Vector3 basicBoundaryForce = Vector3.zero;
 
     public GameObject damageIndicator;
     private float damageDuration = 1f;
 
     private bool onHealing = false;
+
 
     // Getter
     public bool IsThrust { get { return isThrust; } }
@@ -80,7 +82,7 @@ public class PlayerControl : MonoBehaviour
         if(!(joystickTouchController = FindObjectOfType<JoystickTouchController>()))
         {
             joystickTouchController = new JoystickTouchController();
-            Debug.LogError("Error! Joystick are undefine now! Please comfirm to put in the JoystickTouchController.cs in you scene!");
+            //Debug.LogError("Error! Joystick are undefine now! Please comfirm to put in the JoystickTouchController.cs in you scene!");
         }
     }
 
@@ -161,10 +163,32 @@ public class PlayerControl : MonoBehaviour
     {
         if( Vector3.Distance(basePosition, transform.position) > Global.gameManager.CurrentPermissiveZoneRadius)
         {
-            playerRigidbody.velocity += (basePosition - playerTransform.position.normalized) * playerRigidbody.velocity.magnitude;
-            //playerRigidbody.velocity = Vector3.zero;
-            //transform.position = transform.position.normalized * Global.gameManager.CurrentPermissiveZoneRadius;
+            basicBoundaryForce = (basePosition - playerTransform.position).normalized;
+            basicBoundaryForce.x *= 0.75f;
+            basicBoundaryForce.y *= 0.0f;
+            basicBoundaryForce.z *= 0.75f;
+
+            playerRigidbody.velocity = basicBoundaryForce;
+
+            //playerRigidbody.velocity -= (basePosition - playerTransform.position.normalized) * playerRigidbody.velocity.magnitude; // more stronger push force
+
+            //playerRigidbody.velocity = Vector3.zero; // directly stop
+            //transform.position = transform.position.normalized * Global.gameManager.CurrentPermissiveZoneRadius; // limit the distance only can between the zone
         }
+    }
+
+    public void Rotating(float value)
+    {
+        /*
+        if (playerRigidbody.angularVelocity != Vector3.zero) // For reset the ship torque when the ship collder with something
+        {
+            currentFacingAngle = transform.rotation.eulerAngles.y; // 
+            playerRigidbody.angularVelocity = Vector3.zero; // Reset the ship torque to all to be zero
+        }
+        */
+
+        currentFacingAngle = value * rotationSpeed * Time.deltaTime;
+        transform.Rotate(0.0f, currentFacingAngle, 0.0f);
     }
 
     void Rotation()
