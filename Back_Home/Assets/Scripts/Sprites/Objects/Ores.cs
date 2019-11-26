@@ -32,26 +32,27 @@ public class Ores : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+
         if (other.gameObject.tag == Global.tag_Player && isCollectable && shipEntity.CurrentWeight < shipEntity.MaximalWeight)
         {
-            other.gameObject.transform.parent.GetComponentInParent<ShipEntity>().GainOres(this, oresType, 1);
-            if(oresType == Global.OresTypes.Special_Ore)
+
+            shipEntity.GainOres(this, oresType, 1); // Pick up the ore to the ship
+
+            if (oresType == Global.OresTypes.Special_Ore)
             {
                 Destroy(gameObject.transform.parent.parent.gameObject);
             }
             else
             {
-                GameObject tempGameObject = Instantiate(gainEffect, transform.position, transform.rotation);
+                float rotation = Random.Range(0.0f, 360.0f);
+
+                GameObject tempGameObject = Instantiate(gainEffect, transform.position, new Quaternion(0.0f, rotation, 0.0f, 0.0f)); // Create a boom effect
                 Destroy(tempGameObject, 0.1f); // Destroy the boom effect after 10 second
                 Destroy(gameObject);
             }
-            
-            //PickUpOre();
+
         }
+
     }
-    private void PickUpOre()
-    {
-        FindObjectOfType<ShipEntity>().GainOres(this, oresType, 1);
-        Destroy(gameObject);
-    }
+
 }

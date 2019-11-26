@@ -28,9 +28,12 @@ public class CustomButton : Selectable
         base.Awake();
     }
 
-    private void SetButtonDoubleClickActive(bool active)
+    public void SetButtonDoubleClickActive( Object requireObject, bool active)
     {
-        multiClick = active;
+        if(requireObject.GetType().Name == nameof(SkillTree))
+        {
+            multiClick = active;
+        }
     }
 
     private void DoubleClickCheck()
@@ -74,8 +77,11 @@ public class CustomButton : Selectable
 
     public override void OnPointerDown(PointerEventData eventData)
     {
-        if (multiClick) DoubleClickCheck();
-
+        if (multiClick)
+        {
+            DoubleClickCheck();
+            return;
+        }
         if (interactable)
         {
             buttonOnPressing = true;

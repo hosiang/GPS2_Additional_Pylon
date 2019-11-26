@@ -62,7 +62,6 @@ public class GameManager : MonoBehaviour {
 
     public void TaskCompleted()
     {
-        Global.userInterfaceActiveManager.SetMenuVisibilitySmoothly(Global.MenusType.TaskCompletedContainer, true);
         endScoreUpdating.EndGameResult();
         //taskCompletedUI.SetActive(true);
         Debug.Log("Task Completed");

@@ -6,20 +6,12 @@ using UnityEditor;
 public class Asteroid : MonoBehaviour
 {
     //private float[] AstroidOreProvide = { 3, 5, 4 };
-    
+
+    private Global.ZoneLevels formWhichZone;
     [SerializeField] private Global.AstroidType astroidType;
+    private Vector3 originalScale;
 
     [SerializeField] private List<GameObject> brokenOresTypes = new List<GameObject>();
-    /*
-    [SerializeField] private GameObject ore1;
-    [SerializeField] private GameObject ore2;
-    [SerializeField] private GameObject ore3;
-    [SerializeField] private GameObject ore4;
-    [SerializeField] private GameObject ore5;
-    [SerializeField] private GameObject ore6;
-    [SerializeField] private GameObject ore7;
-    [SerializeField] private GameObject ore8;
-    */
 
     [SerializeField] private float health;
     [SerializeField] private float oreScatterRaius;
@@ -33,40 +25,35 @@ public class Asteroid : MonoBehaviour
     private float vibrationChangeCounter;
 
     [SerializeField] private Animator specialOresAnimator;
+    private Rigidbody playerRigidbody;
+    private float knockBackForce = 200.0f;
+    [SerializeField] private float knockBackDelayTime = 0.2f;
+    private bool onKnockBack = false;
 
     public GameObject boomEffect;
     //private bool isBoom = false;
     private bool brokenByDoubleThrust = false;
     
-    private List<float> spawnOreAmount = new List<float> { 3, 5, 1, 2 };
-    private float[] eachAsteridSizeHealth = new float[]{ 30.0f, 50.0f };
+
+    //private List<float> spawnOreAmount = new List<float> { 3, 5, 1, 2 };
+
+    public Global.ZoneLevels FormWhichZone => formWhichZone;
+    public Global.AstroidType AstroidType => astroidType;
+    public bool OnKnockBack => onKnockBack;
 
     private void Awake()
     {
-
         vibrationChangeCounter = 0f;
 
-        switch (astroidType)
-        {
-
-            case Global.AstroidType.AsteroidSmall:
-                //transform.localScale = Vector3(); //placeholder
-                break;
-
-            case Global.AstroidType.AsteroidBig:
-                //transform.localScale = Vector3(); //placeholder
-                break;
-
-        }
-
+        originalScale = transform.localScale;
     }
 
     private void Start()
     {
         specialOresAnimator = GetComponentInChildren<Animator>();
+        playerRigidbody = FindObjectOfType<PlayerControl>().GetComponent<Rigidbody>();
     }
 
-    // Update is called once per frame
     void Update()
     {
 
@@ -74,31 +61,49 @@ public class Asteroid : MonoBehaviour
         else if (vibrationDistance > 0f) { VibrationDissipate(); }
 
         AlertEnemy();
-
-        if (health <= 0f)
-        {
-            ConvertToOre();
-        }
-
     }
-    
-    private void ConvertToOre()
+
+    public void Drill(float damage, float vibrationFrequency)
     {
-        switch (astroidType)
+        if(astroidType == Global.AstroidType.Special)
         {
-            case Global.AstroidType.AsteroidSmall:
-            case Global.AstroidType.AsteroidBig:
-                Explode();
-                Destroy(gameObject);
-                break;
-            case Global.AstroidType.Special:
-                this.GetComponentInChildren<Ores>().SetOresToColletable(this); // Make sure the special ore is get from the correct way
-                specialOresAnimator.SetBool("isDestroyed", true); // Special Ore Animation
-                break;
+            if (!onKnockBack) // Not allow trigger again while it on knock back
+            {
+                onKnockBack = true;
+                specialOresAnimator.SetTrigger(Global.animator_Trigger_SpecialAsteroid_isKnockBack);
+                StartCoroutine("KnockBack");
+            }
+        }
+        else // If the asteroid isn't SpecialAsteroid
+        {
+            if (vibrationChangeCounter == 0f)
+            {
+                this.vibrationFrequency = vibrationFrequency;
+            }
+
+            if (health > 0.0f)
+            {
+                health -= damage * Time.deltaTime;
+                health = (health <= 0.0f) ? 0.0f : health;
+            }
+
+            if (health <= 0f)
+            {
+                ConvertToOre();
+            }
         }
 
     }
-    
+
+    private IEnumerator KnockBack()
+    {
+        yield return new WaitForSeconds(knockBackDelayTime);
+
+        onKnockBack = false;
+        playerRigidbody.AddForce(-(transform.position - playerRigidbody.position).normalized * knockBackForce, ForceMode.Force);
+    }
+
+    #region | Vibration Functions |
     private void VibrationDissipate()
     {
 
@@ -133,80 +138,6 @@ public class Asteroid : MonoBehaviour
 
     }
 
-    
-    private void Explode()
-    {
-
-        //Quickly made
-
-        int oresToSpawn = 0;
-
-        switch (astroidType)
-        {
-
-            case Global.AstroidType.AsteroidSmall:
-                oresToSpawn = brokenByDoubleThrust ? 1 : 3;
-                break;
-
-            case Global.AstroidType.AsteroidBig:
-                oresToSpawn = brokenByDoubleThrust ? 2 : 5;
-                break;
-
-        }
-
-        Vector3 spawnPosition = Vector3.zero;
-        int randomTypeAsteroid = 0;
-        float rotationY = 0.0f;
-        for (int i = 0; i < oresToSpawn; ++i)
-        {
-            spawnPosition.x = Random.Range(transform.position.x - oreScatterRaius, transform.position.x + oreScatterRaius);
-            spawnPosition.y = 0.0f;
-            spawnPosition.z = Random.Range(transform.position.z - oreScatterRaius, transform.position.z + oreScatterRaius);
-
-            rotationY = Random.Range(0.0f, 360.0f);
-
-            randomTypeAsteroid = Random.Range(0, brokenOresTypes.Count);
-
-            GameObject tempGameObject = Instantiate(brokenOresTypes[randomTypeAsteroid], spawnPosition, Quaternion.Euler(0.0f, rotationY, 0.0f));
-            tempGameObject.GetComponent<Ores>().SetOresToColletable(this); // Make sure the ore is explode in correct way
-            /*
-            switch (randomTypeAsteroid)
-            {
-                case 1:
-                    Instantiate(ore1, spawnPosition, transform.rotation);
-                    break;
-                case 2:
-                    Instantiate(ore2, spawnPosition, transform.rotation);
-                    break;
-                case 3:
-                    Instantiate(ore3, spawnPosition, transform.rotation);
-                    break;
-                case 4:
-                    Instantiate(ore4, spawnPosition, transform.rotation);
-                    break;
-                case 5:
-                    Instantiate(ore5, spawnPosition, transform.rotation);
-                    break;
-                case 6:
-                    Instantiate(ore6, spawnPosition, transform.rotation);
-                    break;
-                case 7:
-                    Instantiate(ore7, spawnPosition, transform.rotation);
-                    break;
-                case 8:
-                    Instantiate(ore8, spawnPosition, transform.rotation);
-                    break;
-
-            }
-            */
-        }
-
-        //Instantiate(parasiteToSpawn);
-        ExplosionEffect();
-        Destroy(gameObject);
-
-    }
-
     private void AlertEnemy()
     {
 
@@ -225,35 +156,60 @@ public class Asteroid : MonoBehaviour
         }
 
     }
+    #endregion
 
-    public void Drill(float damage, float vibrationFrequency)
+
+    private void ConvertToOre()
+    {
+        switch (astroidType)
+        {
+            case Global.AstroidType.AsteroidSmall:
+            case Global.AstroidType.AsteroidBig:
+                Explode();
+                Destroy(gameObject);
+                break;
+            case Global.AstroidType.Special:
+                this.GetComponentInChildren<Ores>().SetOresToColletable(this); // Make sure the special ore is get from the correct way
+                specialOresAnimator.SetTrigger(Global.animator_Trigger_SpecialAsteroid_isDestroyed); // Special Ore Animation
+                break;
+        }
+
+    }
+
+    private void Explode()
     {
 
-        if (vibrationChangeCounter == 0f)
+        int oresToSpawn = Random.Range(Global.eachZoneAsteroidSpwanOreAmount[(int)formWhichZone, (int)astroidType, (int)Global.OresSpawn.Minimal],
+        Global.eachZoneAsteroidSpwanOreAmount[(int)formWhichZone, (int)astroidType, (int)Global.OresSpawn.Maximal]); // Get the random number of each zone of ores will spawn
+
+        Vector3 spawnPosition = Vector3.zero;
+        float rotationY = 0.0f;
+        int randomTypeAsteroid = 0;
+
+        for (int i = 0; i < oresToSpawn; ++i)
         {
-            this.vibrationFrequency = vibrationFrequency;
-            
+            spawnPosition.x = Random.Range(transform.position.x - oreScatterRaius, transform.position.x + oreScatterRaius);
+            spawnPosition.y = 0.0f;
+            spawnPosition.z = Random.Range(transform.position.z - oreScatterRaius, transform.position.z + oreScatterRaius);
+
+            rotationY = Random.Range(0.0f, 360.0f);
+
+            randomTypeAsteroid = Random.Range(0, brokenOresTypes.Count); // Get the random one type of the 8 different broken_asteroid
+
+            GameObject tempGameObject = Instantiate(brokenOresTypes[randomTypeAsteroid], spawnPosition, Quaternion.Euler(0.0f, rotationY, 0.0f)); // Spawn the ore
+            tempGameObject.GetComponent<Ores>().SetOresToColletable(this); // Only explode the ore when player using correct way the getting
         }
 
-        if(health > 0.0f)
-        {
-            health -= damage * Time.deltaTime;
-            health = (health <= 0.0f) ? 0.0f : health; 
-        }
-        
-
+        //Instantiate(parasiteToSpawn);
+        ExplosionEffect();
+        Destroy(gameObject);
 
     }
 
     private void ExplosionEffect()
     {
         GameObject tempGameObject =  Instantiate(boomEffect, transform.position, transform.rotation);
-        Destroy(tempGameObject, 10.0f); // Destroy the boom effect after 10 second
-    }
-
-    public Global.AstroidType GetAstroidType()
-    {
-        return astroidType;
+        Destroy(tempGameObject, 3.0f); // Destroy the boom effect after 3 second
     }
 
     public void DoubleThrustBroken()
@@ -261,13 +217,36 @@ public class Asteroid : MonoBehaviour
 
     }
 
-    public void SetAsteroidSize(Object requestObject, Global.AstroidType astroidType)
+    #region | Asteroid Genarator Funtions |
+    public void SetAsteroidSize(Object requestObject, Global.AstroidType astroidType, Global.ZoneLevels zoneLevels)
     {
         if(requestObject.GetType().Name == nameof(AsteroidGenerator) && (int)astroidType < 2)
         {
             this.astroidType = astroidType;
-            health = eachAsteridSizeHealth[(int)astroidType];
+            formWhichZone = zoneLevels;
+            SizeGenerator();
         }
         
     }
+
+    private void SizeGenerator()
+    {
+        switch (astroidType)
+        {
+            case Global.AstroidType.AsteroidSmall:
+                transform.localScale = originalScale / 3.0f;
+                health = Global.eachAsteroidHealthPoint[(int)astroidType];
+                break;
+            case Global.AstroidType.AsteroidBig:
+                transform.localScale = originalScale;
+                health = Global.eachAsteroidHealthPoint[(int)astroidType];
+                break;
+            case Global.AstroidType.Special:
+                transform.localScale = originalScale;
+                health = Global.eachAsteroidHealthPoint[(int)astroidType];
+                break;
+        }
+    }
+    #endregion
+
 }

@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acba9c271a002604babb25a06c85aef5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  astroidType: 0
+  astroidType: 1
   brokenOresTypes:
   - {fileID: 6665611228380994144, guid: 3bdbdf7e25f65a14a8e1d8634f775930, type: 3}
   - {fileID: 1352980874026008290, guid: f61a4ce8207218d438d6da33d4de8f46, type: 3}
@@ -54,7 +54,7 @@ MonoBehaviour:
   - {fileID: 2945199885253729694, guid: 70c58a3fbfc90b243903daeecfe6e97c, type: 3}
   - {fileID: 21345714789697661, guid: 431c550f9512de6498a644d21f4e13c9, type: 3}
   - {fileID: 4525068530081090353, guid: 3f14952690749ac4e9f5a94c6ddbeea5, type: 3}
-  health: 50
+  health: 40
   oreScatterRaius: 1.5
   vibrationDissipateRate: 0
   specialOresAnimator: {fileID: 0}

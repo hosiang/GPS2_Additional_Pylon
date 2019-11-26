@@ -193,7 +193,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 4.5, y: 4.5, z: 4.5}
+  m_Size: {x: 4, y: 4, z: 4}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!95 &3095279561253170829
 Animator:
@@ -306,6 +306,7 @@ MonoBehaviour:
   oreScatterRaius: 0
   vibrationDissipateRate: 0
   specialOresAnimator: {fileID: 3095279561253170829}
+  knockBackDelayTime: 0.2
   boomEffect: {fileID: 0}
 --- !u!64 &888013582882775215
 MeshCollider:
@@ -375,6 +376,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   oresType: 0
+  gainEffect: {fileID: 3525185920149238993, guid: 1fa6e1ea0e36e6044b624617f4657cde,
+    type: 3}
 --- !u!64 &6858513334698715519
 MeshCollider:
   m_ObjectHideFlags: 0

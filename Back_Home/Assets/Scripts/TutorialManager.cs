@@ -102,7 +102,7 @@ public class TutorialManager : MonoBehaviour
         }
         else if (popUpIndex == 9)
         {
-            if(playerControl.damageIndicator.activeInHierarchy == true)
+            if(Global.userInterfaceActiveManager.MenusVisibilityState[(int)Global.MenusType.Hurt_Effect])
             {
                 popUpIndex++;
             }

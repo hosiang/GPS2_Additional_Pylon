@@ -73,6 +73,8 @@ public class UIActiveManager : MonoBehaviour
         SetMenuVisibilityDirectly(Global.MenusType.UIInformationContainer, true);
 
         SetMenuVisibilityDirectly(Global.MenusType.TaskCompletedContainer, false);
+
+        SetMenuVisibilityDirectly(Global.MenusType.Hurt_Effect, false);
     }
 
 

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3147171347909970450}
   - component: {fileID: 3147171347909970444}
   - component: {fileID: 3147171347909970451}
+  - component: {fileID: 4789588437231378984}
   m_Layer: 5
   m_Name: Hurt Effect
   m_TagString: Untagged
@@ -74,3 +75,15 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
+--- !u!225 &4789588437231378984
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3147171347909970449}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0

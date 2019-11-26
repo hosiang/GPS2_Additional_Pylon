@@ -95,7 +95,7 @@ public class AsteroidGenerator : MonoBehaviour
                 asteroidBigTransforms_EasyZone.Add(asteroidBigGameObjects_EasyZone[i].GetComponent<Transform>());
                 asteroidBigTransforms_EasyZone[i].SetParent(asteroidContainner[0].transform);
 
-                asteroidBigGameObjects_EasyZone[i].GetComponent<Asteroid>().SetAsteroidSize(this, Global.AstroidType.AsteroidBig); // Set the type of the asteroid
+                asteroidBigGameObjects_EasyZone[i].GetComponent<Asteroid>().SetAsteroidSize(this, Global.AstroidType.AsteroidBig, Global.ZoneLevels.EasyZone); // Set the type of the asteroid
             }
             else
             {
@@ -104,7 +104,7 @@ public class AsteroidGenerator : MonoBehaviour
                 asteroidSmallTransforms_EasyZone[i - (int)(eachZoneAsteroidAmount[0] / 3)].localScale /= 3.0f;
                 asteroidSmallTransforms_EasyZone[i - (int)(eachZoneAsteroidAmount[0] / 3)].SetParent(asteroidContainner[1].transform);
 
-                asteroidSmallGameObjects_EasyZone[i - (int)(eachZoneAsteroidAmount[0] / 3)].GetComponent<Asteroid>().SetAsteroidSize(this, Global.AstroidType.AsteroidSmall); // Set the type of the asteroid
+                asteroidSmallGameObjects_EasyZone[i - (int)(eachZoneAsteroidAmount[0] / 3)].GetComponent<Asteroid>().SetAsteroidSize(this, Global.AstroidType.AsteroidSmall, Global.ZoneLevels.EasyZone); // Set the type of the asteroid
             }
         }
         for (int i = 0; i < eachZoneAsteroidAmount[1]; i++) // Medium Zone
@@ -117,7 +117,7 @@ public class AsteroidGenerator : MonoBehaviour
                 asteroidBigTransforms_MediumZone.Add(asteroidBigGameObjects_MediumZone[i].GetComponent<Transform>());
                 asteroidBigTransforms_MediumZone[i].SetParent(asteroidContainner[2].transform);
 
-                asteroidBigGameObjects_MediumZone[i].GetComponent<Asteroid>().SetAsteroidSize(this, Global.AstroidType.AsteroidBig); // Set the type of the asteroid
+                asteroidBigGameObjects_MediumZone[i].GetComponent<Asteroid>().SetAsteroidSize(this, Global.AstroidType.AsteroidBig, Global.ZoneLevels.MediumZone); // Set the type of the asteroid
             }
             else
             {
@@ -126,7 +126,7 @@ public class AsteroidGenerator : MonoBehaviour
                 asteroidSmallTransforms_MediumZone[i - (int)(eachZoneAsteroidAmount[1] / 3)].localScale /= 3.0f;
                 asteroidSmallTransforms_MediumZone[i - (int)(eachZoneAsteroidAmount[1] / 3)].SetParent(asteroidContainner[3].transform);
 
-                asteroidSmallGameObjects_MediumZone[i - (int)(eachZoneAsteroidAmount[1] / 3)].GetComponent<Asteroid>().SetAsteroidSize(this, Global.AstroidType.AsteroidSmall); // Set the type of the asteroid
+                asteroidSmallGameObjects_MediumZone[i - (int)(eachZoneAsteroidAmount[1] / 3)].GetComponent<Asteroid>().SetAsteroidSize(this, Global.AstroidType.AsteroidSmall, Global.ZoneLevels.MediumZone); // Set the type of the asteroid
             }
         }
         
@@ -140,7 +140,7 @@ public class AsteroidGenerator : MonoBehaviour
                 asteroidBigTransforms_HardZone.Add(asteroidBigGameObjects_HardZone[i].GetComponent<Transform>());
                 asteroidBigTransforms_HardZone[i].SetParent(asteroidContainner[4].transform);
 
-                asteroidBigGameObjects_HardZone[i].GetComponent<Asteroid>().SetAsteroidSize(this, Global.AstroidType.AsteroidBig); // Set the type of the asteroid
+                asteroidBigGameObjects_HardZone[i].GetComponent<Asteroid>().SetAsteroidSize(this, Global.AstroidType.AsteroidBig, Global.ZoneLevels.HardZone); // Set the type of the asteroid
             }
             else
             {
@@ -149,7 +149,7 @@ public class AsteroidGenerator : MonoBehaviour
                 asteroidSmallTransforms_HardZone[i - (int)(eachZoneAsteroidAmount[2] / 3)].localScale /= 3.0f;
                 asteroidSmallTransforms_HardZone[i - (int)(eachZoneAsteroidAmount[2] / 3)].SetParent(asteroidContainner[5].transform);
 
-                asteroidSmallGameObjects_HardZone[i - (int)(eachZoneAsteroidAmount[2] / 3)].GetComponent<Asteroid>().SetAsteroidSize(this, Global.AstroidType.AsteroidSmall); // Set the type of the asteroid
+                asteroidSmallGameObjects_HardZone[i - (int)(eachZoneAsteroidAmount[2] / 3)].GetComponent<Asteroid>().SetAsteroidSize(this, Global.AstroidType.AsteroidSmall, Global.ZoneLevels.HardZone); // Set the type of the asteroid
             }
         }
         
@@ -298,6 +298,11 @@ public class AsteroidGenerator : MonoBehaviour
         #endregion
     }
 
+    void CreateAsteroid()
+    {
+
+    }
+
     void RandomPosition(int sizeOfAll,ref List<Transform> bigObject,ref List<Transform> smallObject, float zoneInnerSize, float zoneOutsiteSize)
     {
         Vector3 tempRandomPosition = new Vector3();
@@ -382,12 +387,6 @@ public class AsteroidGenerator : MonoBehaviour
 
         }
 
-    }
-
-
-    // Update is called once per frame
-    void Update()
-    {
     }
 
     private void OnDestroy()
