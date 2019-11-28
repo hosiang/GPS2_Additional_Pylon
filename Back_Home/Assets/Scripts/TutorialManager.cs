@@ -5,8 +5,8 @@ using UnityEngine;
 public class TutorialManager : MonoBehaviour
 {
     [SerializeField] private GameObject[] popUps;
-    [SerializeField] private GameObject asteroid;
-    [SerializeField] private GameObject specialAsteroid;
+    [SerializeField] private GameObject asteroid1;
+    [SerializeField] private GameObject asteroid2;
     [SerializeField] private GameObject enemySpawner;
     private int popUpIndex;
 
@@ -22,7 +22,7 @@ public class TutorialManager : MonoBehaviour
     {
         for(int i = 0; i<popUps.Length; i++)
         {
-            if (i == popUpIndex && startWaitTime <= 0) // waiting the animation to start tutorial not really working
+            if (i == popUpIndex && startWaitTime <= 0) 
             {
                 popUps[i].SetActive(true);
             }
@@ -41,14 +41,14 @@ public class TutorialManager : MonoBehaviour
         }
         else if (popUpIndex == 1)
         {
-            if(Input.GetMouseButtonDown(0)) // not sure how to detect the player rotate 
+            if(Input.GetMouseButtonDown(0)) 
             {
                 popUpIndex++;
             }
         }
         else if (popUpIndex == 2)
         {
-            if(playerControl.isThrust)
+            if(Input.GetMouseButtonDown(0))
             {
                 popUpIndex++;
             }
@@ -62,7 +62,7 @@ public class TutorialManager : MonoBehaviour
         }
         else if (popUpIndex == 4)
         {
-            if(playerControl.isThrust)
+            if(Input.GetMouseButtonDown(0))
             {
                 popUpIndex++;
             }
@@ -76,14 +76,14 @@ public class TutorialManager : MonoBehaviour
         }
         else if (popUpIndex == 6)
         {
-            if (asteroid == null)
+            if (asteroid1 == null)
             {
                 popUpIndex++;
             }
         }
         else if (popUpIndex == 7)
         {
-            if (specialAsteroid == null)
+            if (asteroid2 == null)
             {
                 popUpIndex++;
             }
