@@ -7,13 +7,15 @@ public class InGameMenuManager : MonoBehaviour
 {
     [SerializeField] private CanvasGroup pauseMenu;
     [SerializeField] private CanvasGroup optionsMenu;
-    [SerializeField] private CanvasGroup quitConfirmationCanvasGroup;
+    [SerializeField] private CanvasGroup returnToMainMenuConfirmation;
+    [SerializeField] private CanvasGroup quitConfirmation;
 
     [SerializeField] private CustomButton drillButton;
     [SerializeField] private CustomButton thrustButton;
 
     private bool isPause = false;
     private bool optionsMenuBool = false;
+    private bool returnMainMenuPromptBool = false;
     private bool quitPromptBool = false;
 
     public bool drillButtonInteractable => drillButton.interactable;
@@ -22,13 +24,14 @@ public class InGameMenuManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        QuitConfirmation(quitPromptBool);
+        Time.timeScale = 1f;
+        //QuitConfirmation(false);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && !quitPromptBool)
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             QuitConfirmation(true);
         }
@@ -49,6 +52,14 @@ public class InGameMenuManager : MonoBehaviour
         //SceneManager.LoadScene("Back Home");
     }
 
+    public void BackToMainMenu()
+    {
+        Time.timeScale = 1f;
+        isPause = false;
+
+        SceneManager.LoadScene((int)Global.GameSceneIndex.MainMenu);
+    }
+
     public void OptionsMenu(bool active)
     {
         optionsMenuBool = active;
@@ -64,12 +75,19 @@ public class InGameMenuManager : MonoBehaviour
         pauseMenu.interactable = isPause;
         pauseMenu.blocksRaycasts = isPause;
     }
+    public void ReturnToMainMenuConfirmation(bool active)
+    {
+        returnMainMenuPromptBool = active;
+        returnToMainMenuConfirmation.alpha = returnMainMenuPromptBool ? 1 : 0;
+        returnToMainMenuConfirmation.interactable = returnMainMenuPromptBool;
+        returnToMainMenuConfirmation.blocksRaycasts = returnMainMenuPromptBool;
+    }
     public void QuitConfirmation(bool active)
     {
         quitPromptBool = active;
-        quitConfirmationCanvasGroup.alpha = quitPromptBool ? 1 : 0;
-        quitConfirmationCanvasGroup.interactable = quitPromptBool;
-        quitConfirmationCanvasGroup.blocksRaycasts = quitPromptBool;
+        quitConfirmation.alpha = quitPromptBool ? 1 : 0;
+        quitConfirmation.interactable = quitPromptBool;
+        quitConfirmation.blocksRaycasts = quitPromptBool;
     }
 
     public void SetDrillButtonInteractable(bool interactable)

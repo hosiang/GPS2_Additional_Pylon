@@ -30,8 +30,6 @@ public class EndScoreUpdating : MonoBehaviour
     }
     public void EndGameResult()
     {
-        Global.userInterfaceActiveManager.SetMenuVisibilitySmoothly(Global.MenusType.TaskCompletedContainer, true);
-
         float numberOresCurrent = baseSystem.GetFinalStorageOresAmount(Global.OresTypes.Ore_No1);
         float numberOresLast = PlayerPrefs.GetFloat("SCORE: ", 0.0f);
         currentPlayerScore.text = text_Score + numberOresCurrent.ToString();
@@ -43,7 +41,6 @@ public class EndScoreUpdating : MonoBehaviour
         }
         else
         {
-            
             endScoreUpdateText.text = text_OldScore + numberOresLast.ToString();
         }
     }

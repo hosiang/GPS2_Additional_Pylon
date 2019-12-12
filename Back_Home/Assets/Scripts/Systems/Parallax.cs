@@ -15,10 +15,10 @@ public class Parallax : MonoBehaviour
     private void Start()
     {
         startPositionX = transform.position.x;
-        length = GetComponent<SpriteRenderer>().bounds.size.x;
+        length = GetComponent<MeshRenderer>().bounds.size.x;
 
         startPositionZ = transform.position.z;
-        width = GetComponent<SpriteRenderer>().bounds.size.z;
+        width = GetComponent<MeshRenderer>().bounds.size.z;
     }
 
     private void FixedUpdate()

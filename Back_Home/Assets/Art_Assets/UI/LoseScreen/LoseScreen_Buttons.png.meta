@@ -1,7 +1,13 @@
 fileFormatVersion: 2
 guid: 5e285572d5e9cd3409883d147aeb94e7
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: -6271339404559639047
+    second: LoseScreen_Buttons_0
+  - first:
+      213: 1709179141523000740
+    second: LoseScreen_Buttons_1
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -40,7 +46,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -93,11 +99,53 @@ TextureImporter:
     androidETC2FallbackOverride: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: LoseScreen_Buttons_0
+      rect:
+        serializedVersion: 2
+        x: 313
+        y: 184
+        width: 375
+        height: 156
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f1e6e7e803be5064299cffb3d6597ae6
+      internalID: -6271339404559639047
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LoseScreen_Buttons_1
+      rect:
+        serializedVersion: 2
+        x: 1265
+        y: 184
+        width: 375
+        height: 156
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c9d64a6f3ce1ee14293f20cb3b7a6150
+      internalID: 1709179141523000740
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 43647730a53e4eb45be37d75cf9c7ead
     internalID: 0
     vertices: []
     indices: 

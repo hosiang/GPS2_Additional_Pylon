@@ -31,6 +31,8 @@ public static class Global {
     //Animation
     public static string animator_Trigger_SpecialAsteroid_isDestroyed = "isDestroyed";
     public static string animator_Trigger_SpecialAsteroid_isKnockBack = "isKnockBack";
+    public static string nameAnimatorTrigger_SplashScreen_PassKDU_Logo = "";
+    public static string nameAnimatorTrigger_SplashScreen_Pass3A_Production_Logo = "";
 
     //Layers
     public static int layer_Player = 1 << LayerMask.NameToLayer("Player");
@@ -47,16 +49,16 @@ public static class Global {
 
     //Menus
     public static readonly string nameGameObject_UI = "UI";
-    public static readonly string[] nameGameObject_Menus = { "ScreenBlock", "UIControllerPrefab", "UIInformationContainer", "QuitConfirmation", "TaskCompletedContainer", "Hurt Effect" };
+    public static readonly string[] nameGameObject_Menus = { "ScreenBlock", "UIControllerPrefab", "UIInformationContainer", "QuitConfirmation", "Hurt Effect", "Win Screen", "Lose Screen", "ReturnMainMenuConfirmation" };
 
     //Enums
     public enum AstroidType { AsteroidSmall, AsteroidBig, Special };
     public enum OresTypes { Special_Ore, Ore_No1, FinalKey, Length };
     public enum ZoneLevels { ShieldZone, EasyZone, MediumZone, HardZone, Length };
     public enum ParticleEffectType { astroid };
-    public enum MenusType {ScreenBlock, UIControllerPrefab, UIInformationContainer, QuitConfirmation, TaskCompletedContainer, Hurt_Effect, Length };
+    public enum MenusType {ScreenBlock, UIControllerPrefab, UIInformationContainer, QuitConfirmation, Hurt_Effect, Win_Screen, Lose_Screen, ReturnMainMenuConfirmation, Length };
     public enum QuestLevels { Quest_01, Quest_02, Quest_03, Length };
-    public enum GameSceneIndex { MainMenu, Level_01 };
+    public enum GameSceneIndex { Splash, MainMenu, Level_01 };
     public enum OresSpawn { Minimal, Maximal, Skill_Broken };
     public enum SkillsTree { DoubleThrust, Length };
 
@@ -85,7 +87,7 @@ public static class Global {
                                                                         };
 
     // Quest
-    public static float[] targetQuest_OreNo1_Amount = { 1, 100, 150 };
+    public static float[] targetQuest_OreNo1_Amount = { 50, 100, 150 };
     public static float targetOreToWinValue = 1.0f;
 
     public static float ValueToTime(float value)

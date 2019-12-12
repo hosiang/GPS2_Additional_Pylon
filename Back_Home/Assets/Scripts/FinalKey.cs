@@ -38,7 +38,7 @@ public class FinalKey : MonoBehaviour
     {
         if(other.tag == Global.tag_Player)
         {
-            shipEntity.GainOres(this, Global.OresTypes.FinalKey);
+            shipEntity.GainOres(this, Global.OresTypes.FinalKey, 1.0f);
             finalKeyEvent.PlayerGetFinalKey(this);
             Debug.Log("Player Getting Final Key");
         }

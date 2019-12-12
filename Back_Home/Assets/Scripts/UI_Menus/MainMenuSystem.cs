@@ -22,6 +22,8 @@ public class MainMenuSystem : MonoBehaviour
 
     private void Awake()
     {
+        Time.timeScale = 1f;
+
         SetScreenSize();
         SetGameQuality(0);
     }
@@ -102,20 +104,20 @@ public class MainMenuSystem : MonoBehaviour
     {
         if (Global.screenSize_Height == 0 && Global.screenSize_Width == 0)
         {
-            int eachScreen_Width = Screen.width / 8;
-            int eachScreen_Height = Screen.height / 8;
+            int eachScreen_Width = Screen.width / 3;
+            int eachScreen_Height = Screen.height / 3;
 
             Global.screenSize_Width = Screen.width;
             Global.screenSize_Height = Screen.height;
 
-            Global.screenResolution_Width_Low = eachScreen_Width * 3;
-            Global.screenResolution_Height_Low = eachScreen_Height * 3;
+            Global.screenResolution_Width_Low = eachScreen_Width * 1;
+            Global.screenResolution_Height_Low = eachScreen_Height * 1;
 
-            Global.screenResolution_Width_Medium = eachScreen_Width * 6;
-            Global.screenResolution_Height_Medium = eachScreen_Height * 6;
+            Global.screenResolution_Width_Medium = eachScreen_Width * 2;
+            Global.screenResolution_Height_Medium = eachScreen_Height * 2;
 
-            Global.screenResolution_Width_High = eachScreen_Width * 8;
-            Global.screenResolution_Height_High = eachScreen_Height * 8;
+            Global.screenResolution_Width_High = eachScreen_Width * 3;
+            Global.screenResolution_Height_High = eachScreen_Height * 3;
         }
     }
 
@@ -125,15 +127,15 @@ public class MainMenuSystem : MonoBehaviour
         {
             case 0:
                 Debug.Log("Yeah");
-                Screen.SetResolution(Global.screenResolution_Width_Low, Global.screenResolution_Height_Low, true);
+                Screen.SetResolution(Global.screenResolution_Width_Low, Global.screenResolution_Height_Low, FullScreenMode.MaximizedWindow);
                 GraphicsSettings.renderPipelineAsset = qualityLow;
                 break;
             case 1:
-                Screen.SetResolution(Global.screenResolution_Width_Medium, Global.screenResolution_Height_Medium, true);
+                Screen.SetResolution(Global.screenResolution_Width_Medium, Global.screenResolution_Height_Medium, FullScreenMode.MaximizedWindow);
                 GraphicsSettings.renderPipelineAsset = qualityMedium;
                 break;
             case 2:
-                Screen.SetResolution(Global.screenResolution_Width_High, Global.screenResolution_Height_High, true);
+                Screen.SetResolution(Global.screenResolution_Width_High, Global.screenResolution_Height_High, FullScreenMode.MaximizedWindow);
                 GraphicsSettings.renderPipelineAsset = qualityHigh;
                 break;
         }

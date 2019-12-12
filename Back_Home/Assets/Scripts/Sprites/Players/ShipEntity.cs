@@ -228,14 +228,15 @@ public class ShipEntity : MonoBehaviour
             switch (oresTypes)
             {
                 case Global.OresTypes.Ore_No1:
-                    oresAmount[oresTypes] += oreAmount;
+                    this.oresAmount[oresTypes] += oreAmount;
                     CheckWeightAmount();
                     break;
                 case Global.OresTypes.Special_Ore:
                     baseSystem.GainOreToExtendTime(this);
                     break;
                 case Global.OresTypes.FinalKey:
-                    oresAmount[oresTypes] += oreAmount;
+                    this.oresAmount[oresTypes] += oreAmount;
+                    Debug.Log((int)oresTypes + ", " + oreAmount);
                     //CheckWeightAmount();
                     break;
             }

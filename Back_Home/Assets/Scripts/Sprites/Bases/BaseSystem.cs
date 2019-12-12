@@ -24,6 +24,7 @@ public class BaseSystem : MonoBehaviour
     private Dictionary<Global.OresTypes, float> storageOresResources = new Dictionary<Global.OresTypes, float>();
 
     private TimerManager timerManager;
+    private ShipEntity shipEntity;
 
 
     #region !! Border Lines Marker Rotation !!
@@ -50,7 +51,6 @@ public class BaseSystem : MonoBehaviour
 
     private void Awake()
     {
-        
         borderLinesContainner = new GameObject(name_borderLinesContainner); // Create the border line containner
         borderLineOriginalColor = borderLine.GetComponentInChildren<SpriteRenderer>().color;
         
@@ -82,7 +82,7 @@ public class BaseSystem : MonoBehaviour
 
     void Start()
     {
-        
+        Debug.Log(storageOresResources[Global.OresTypes.Ore_No1]);
         layerMask_player = LayerMask.GetMask("Player");
 
         eachAngle = (2f * Mathf.PI) / borderLinesAmount; // For count the each border lines's angle
@@ -90,7 +90,9 @@ public class BaseSystem : MonoBehaviour
         //currentTime = Global.ValueToTime(startShieldRadius);
 
         shieldOriginalScale = shieldTransform.localScale;
-        
+
+        shipEntity = FindObjectOfType<ShipEntity>();
+
     }
 
     void Update()
@@ -103,17 +105,18 @@ public class BaseSystem : MonoBehaviour
         if (playerCollider.Length > 0)
         {
             
-            if (playerCollider[0].transform.parent.GetComponentInParent<ShipEntity>().CurrentWeight > 0.0f)
+            if (shipEntity.CurrentWeight > 0.0f || shipEntity.GetShipOresAmount(Global.OresTypes.FinalKey) > 0.0f)
             {
-                playerCollider[0].GetComponentInParent<ShipEntity>().UnloadResources(this, ref storageOresResources, ref finalStorageOresResources);
+                shipEntity.UnloadResources(this, ref storageOresResources, ref finalStorageOresResources);
 
+                Debug.Log(finalStorageOresResources[Global.OresTypes.FinalKey]);
                 Debug.Log(finalStorageOresResources[Global.OresTypes.Ore_No1]);
                 //Debug.Log("Iron = " + storageOresResources[Global.OresTypes.Ore_No1]);
                 //Debug.Log("No2_Ores = " + storageOresResources[Global.OresTypes.Special_Ore]);
                 //RepairTheShield();
             }
-            playerCollider[0].GetComponentInParent<ShipEntity>().ReplenishHealthPoint(this);
-            playerCollider[0].GetComponentInParent<ShipEntity>().ReplenishNitroPoint(this);
+            shipEntity.ReplenishHealthPoint(this);
+            shipEntity.ReplenishNitroPoint(this);
 
             if(!isPlayerInBase)
             {

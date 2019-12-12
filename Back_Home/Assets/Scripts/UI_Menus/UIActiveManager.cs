@@ -43,8 +43,11 @@ public class UIActiveManager : MonoBehaviour
             }
         }
 
+        
+
         if(checkMenusAmount != (int)Global.MenusType.Length) // check the menus amount
         {
+            Debug.Log("Menus Amount = " + checkMenusAmount);
             Debug.LogError("Error! Menus are not setting corectlly!");
         }
     }
@@ -58,8 +61,8 @@ public class UIActiveManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-
-            SetMenuVisibilitySmoothly(Global.MenusType.ScreenBlock, !menusVisibilityState[(int)Global.MenusType.ScreenBlock], 3.0f, menusVisibilityState[(int)Global.MenusType.ScreenBlock]);
+            InverseMenuVisibilitySmoothly(menusCanvasGroup[(int)Global.MenusType.Win_Screen]);
+            //SetMenuVisibilitySmoothly(Global.MenusType.ScreenBlock, !menusVisibilityState[(int)Global.MenusType.ScreenBlock], 3.0f, menusVisibilityState[(int)Global.MenusType.ScreenBlock]);
         }
     }
 
@@ -72,9 +75,11 @@ public class UIActiveManager : MonoBehaviour
         SetMenuVisibilityDirectly(Global.MenusType.UIControllerPrefab, true);
         SetMenuVisibilityDirectly(Global.MenusType.UIInformationContainer, true);
 
-        SetMenuVisibilityDirectly(Global.MenusType.TaskCompletedContainer, false);
-
         SetMenuVisibilityDirectly(Global.MenusType.Hurt_Effect, false);
+
+        SetMenuVisibilityDirectly(Global.MenusType.Lose_Screen, false);
+        SetMenuVisibilityDirectly(Global.MenusType.Win_Screen, false);
+        SetMenuVisibilityDirectly(Global.MenusType.ReturnMainMenuConfirmation, false);
     }
 
 
@@ -156,7 +161,7 @@ public class UIActiveManager : MonoBehaviour
         {
             if(menusType == menusCanvasGroup[i])
             {
-                SetMenuVisibilitySmoothly((Global.MenusType)i, !menusVisibilityState[i], 1.0f);
+                SetMenuVisibilitySmoothly((Global.MenusType)i, !menusVisibilityState[i]);
                 break;
             }
         }
@@ -188,7 +193,7 @@ public class UIActiveManager : MonoBehaviour
         if (menusVisibilityState[(int)menusType] != visibilityState)
         {
             menusVisibilityState[(int)menusType] = visibilityState;
-            StopAllCoroutines();
+            //StopAllCoroutines();
             StartCoroutine(VisibilitySmoothlySwitchCoroutine(menusType, menusVisibilityState[(int)menusType], smoothlTime, slowToFast));
         }
         

@@ -183,6 +183,16 @@ public class PlayerControl : MonoBehaviour
             shipEntity.TakeDamage(5f);
             //heatSystem.AddHeatAmount(heatCollisionEnemyIncreaseRate);
         }
+        
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Booster"))
+        {
+            skillTree.Skill_Open(this, Global.SkillsTree.DoubleThrust);
+            Destroy(other.gameObject);
+        }
     }
 
     private void CircularEdgeWallEffect()

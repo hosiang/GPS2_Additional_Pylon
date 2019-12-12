@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour {
 
     private EnemySpawner enemySpawner;
+    private TimerManager timerManager;
     //public GameObject taskCompletedUI;
     private BaseSystem baseSystem;
     private EndScoreUpdating endScoreUpdating;
@@ -38,31 +39,50 @@ public class GameManager : MonoBehaviour {
         baseSystem = FindObjectOfType<BaseSystem>();
         endScoreUpdating = FindObjectOfType<EndScoreUpdating>();
 
+        timerManager = FindObjectOfType<TimerManager>();
+
     }
 
     // Update is called once per frame
     void Update() {
-
-        if(!isGameOver && baseSystem.GetBaseStorageOres(Global.OresTypes.Ore_No1) >= Global.targetQuest_OreNo1_Amount[currentQuestLevel]) // For update the quest level
+        Debug.Log(baseSystem.GetBaseStorageOres(Global.OresTypes.FinalKey));
+        if (baseSystem.GetFinalStorageOresAmount(Global.OresTypes.FinalKey) > 0.0f)
         {
-            if (currentQuestLevel < (int)Global.QuestLevels.Quest_03)
+            isGameOver = true;
+            TaskCompleted();
+            Global.userInterfaceActiveManager.SetMenuVisibilitySmoothly(Global.MenusType.Win_Screen, true);
+        }
+
+        if (!isGameOver) // For update the quest level
+        {
+            if (timerManager.CurrentTime <= 0.0f)
             {
-                baseSystem.GetOutSomeStorageOresForQuestSystem(this, Global.OresTypes.Ore_No1, (Global.QuestLevels)currentQuestLevel);
-                currentQuestLevel++;
-                currentPermissiveZoneRadius = Global.zonesRadius[(int)Global.ZoneLevels.EasyZone + currentQuestLevel];
-            }
-            else
-            {
+                Debug.Log("isGameOver");
                 isGameOver = true;
-                TaskCompleted();
+                Global.userInterfaceActiveManager.SetMenuVisibilitySmoothly(Global.MenusType.Lose_Screen, true);
             }
+            if(baseSystem.GetBaseStorageOres(Global.OresTypes.Ore_No1) >= Global.targetQuest_OreNo1_Amount[currentQuestLevel])
+            {
+                if (currentQuestLevel < (int)Global.QuestLevels.Quest_03)
+                {
+                    baseSystem.GetOutSomeStorageOresForQuestSystem(this, Global.OresTypes.Ore_No1, (Global.QuestLevels)currentQuestLevel);
+                    currentQuestLevel++;
+                    currentPermissiveZoneRadius = Global.zonesRadius[(int)Global.ZoneLevels.EasyZone + currentQuestLevel];
+                }
+                else
+                {
+                    
+                }
+
+            }
+            
         }
 
     }
 
     public void TaskCompleted()
     {
-        endScoreUpdating.EndGameResult();
+        //endScoreUpdating.EndGameResult();
         //taskCompletedUI.SetActive(true);
         Debug.Log("Task Completed");
     }

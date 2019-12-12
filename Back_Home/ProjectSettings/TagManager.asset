@@ -8,6 +8,7 @@ TagManager:
   - Ores
   - Asteroid
   - UI Items
+  - Booster
   layers:
   - Default
   - TransparentFX

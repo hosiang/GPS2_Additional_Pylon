@@ -18,6 +18,10 @@ public class UIInformationManager : MonoBehaviour
     [SerializeField] private Text timerText;
     [SerializeField] private Text oreAmountText;
 
+    [SerializeField] private GameObject zoneEazyIcon;
+    [SerializeField] private GameObject zoneMediumIcon;
+    [SerializeField] private GameObject zoneHardIcon;
+
     private float distanceBetweenShipAndBase = 0.0f;
 
     private ShipEntity shipEntity;
@@ -78,6 +82,21 @@ public class UIInformationManager : MonoBehaviour
         timerText.text = timeValueRawNumber.ToString() + ":" + ((timeValueRadixPoint < 10) ? ("0" + timeValueRadixPoint.ToString()) : timeValueRadixPoint.ToString());
 
         distanceBetweenShipAndBase = baseTransform.position.magnitude - shipTransform.position.magnitude; // Count the distance between base and ship
+
+        int countRate = 0;
+        for (int i = 0; i < (int)Global.ZoneLevels.Length; i++)
+        {
+            if(Mathf.Abs(distanceBetweenShipAndBase) > Global.zonesRadius[i])
+            {
+                countRate++;
+            }
+            else
+            {
+                break;
+            }
+        }
+        ZoneDifficulty((Global.ZoneLevels)countRate);
+
         distanceBetweenShipAndBase = (int)(distanceBetweenShipAndBase * 100f); // Getting radix point first step (3.200f * 100)
         distanceBetweenShipAndBase = distanceBetweenShipAndBase / 100f; // Getting radix point last step
 
@@ -88,5 +107,33 @@ public class UIInformationManager : MonoBehaviour
         basePointerTransform.LookAt(baseTransform.position);
 
         basePointerTransform.position = shipTransform.position - (shipAndBaseNormalized * 1.5f);
+
+    }
+
+    private void ZoneDifficulty(Global.ZoneLevels whichZone)
+    {
+        switch (whichZone)
+        {
+            case Global.ZoneLevels.ShieldZone:
+                zoneEazyIcon.SetActive(false);
+                zoneMediumIcon.SetActive(false);
+                zoneHardIcon.SetActive(false);
+                break;
+            case Global.ZoneLevels.EasyZone:
+                zoneEazyIcon.SetActive(true);
+                zoneMediumIcon.SetActive(false);
+                zoneHardIcon.SetActive(false);
+                break;
+            case Global.ZoneLevels.MediumZone:
+                zoneEazyIcon.SetActive(true);
+                zoneMediumIcon.SetActive(true);
+                zoneHardIcon.SetActive(false);
+                break;
+            case Global.ZoneLevels.HardZone:
+                zoneEazyIcon.SetActive(true);
+                zoneMediumIcon.SetActive(true);
+                zoneHardIcon.SetActive(true);
+                break;
+        }
     }
 }
