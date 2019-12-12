@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour {
         enemySpawner = transform.Find("Enemy Spawner").GetComponent<EnemySpawner>();
 
         currentPermissiveZoneRadius = Global.zonesRadius[(int)Global.ZoneLevels.EasyZone];
-        Screen.SetResolution((int)(Screen.width * 0.5f), (int)(Screen.height * 0.5f), fullscreen:true);
+        //Screen.SetResolution((int)(Screen.width * 0.5f), (int)(Screen.height * 0.5f), fullscreen:true);
     }
 
     // Start is called before the first frame update

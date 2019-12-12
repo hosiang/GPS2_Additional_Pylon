@@ -7,7 +7,6 @@ using UnityEngine.Events;
 
 public class CustomButton : Selectable
 {
-    
     [SerializeField] private UnityEvent onClick;
     [SerializeField] private UnityEvent onPressing;
     [SerializeField] private UnityEvent onRelease;
@@ -18,6 +17,7 @@ public class CustomButton : Selectable
     [SerializeField] private UnityEvent onMultiClick;
     [SerializeField, Range(2, 10)] private int multiClickAmount = 2;
     private int clicks = 0;
+    private bool multiClickPressing = false;
 
     private bool buttonOnPressing = false;
     public bool ButtonOnPressing { get{ return buttonOnPressing; } }
@@ -36,7 +36,7 @@ public class CustomButton : Selectable
         }
     }
 
-    private void DoubleClickCheck()
+    private bool DoubleClickCheck()
     {
         if (clicks < (multiClickAmount - 1))
         {
@@ -44,6 +44,8 @@ public class CustomButton : Selectable
 
             StopCoroutine("SecondClickDetect");
             StartCoroutine("SecondClickDetect");
+
+            return false;
         }
         else
         {
@@ -52,6 +54,10 @@ public class CustomButton : Selectable
 
             onMultiClick.Invoke();
             Debug.Log("Double Click");
+
+            buttonOnPressing = false;
+
+            return true;
         }
         
         
@@ -77,13 +83,13 @@ public class CustomButton : Selectable
 
     public override void OnPointerDown(PointerEventData eventData)
     {
-        if (multiClick)
-        {
-            DoubleClickCheck();
-            return;
-        }
         if (interactable)
         {
+            if (multiClick)
+            {
+                if (DoubleClickCheck()) return;
+            }
+
             buttonOnPressing = true;
 
             onClick.Invoke();

@@ -74,7 +74,6 @@ public class JoystickTouchController : MonoBehaviour, IDragHandler, IPointerUpHa
         {
             inputDirection = touchingPosition.normalized;
             touchingPosition = touchingPosition.normalized * ((joystickContainer.rectTransform.sizeDelta / 2) - (joystick.rectTransform.sizeDelta / 2));
-
         }
         else
         {

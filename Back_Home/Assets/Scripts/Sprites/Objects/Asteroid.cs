@@ -89,7 +89,7 @@ public class Asteroid : MonoBehaviour
 
             if (health <= 0f)
             {
-                ConvertToOre();
+                Explode(false);
             }
         }
 
@@ -158,29 +158,23 @@ public class Asteroid : MonoBehaviour
     }
     #endregion
 
-
-    private void ConvertToOre()
+    private void Explode(bool isDoubleThrust)
     {
-        switch (astroidType)
+        int zonesLevel = (int)(formWhichZone - Global.ZoneLevels.EasyZone);
+        int oresToSpawn = 0;
+
+        if (isDoubleThrust)
         {
-            case Global.AstroidType.AsteroidSmall:
-            case Global.AstroidType.AsteroidBig:
-                Explode();
-                Destroy(gameObject);
-                break;
-            case Global.AstroidType.Special:
-                this.GetComponentInChildren<Ores>().SetOresToColletable(this); // Make sure the special ore is get from the correct way
-                specialOresAnimator.SetTrigger(Global.animator_Trigger_SpecialAsteroid_isDestroyed); // Special Ore Animation
-                break;
+            oresToSpawn = Global.eachZoneAsteroidSpwanOreAmount[zonesLevel, (int)astroidType, (int)Global.OresSpawn.Skill_Broken]; // Get the number of each zone of ores will spawn while broken by double thrust
         }
+        else
+        {
+            int minimalSpawn = Global.eachZoneAsteroidSpwanOreAmount[zonesLevel, (int)astroidType, (int)Global.OresSpawn.Minimal];
+            int maximalSpwan = Global.eachZoneAsteroidSpwanOreAmount[zonesLevel, (int)astroidType, (int)Global.OresSpawn.Maximal];
 
-    }
-
-    private void Explode()
-    {
-
-        int oresToSpawn = Random.Range(Global.eachZoneAsteroidSpwanOreAmount[(int)formWhichZone, (int)astroidType, (int)Global.OresSpawn.Minimal],
-        Global.eachZoneAsteroidSpwanOreAmount[(int)formWhichZone, (int)astroidType, (int)Global.OresSpawn.Maximal]); // Get the random number of each zone of ores will spawn
+            oresToSpawn = Random.Range(minimalSpawn, maximalSpwan); // Get the random number of each zone of ores will spawn while normal drilled
+        }
+          
 
         Vector3 spawnPosition = Vector3.zero;
         float rotationY = 0.0f;
@@ -200,6 +194,7 @@ public class Asteroid : MonoBehaviour
             tempGameObject.GetComponent<Ores>().SetOresToColletable(this); // Only explode the ore when player using correct way the getting
         }
 
+
         //Instantiate(parasiteToSpawn);
         ExplosionEffect();
         Destroy(gameObject);
@@ -214,7 +209,17 @@ public class Asteroid : MonoBehaviour
 
     public void DoubleThrustBroken()
     {
+        if (astroidType == Global.AstroidType.Special)
+        {
+            //int oresToSpawn = (int)Global.OresSpawn.Skill_Broken;
 
+            this.GetComponentInChildren<Ores>().SetOresToColletable(this); // Make sure the special ore is get from the correct way
+            specialOresAnimator.SetTrigger(Global.animator_Trigger_SpecialAsteroid_isDestroyed); // Special Ore Animation
+        }
+        else
+        {
+            Explode(true);
+        }
     }
 
     #region | Asteroid Genarator Funtions |

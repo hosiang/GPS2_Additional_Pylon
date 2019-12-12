@@ -47,19 +47,11 @@ public class ShipEntity : MonoBehaviour
     [SerializeField] private Animator playerAnimator;
 
     //Particle
-    //[SerializeField] private ParticleSystem healing1;
-    //[SerializeField] private ParticleSystem healing2;
-    [SerializeField] private ParticleSystem blingHurt;
-    [SerializeField] private ParticleSystem boomHurt;
     [SerializeField] private ParticleSystem astroidHitParticle;
     [SerializeField] private float astroidCollisionSpeed;
 
     void Start()
     {
-        //healing1.Stop();
-        //healing2.Stop();
-        //blingHurt.Stop();
-        //boomHurt.Stop();
 
         for (int i = 0; i < (int)Global.OresTypes.Length; i++)
         {
@@ -231,7 +223,7 @@ public class ShipEntity : MonoBehaviour
 
     public void GainOres(Object requireObject, Global.OresTypes oresTypes, float oreAmount = 1.0f)
     {
-        if (requireObject.GetType().Name == nameof(Ores))
+        if (requireObject.GetType().Name == nameof(Ores) || requireObject.GetType().Name == nameof(FinalKey))
         {
             switch (oresTypes)
             {
@@ -241,6 +233,10 @@ public class ShipEntity : MonoBehaviour
                     break;
                 case Global.OresTypes.Special_Ore:
                     baseSystem.GainOreToExtendTime(this);
+                    break;
+                case Global.OresTypes.FinalKey:
+                    oresAmount[oresTypes] += oreAmount;
+                    //CheckWeightAmount();
                     break;
             }
                 

@@ -9,6 +9,16 @@ public static class Global {
     public static AudioManager audioManager;
     public static UIActiveManager userInterfaceActiveManager;
 
+    //System Variable
+    public static int screenSize_Width = 0;
+    public static int screenSize_Height = 0;
+    public static int screenResolution_Width_Low = 0;
+    public static int screenResolution_Height_Low = 0;
+    public static int screenResolution_Width_Medium = 0;
+    public static int screenResolution_Height_Medium = 0;
+    public static int screenResolution_Width_High = 0;
+    public static int screenResolution_Height_High = 0;
+
     //Save location
     public static string saveFile_HighScore = "/HighScore.dat";
 
@@ -41,7 +51,7 @@ public static class Global {
 
     //Enums
     public enum AstroidType { AsteroidSmall, AsteroidBig, Special };
-    public enum OresTypes { Special_Ore, Ore_No1, Length };
+    public enum OresTypes { Special_Ore, Ore_No1, FinalKey, Length };
     public enum ZoneLevels { ShieldZone, EasyZone, MediumZone, HardZone, Length };
     public enum ParticleEffectType { astroid };
     public enum MenusType {ScreenBlock, UIControllerPrefab, UIInformationContainer, QuitConfirmation, TaskCompletedContainer, Hurt_Effect, Length };
@@ -52,7 +62,7 @@ public static class Global {
 
     //List or Array
     public static readonly float[] zonesRadius = { 20.0f, 40.0f, 80.0f, 160.0f };
-    public static readonly float[] OresWeight = { 0.0f, 2.5f };
+    public static readonly float[] OresWeight = { 0.0f, 2.5f, 0.0f };
     public static readonly float[] eachAsteroidHealthPoint = { 20.0f, 40.0f, 40.0f };
 
     //Mutil List or Mutil Dimension Array

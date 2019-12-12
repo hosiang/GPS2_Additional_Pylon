@@ -312,7 +312,7 @@ public class AsteroidGenerator : MonoBehaviour
         {
             angle = Random.Range(0, Mathf.PI * 2);
 
-            tempRandomPosition.x = Mathf.Cos(angle) * zoneOutsiteSize;
+            tempRandomPosition.x = Random.Range(Mathf.Cos(angle) * zoneInnerSize, Mathf.Cos(angle) * zoneOutsiteSize);
             tempRandomPosition.y = 0.0f;
             tempRandomPosition.z = Random.Range(Mathf.Sin(angle) * zoneInnerSize, Mathf.Sin(angle) * zoneOutsiteSize);
 
@@ -360,7 +360,7 @@ public class AsteroidGenerator : MonoBehaviour
             while (tempCollider.Length > 0)
             {
                 angle = Random.Range(0, Mathf.PI * 2);
-                tempRandomPosition.x = Mathf.Cos(angle) * zoneOutsiteSize;
+                tempRandomPosition.x = Random.Range(Mathf.Cos(angle) * zoneInnerSize, Mathf.Cos(angle) * zoneOutsiteSize);
                 tempRandomPosition.y = 0.0f;
                 tempRandomPosition.z = Random.Range(Mathf.Sin(angle) * zoneInnerSize, Mathf.Sin(angle) * zoneOutsiteSize);
 

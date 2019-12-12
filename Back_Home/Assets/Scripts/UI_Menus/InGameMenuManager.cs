@@ -10,10 +10,14 @@ public class InGameMenuManager : MonoBehaviour
     [SerializeField] private CanvasGroup quitConfirmationCanvasGroup;
 
     [SerializeField] private CustomButton drillButton;
+    [SerializeField] private CustomButton thrustButton;
 
     private bool isPause = false;
     private bool optionsMenuBool = false;
     private bool quitPromptBool = false;
+
+    public bool drillButtonInteractable => drillButton.interactable;
+    public bool thrustButtonInteractable => thrustButton.interactable;
 
     // Start is called before the first frame update
     void Start()
@@ -71,6 +75,11 @@ public class InGameMenuManager : MonoBehaviour
     public void SetDrillButtonInteractable(bool interactable)
     {
         drillButton.interactable = interactable;
+    }
+
+    public void SetThrustButtonInteractable(bool interactable)
+    {
+        thrustButton.interactable = interactable;
     }
 
     public void ReturnMainMenu()

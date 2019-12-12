@@ -2889,6 +2889,7 @@ MonoBehaviour:
   optionsMenu: {fileID: 5392201167290776524}
   quitConfirmationCanvasGroup: {fileID: 7988311206221816289}
   drillButton: {fileID: 8727342438982081415}
+  thrustButton: {fileID: 256892626835758044}
 --- !u!1 &7988311206130184374
 GameObject:
   m_ObjectHideFlags: 0
@@ -3174,6 +3175,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 2751384417312493231, guid: 646ae9b50c2700f44a19c9202516dab6,
+        type: 3}
+      propertyPath: m_Alpha
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1055955652, guid: 646ae9b50c2700f44a19c9202516dab6, type: 3}
       propertyPath: weightPointSlider
       value: 
@@ -3182,21 +3188,6 @@ PrefabInstance:
       propertyPath: oreAmountText
       value: 
       objectReference: {fileID: 448809052}
-    - target: {fileID: 2260775866058769528, guid: 646ae9b50c2700f44a19c9202516dab6,
-        type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2260775866058769528, guid: 646ae9b50c2700f44a19c9202516dab6,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2751384417312493231, guid: 646ae9b50c2700f44a19c9202516dab6,
-        type: 3}
-      propertyPath: m_Alpha
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 951175688315538531, guid: 646ae9b50c2700f44a19c9202516dab6,
         type: 3}
       propertyPath: m_AnchorMin.x
@@ -3232,6 +3223,11 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 260
       objectReference: {fileID: 0}
+    - target: {fileID: 3744124661699586239, guid: 646ae9b50c2700f44a19c9202516dab6,
+        type: 3}
+      propertyPath: m_Color.a
+      value: 0.78431374
+      objectReference: {fileID: 0}
     - target: {fileID: 951175688315538532, guid: 646ae9b50c2700f44a19c9202516dab6,
         type: 3}
       propertyPath: m_RaycastTarget
@@ -3256,11 +3252,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_FillOrigin
       value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3744124661699586239, guid: 646ae9b50c2700f44a19c9202516dab6,
-        type: 3}
-      propertyPath: m_Color.a
-      value: 0.78431374
       objectReference: {fileID: 0}
     - target: {fileID: 2260775867897000125, guid: 646ae9b50c2700f44a19c9202516dab6,
         type: 3}
@@ -3297,6 +3288,16 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 2260775866058769528, guid: 646ae9b50c2700f44a19c9202516dab6,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2260775866058769528, guid: 646ae9b50c2700f44a19c9202516dab6,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 646ae9b50c2700f44a19c9202516dab6, type: 3}
 --- !u!224 &8887030885117061907 stripped
@@ -3318,6 +3319,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7988311205905773059}
     m_Modifications:
+    - target: {fileID: 6772425754276614766, guid: 7c29f58a67fe6254d85a75a277ed5629,
+        type: 3}
+      propertyPath: m_Name
+      value: TaskCompletedContainer
+      objectReference: {fileID: 0}
     - target: {fileID: 6772425754276614767, guid: 7c29f58a67fe6254d85a75a277ed5629,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3423,11 +3429,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 6772425754276614766, guid: 7c29f58a67fe6254d85a75a277ed5629,
-        type: 3}
-      propertyPath: m_Name
-      value: TaskCompletedContainer
-      objectReference: {fileID: 0}
     - target: {fileID: 6772425753556390380, guid: 7c29f58a67fe6254d85a75a277ed5629,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -3448,6 +3449,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7988311205905773059}
     m_Modifications:
+    - target: {fileID: 3147171347909970449, guid: 2ce4642cb2ca9df4598b61cea084c1d7,
+        type: 3}
+      propertyPath: m_Name
+      value: Hurt Effect
+      objectReference: {fileID: 0}
     - target: {fileID: 3147171347909970450, guid: 2ce4642cb2ca9df4598b61cea084c1d7,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3553,10 +3559,10 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 3147171347909970449, guid: 2ce4642cb2ca9df4598b61cea084c1d7,
+    - target: {fileID: 4789588437231378984, guid: 2ce4642cb2ca9df4598b61cea084c1d7,
         type: 3}
-      propertyPath: m_Name
-      value: Hurt Effect
+      propertyPath: m_Alpha
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2ce4642cb2ca9df4598b61cea084c1d7, type: 3}
@@ -3573,6 +3579,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7988311205905773059}
     m_Modifications:
+    - target: {fileID: 7549896281015065104, guid: 9fbbec7b08bcac54898621eddd1b1b13,
+        type: 3}
+      propertyPath: m_Name
+      value: ToggleInventoryAmount
+      objectReference: {fileID: 0}
     - target: {fileID: 7549896281015065107, guid: 9fbbec7b08bcac54898621eddd1b1b13,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3677,11 +3688,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7549896281015065104, guid: 9fbbec7b08bcac54898621eddd1b1b13,
-        type: 3}
-      propertyPath: m_Name
-      value: ToggleInventoryAmount
       objectReference: {fileID: 0}
     - target: {fileID: 7549896281015065106, guid: 9fbbec7b08bcac54898621eddd1b1b13,
         type: 3}
@@ -3839,6 +3845,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7988311205905773059}
     m_Modifications:
+    - target: {fileID: 5277277241219439283, guid: a3d3841547ddad44ca2873d8cb2ff1c9,
+        type: 3}
+      propertyPath: m_Name
+      value: UIControllerPrefab
+      objectReference: {fileID: 0}
     - target: {fileID: 5277277240349615106, guid: a3d3841547ddad44ca2873d8cb2ff1c9,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3944,15 +3955,45 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 5277277241219439283, guid: a3d3841547ddad44ca2873d8cb2ff1c9,
+    - target: {fileID: 1310858195249160019, guid: a3d3841547ddad44ca2873d8cb2ff1c9,
         type: 3}
-      propertyPath: m_Name
-      value: UIControllerPrefab
+      propertyPath: m_Colors.m_DisabledColor.r
+      value: 0.46226418
+      objectReference: {fileID: 0}
+    - target: {fileID: 1310858195249160019, guid: a3d3841547ddad44ca2873d8cb2ff1c9,
+        type: 3}
+      propertyPath: m_Colors.m_DisabledColor.g
+      value: 0.46226418
+      objectReference: {fileID: 0}
+    - target: {fileID: 1310858195249160019, guid: a3d3841547ddad44ca2873d8cb2ff1c9,
+        type: 3}
+      propertyPath: m_Colors.m_DisabledColor.b
+      value: 0.46226418
+      objectReference: {fileID: 0}
+    - target: {fileID: 1310858195249160019, guid: a3d3841547ddad44ca2873d8cb2ff1c9,
+        type: 3}
+      propertyPath: m_Colors.m_DisabledColor.a
+      value: 0.39215687
+      objectReference: {fileID: 0}
+    - target: {fileID: 1310858195249160019, guid: a3d3841547ddad44ca2873d8cb2ff1c9,
+        type: 3}
+      propertyPath: onPressing.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Drilling
+      objectReference: {fileID: 0}
+    - target: {fileID: 1310858195249160019, guid: a3d3841547ddad44ca2873d8cb2ff1c9,
+        type: 3}
+      propertyPath: onRelease.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: DrillingRelease
       objectReference: {fileID: 0}
     - target: {fileID: 5277277240309428219, guid: a3d3841547ddad44ca2873d8cb2ff1c9,
         type: 3}
       propertyPath: m_SizeDelta.y
       value: 199
+      objectReference: {fileID: 0}
+    - target: {fileID: 5277277241368009814, guid: a3d3841547ddad44ca2873d8cb2ff1c9,
+        type: 3}
+      propertyPath: m_Color.a
+      value: 0.88235295
       objectReference: {fileID: 0}
     - target: {fileID: 5277277240309428215, guid: a3d3841547ddad44ca2873d8cb2ff1c9,
         type: 3}
@@ -3984,52 +4025,29 @@ PrefabInstance:
       propertyPath: m_Color.a
       value: 0.88235295
       objectReference: {fileID: 0}
-    - target: {fileID: 5277277241368009814, guid: a3d3841547ddad44ca2873d8cb2ff1c9,
-        type: 3}
-      propertyPath: m_Color.a
-      value: 0.88235295
-      objectReference: {fileID: 0}
-    - target: {fileID: 1310858195249160019, guid: a3d3841547ddad44ca2873d8cb2ff1c9,
-        type: 3}
-      propertyPath: m_Colors.m_DisabledColor.r
-      value: 0.46226418
-      objectReference: {fileID: 0}
-    - target: {fileID: 1310858195249160019, guid: a3d3841547ddad44ca2873d8cb2ff1c9,
-        type: 3}
-      propertyPath: m_Colors.m_DisabledColor.g
-      value: 0.46226418
-      objectReference: {fileID: 0}
-    - target: {fileID: 1310858195249160019, guid: a3d3841547ddad44ca2873d8cb2ff1c9,
-        type: 3}
-      propertyPath: m_Colors.m_DisabledColor.b
-      value: 0.46226418
-      objectReference: {fileID: 0}
-    - target: {fileID: 1310858195249160019, guid: a3d3841547ddad44ca2873d8cb2ff1c9,
-        type: 3}
-      propertyPath: m_Colors.m_DisabledColor.a
-      value: 0.39215687
-      objectReference: {fileID: 0}
-    - target: {fileID: 1310858195249160019, guid: a3d3841547ddad44ca2873d8cb2ff1c9,
-        type: 3}
-      propertyPath: onPressing.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Drilling
-      objectReference: {fileID: 0}
-    - target: {fileID: 1310858195249160019, guid: a3d3841547ddad44ca2873d8cb2ff1c9,
-        type: 3}
-      propertyPath: onRelease.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: DrillingRelease
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a3d3841547ddad44ca2873d8cb2ff1c9, type: 3}
+--- !u!114 &8727342438982081415 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1310858195249160019, guid: a3d3841547ddad44ca2873d8cb2ff1c9,
+    type: 3}
+  m_PrefabInstance: {fileID: 7722729018462274772}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 778f9b60b3e59704db82be78bc909161, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &2454464617607422166 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5277277240349615106, guid: a3d3841547ddad44ca2873d8cb2ff1c9,
     type: 3}
   m_PrefabInstance: {fileID: 7722729018462274772}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &8727342438982081415 stripped
+--- !u!114 &256892626835758044 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1310858195249160019, guid: a3d3841547ddad44ca2873d8cb2ff1c9,
+  m_CorrespondingSourceObject: {fileID: 7546923961330556680, guid: a3d3841547ddad44ca2873d8cb2ff1c9,
     type: 3}
   m_PrefabInstance: {fileID: 7722729018462274772}
   m_PrefabAsset: {fileID: 0}

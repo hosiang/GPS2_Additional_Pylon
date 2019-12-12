@@ -8,7 +8,7 @@ public class PlayerControl : MonoBehaviour
     private float currentThrustPower;
     [SerializeField] private float thrustPower = 20f;
     [SerializeField] private float minimalThrustPower = 10f;
-    [SerializeField]private float maximalThrustPower = 10f;
+    [SerializeField] private float maximalThrustPower = 10f;
     private float eachWeightAffectThrustRate;
     public bool isThrust = false;
     public bool isDoubleThrust = false;
@@ -26,6 +26,8 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] private ParticleSystem boomDrill;
     [SerializeField] private ParticleSystem healing1;
     [SerializeField] private ParticleSystem healing2;
+    [SerializeField] private ParticleSystem blingHurt;
+    [SerializeField] private ParticleSystem boomHurt;
 
     private BoxCollider playerCollision;
     private Rigidbody playerRigidbody;
@@ -43,6 +45,9 @@ public class PlayerControl : MonoBehaviour
     private Collider[] drillCollide;
     Global.AstroidType drillWhichAstroidType;
     private bool onDrilling = false;
+
+    private bool allowThrusting = true;
+    private bool allowDrilling = true;
 
     [SerializeField] private float damage;
     [SerializeField] private float vibrationFrequency;
@@ -72,12 +77,14 @@ public class PlayerControl : MonoBehaviour
     //private float damageDuration = 1f;
 
     private bool onHealing = false;
+    private bool isPlayerOnTheBoundary = false;
 
 
     // Getter
     public bool IsThrust { get { return isThrust; } }
     public bool OnDrilling { get { return onDrilling; } }
     public bool OnHealing { get { return onHealing; } }
+    public bool IsPlayerOnTheBoundary { get{ return isPlayerOnTheBoundary; } }
 
     private void Awake()
     {
@@ -128,7 +135,7 @@ public class PlayerControl : MonoBehaviour
     {
         if (!onDrilling)
         {
-            Rotation();
+            //Rotation();
             Thrust();
             //WeightToNitroConsume();
         }
@@ -147,6 +154,19 @@ public class PlayerControl : MonoBehaviour
             VFX_Healing(onHealing = false);
         }
 
+        if (allowThrusting)
+        {
+            if (shipEntity.IsOverheat && inGameMenuManager.thrustButtonInteractable)
+            {
+                inGameMenuManager.SetThrustButtonInteractable(false);
+            }
+            else if (!shipEntity.IsOverheat && !inGameMenuManager.thrustButtonInteractable)
+            {
+                inGameMenuManager.SetThrustButtonInteractable(true);
+            }
+        }
+        
+
         DrillCollideDetect();
 
         CircularEdgeWallEffect();
@@ -158,20 +178,24 @@ public class PlayerControl : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
+            VFX_Hurting(true);
             //PlayerDamaged();
-            shipEntity.TakeDamage(50f);
+            shipEntity.TakeDamage(5f);
             //heatSystem.AddHeatAmount(heatCollisionEnemyIncreaseRate);
         }
     }
 
     private void CircularEdgeWallEffect()
     {
-        if( Vector3.Distance(basePosition, transform.position) > Global.gameManager.CurrentPermissiveZoneRadius)
+        isPlayerOnTheBoundary = Vector3.Distance(basePosition, transform.position) > Global.gameManager.CurrentPermissiveZoneRadius;
+        if (isPlayerOnTheBoundary )
         {
             basicBoundaryForce = (basePosition - playerTransform.position).normalized;
             basicBoundaryForce.x *= 0.75f;
             basicBoundaryForce.y *= 0.0f;
             basicBoundaryForce.z *= 0.75f;
+
+            //basicBoundaryForce += playerRigidbody.velocity;
 
             playerRigidbody.velocity = basicBoundaryForce;
 
@@ -191,9 +215,11 @@ public class PlayerControl : MonoBehaviour
             playerRigidbody.angularVelocity = Vector3.zero; // Reset the ship torque to all to be zero
         }
         */
-
-        currentFacingAngle = value * rotationSpeed * Time.deltaTime;
-        transform.Rotate(0.0f, currentFacingAngle, 0.0f);
+        if (!onDrilling)
+        {
+            currentFacingAngle = value * rotationSpeed * Time.deltaTime;
+            transform.Rotate(0.0f, currentFacingAngle, 0.0f);
+        }
     }
 
     void Rotation()
@@ -251,12 +277,14 @@ public class PlayerControl : MonoBehaviour
 
     public void DoubleThrust()
     {
-        if (skillTree.Skill01_DoubleThrust_State)
+        if (skillTree.Skill01_DoubleThrust_State && !isDoubleThrust && allowThrusting)
         {
-            isDoubleThrust = true;
+            
+            allowDrilling = false;
+            allowThrusting = false;
 
-            DragRateSwitch(true);
-            VFX_Thrust(true);
+            inGameMenuManager.SetThrustButtonInteractable(false);
+
             StartCoroutine("DoubleThrusting");
         }
     }
@@ -264,6 +292,9 @@ public class PlayerControl : MonoBehaviour
     private IEnumerator DoubleThrusting()
     {
         float i = 0.0f;
+        var mT_main = mainThruster.main;
+        var lT_main = leftSideThruster.main;
+        var rT_main = rightSideThruster.main;
         while (true)
         {
             i += Time.deltaTime;
@@ -277,7 +308,14 @@ public class PlayerControl : MonoBehaviour
             }
             else
             {
-                playerRigidbody.AddForce(playerTransform.forward * 100.0f, ForceMode.Acceleration);
+                mT_main.simulationSpeed = 5.0f;
+                lT_main.simulationSpeed = 5.0f;
+                rT_main.simulationSpeed = 5.0f;
+                DragRateSwitch(true);
+                VFX_Thrust(true);
+                isDoubleThrust = true;
+                playerRigidbody.velocity += playerTransform.forward * 100.0f * Time.deltaTime;
+                //playerRigidbody.AddForce(playerTransform.forward * 100.0f, ForceMode.VelocityChange);
             }
             
             if(i >= 1.2f)
@@ -289,28 +327,40 @@ public class PlayerControl : MonoBehaviour
             yield return null;
         }
 
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.4f);
+
+        mT_main.simulationSpeed = 1.0f;
+        lT_main.simulationSpeed = 1.0f;
+        rT_main.simulationSpeed = 1.0f;
+
         isDoubleThrust = false;
         VFX_Thrust(false);
-
+        inGameMenuManager.SetThrustButtonInteractable(true);
+        allowDrilling = true;
+        allowThrusting = true;
     }
 
     public void Thrusting()
     {
         if (!shipEntity.IsOverheat && !onDrilling)
         {
-            if (!isDoubleThrust)
+            if (allowThrusting)
             {
                 VFX_Thrust(isThrust = true);
                 DragRateSwitch(isThrust);
-
+                /*
+                if (!isPlayerOnTheBoundary)
+                {
+                    playerRigidbody.velocity = transform.forward * 50f * (currentThrustPower * Time.deltaTime);
+                }
+                */
                 playerRigidbody.velocity += transform.forward * (currentThrustPower * Time.deltaTime);
-
+                
                 if (playerRigidbody.velocity.magnitude > maximalThrustPower) // Limit the maximal speed of player
                 {
                     playerRigidbody.velocity = playerRigidbody.velocity.normalized * maximalThrustPower;
                 }
-
+                
                 shipEntity.NitroReduction();
             }
         }
@@ -422,11 +472,15 @@ public class PlayerControl : MonoBehaviour
     {
         drillCollide = Physics.OverlapCapsule(drillStart.position, drillEnd.position, drillRadius, Global.layer_Astroid);
 
-        if (drillCollide.Length > 0 && shipEntity.CurrentWeight <= shipEntity.MaximalWeight && !isDoubleThrust)
+        if (drillCollide.Length > 0 && allowDrilling)
         {
             for (int i = 0; i < drillCollide.Length; ++i)
             {
-                inGameMenuManager.SetDrillButtonInteractable(true);
+                if (!inGameMenuManager.drillButtonInteractable)
+                {
+                    inGameMenuManager.SetDrillButtonInteractable(true);
+                }
+
                 if (onDrilling)
                 {
                     //if (drillerVibrationFrequencyParticleSystem.isStopped)
@@ -441,9 +495,21 @@ public class PlayerControl : MonoBehaviour
                 }
             }
         }
+        else if (drillCollide.Length > 0 && !allowDrilling && isDoubleThrust)
+        {
+            for (int i = 0; i < drillCollide.Length; ++i)
+            {
+                VFX_Drill(onDrilling);
+
+                drillCollide[i].gameObject.GetComponentInParent<Asteroid>().DoubleThrustBroken();
+            }
+        }
         else
         {
-            inGameMenuManager.SetDrillButtonInteractable(false);
+            if (inGameMenuManager.drillButtonInteractable)
+            {
+                inGameMenuManager.SetDrillButtonInteractable(false);
+            }
 
             VFX_Drill(onDrilling = false);
         }
@@ -567,6 +633,27 @@ public class PlayerControl : MonoBehaviour
         }
         
     }
+
+    private void VFX_Hurting(bool toPlay)
+    {
+        if (toPlay)
+        {
+            if (blingHurt.isStopped || boomHurt.isStopped)
+            {
+                blingHurt.Play();
+                boomHurt.Play();
+            }
+        }
+        else
+        {
+            if (blingHurt.isPlaying || boomHurt.isPlaying)
+            {
+                blingHurt.Stop();
+                boomHurt.Stop();
+            }
+        }
+    }
+
     /*
     private void OnTriggerEnter(Collider other)
     {
